@@ -1,0 +1,9 @@
+{
+	"name": "@repo/dayjs",
+	"private": true,
+	"version": "1.0.0",
+	"main": "./index.ts",
+	"dependencies": {
+		"dayjs": "1.11.2"
+	}
+}

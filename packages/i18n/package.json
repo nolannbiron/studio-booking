@@ -1,0 +1,25 @@
+{
+	"name": "@repo/i18n",
+	"version": "0.0.0",
+	"main": "index.ts",
+	"types": "index.ts",
+	"files": [
+		"next",
+		"messages"
+	],
+	"private": true,
+	"dependencies": {
+		"i18next": "^23.5.1",
+		"i18next-browser-languagedetector": "^7.2.1",
+		"i18next-fs-backend": "^2.2.0",
+		"i18next-resources-to-backend": "^1.2.0",
+		"react-cookie": "^7.1.0"
+	},
+	"devDependencies": {
+		"@repo/tsconfig": "*"
+	},
+	"peerDependencies": {
+		"next": "^14.2.2",
+		"react": "^18.2.0"
+	}
+}

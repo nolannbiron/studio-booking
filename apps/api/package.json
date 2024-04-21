@@ -1,0 +1,43 @@
+{
+	"name": "@repo/api",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsx watch ./src/main.ts --clear-screen --on-error \"echo 'error'\" --on-success \"echo 'success'\" --on-start \"echo 'start'\" --on-ready \"echo 'ready'\"",
+		"test": "vitest run",
+		"start": "tsx ./dist/main.js",
+		"lint": "eslint --ext .ts ./src",
+		"lint:fix": "eslint --ext .ts ./src --fix"
+	},
+	"dependencies": {
+		"@fastify/cors": "^8.3.0",
+		"@fastify/formbody": "^7.4.0",
+		"@fastify/multipart": "^7.7.0",
+		"@fastify/oauth2": "^7.8.0",
+		"@fastify/rate-limit": "^9.1.0",
+		"@repo/lib": "*",
+		"@repo/prisma": "*",
+		"@repo/schemas": "*",
+		"axios": "^1.4.0",
+		"fastify": "^4.19.2",
+		"fastify-type-provider-zod": "^1.1.9",
+		"http-graceful-shutdown": "^3.1.13",
+		"zod": "^3.21.4"
+	},
+	"devDependencies": {
+		"@faker-js/faker": "^8.4.1",
+		"@repo/config": "*",
+		"@repo/tsconfig": "*",
+		"@types/node": "^17.0.12",
+		"@types/supertest": "^2.0.12",
+		"dotenv": "^16.3.1",
+		"dotenv-cli": "^7.2.1",
+		"supertest": "^6.3.3",
+		"tsc": "^2.0.4",
+		"tsup": "^7.2.0",
+		"tsx": "^4.7.0",
+		"typescript": "5.2.2",
+		"vitest": "^0.33.0"
+	}
+}

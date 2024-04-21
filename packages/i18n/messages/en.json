@@ -1,0 +1,109 @@
+{
+	"general": {
+		"thanks": "Thanks"
+	},
+	"button": {
+		"cancel": "Cancel",
+		"save": "Save",
+		"create_team": "Create a team",
+		"upload": "Upload",
+		"remove": "Remove",
+		"continue": "Continue",
+		"logout": "Logout",
+		"reset_password": "Reset Password"
+	},
+	"team": {
+		"create": {
+			"header": "Create a team",
+			"description": "Create a new team by filling in the fields below."
+		},
+		"choose": {
+			"header": "Choose a team",
+			"description": "Select a team from the list below."
+		},
+		"form": {
+			"logo": "Team Logo",
+			"logo_subtitle": "File in *.jpg, *.jpeg, *.png format with a maximum size of 2 MB.",
+			"name": "Team Name",
+			"slug": "Team Slug",
+			"websiteUrl": "Website"
+		}
+	},
+	"account": {
+		"form": {
+			"email": "Email Address",
+			"password": "Password",
+			"password_confirmation": "Confirm Password",
+			"first_name": "First Name",
+			"last_name": "Last Name",
+			"picture": "Profile Picture",
+			"change_email": "Change Primary Email",
+			"locale": "Language",
+			"select_locale": "Select a language"
+		}
+	},
+	"navbar": {
+		"dashboard": {
+			"feedback": "Feedbacks"
+		},
+		"settings": {
+			"title": "Settings",
+			"account": "Account settings",
+			"team": "Team settings",
+			"profile": "Profile",
+			"notifications": "Notifications",
+			"referral": "Referral",
+			"team_general": "General",
+			"team_members": "Members",
+			"team_billing": "Billing"
+		},
+		"theme": {
+			"label": "Theme",
+			"light": "Light",
+			"dark": "Dark",
+			"system": "System"
+		}
+	},
+	"locale": {
+		"en": "English",
+		"fr": "French"
+	},
+	"emails": {
+		"hello": "Hi, {{name, string}}",
+		"team_signature": "The {{team, string}} team",
+		"verify_email": {
+			"click_here": "Click here to verify your email address.",
+			"button_label": "Verify your email",
+			"ignore_this_email": "If you didn't create an account, you can safely ignore this email."
+		},
+		"forgot_password": {
+			"click_here": "Click here to reset your password.",
+			"button_label": "Reset your password",
+			"ignore_this_email": "If you didn't request a password reset, you can safely ignore this email."
+		}
+	},
+	"errors": {
+		"incorrect-username-password": "Incorrect username or password.",
+		"incorrect-email-password": "Incorrect email or password.",
+		"user-not-found": "User not found.",
+		"incorrect-password": "Incorrect password.",
+		"missing-password": "Password is required.",
+		"two-factor-disabled": "Two-factor authentication is disabled for this user.",
+		"two-factor-already-enabled": "Two-factor authentication is already enabled for this user.",
+		"two-factor-setup-required": "Two-factor authentication setup is required for this user.",
+		"second-factor-required": "Second factor is required.",
+		"incorrect-two-factor-code": "Incorrect two-factor code.",
+		"internal-server-error": "Internal server error.",
+		"new-password-matches-old": "New password matches old password.",
+		"rate-limit-exceeded": "Rate limit exceeded.",
+		"third-party-identity-provider-enabled": "Third-party identity provider is enabled.",
+		"social-identity-provider-required": "Social identity provider is required.",
+		"email-already-exists": "An account with this email already exists.",
+		"username-already-exists": "Username already exists.",
+		"phone-already-exists": "Phone already exists.",
+		"user-account-locked": "User account is locked.",
+		"missing-backup-codes": "Missing backup codes.",
+		"incorrect-backup-code": "Incorrect backup code.",
+		"slug-not-available": "Slug is not available."
+	}
+}

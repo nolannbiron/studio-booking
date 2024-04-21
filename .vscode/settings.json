@@ -1,0 +1,12 @@
+{
+	"css.customData": [".vscode/tailwind.json"],
+	"tailwindCSS.experimental.classRegex": [
+		["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+		["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+	],
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	"eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact"],
+	"typescript.tsdk": "node_modules/typescript/lib"
+}

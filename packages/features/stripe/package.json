@@ -1,0 +1,12 @@
+{
+	"name": "@repo/stripe",
+	"version": "1.0.0",
+	"description": "Stripe API",
+	"main": "index.ts",
+	"author": "Repo",
+	"license": "ISC",
+	"dependencies": {
+		"@repo/prisma": "*",
+		"stripe": "^14.21.0"
+	}
+}

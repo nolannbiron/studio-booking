@@ -1,0 +1,25 @@
+// {
+// 	"extends": "@repo/tsconfig/react-library.json",
+// 	"include": [
+// 		"../../apps/web/next-env.d.ts",
+// 		"../types/*.d.ts",
+// 		"../types/next-auth.d.ts",
+// 		"**/*.ts",
+// 		"**/*.tsx",
+// 		"templates",
+// 		"src",
+// 		"emails",
+// 		"components"
+// 	],
+// }
+
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "@repo/tsconfig/react-library.json",
+	"include": [".", "../types/*.d.ts"],
+	"exclude": ["dist", "build", "node_modules"],
+	"compilerOptions": {
+		"strict": true,
+		"jsx": "react-jsx"
+	}
+}

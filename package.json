@@ -1,0 +1,61 @@
+{
+	"name": "repo",
+	"private": true,
+	"scripts": {
+		"dev:api": "dotenv -- turbo run dev --scope=\"@repo/api\"",
+		"build:api": "dotenv -- turbo run build --scope=\"@repo/api\"",
+		"start:api": "dotenv -- turbo run start --scope=\"@repo/api\"",
+		"dev:payments": "dotenv -- turbo run dev --scope=\"@repo/payments\"",
+		"build:payments": "dotenv -- turbo run build --scope=\"@repo/payments\"",
+		"start:payments": "dotenv -- turbo run start --scope=\"@repo/payments\"",
+		"dev:web": "dotenv -- turbo run dev --scope=\"@repo/web\" --scope=\"@repo/api\"",
+		"build:web": "dotenv -- turbo run build --scope=\"@repo/web\"",
+		"start:web": "dotenv -- turbo run start --scope=\"@repo/web\"",
+		"lint": "turbo lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"predev": "dotenv-checker --schema .env.schema --env .env.local",
+		"docker:dev": "docker compose -f ./docker/dev/docker-compose.yml up -d --build",
+		"db-setup-test": "dotenv -e .env.test turbo run db-setup-test --scope=\"@repo/prisma\"",
+		"test:setup": "yarn db-setup-test",
+		"prisma": "dotenv -- yarn workspace @repo/prisma prisma",
+		"prisma:test": "dotenv -e .env.test yarn workspace @repo/prisma prisma",
+		"test": "dotenv -e .env.test turbo run test",
+		"stripe:webhook": "dotenv -- turbo run stripe:webhook --scope=\"@repo/payments\"",
+		"knip": "dotenv -- knip",
+		"dev:emails": "dotenv -- turbo run dev --scope=\"@repo/emails\""
+	},
+	"devDependencies": {
+		"@repo/tsconfig": "*",
+		"@types/prettier": "^2.7.3",
+		"autoprefixer": "^10.4.16",
+		"dotenv-checker": "^1.1.5",
+		"dotenv-cli": "latest",
+		"eslint": "^8.48.0",
+		"knip": "^3.8.2",
+		"lint-staged": "^14.0.1",
+		"postcss": "^8.4.30",
+		"postcss-import": "^15.1.0",
+		"prettier": "^3.0.1",
+		"tailwindcss": "^3.4.1",
+		"tsx": "^3.7.1",
+		"turbo": "^1.11.1",
+		"typescript": "5.2.2",
+		"vitest": "^0.33.0"
+	},
+	"engines": {
+		"node": ">=14.0.0",
+		"npm": ">=7.0.0",
+		"yarn": ">=1.19.0 < 2.0.0"
+	},
+	"workspaces": [
+		"apps/*",
+		"packages/*",
+		"packages/features/*",
+		"packages/emails/.react-email"
+	],
+	"prisma": {
+		"schema": "packages/prisma/schema.prisma",
+		"seed": "ts-node --transpile-only ./packages/prisma/seed.ts"
+	},
+	"packageManager": "yarn@4.1.1"
+}

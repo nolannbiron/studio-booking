@@ -1,0 +1,38 @@
+{
+	"name": "@repo/prisma",
+	"version": "1.0.0",
+	"description": "Prisma client for AI Design",
+	"main": "index.ts",
+	"scripts": {
+		"db-push": "yarn prisma db push",
+		"db-pull": "yarn prisma db pull",
+		"db-deploy": "yarn prisma migrate deploy",
+		"db-migrate": "yarn prisma migrate dev",
+		"db-seed": "yarn prisma db seed",
+		"db-studio": "yarn prisma studio",
+		"db-generate": "prisma generate --schema schema.prisma",
+		"db-setup": "yarn prisma db push && yarn prisma migrate deploy && yarn prisma db seed",
+		"db-setup-test": "yarn prisma db push && yarn prisma db seed"
+	},
+	"keywords": [
+		"prisma",
+		"repo"
+	],
+	"author": "AI Design",
+	"license": "MIT",
+	"dependencies": {
+		"@prisma/client": "^5.11.0"
+	},
+	"devDependencies": {
+		"@faker-js/faker": "^8.4.1",
+		"@prisma/generator-helper": "^5.11.0",
+		"prisma": "^5.11.0",
+		"tsx": "^4.7.1",
+		"typescript": "5.2.2",
+		"zod-prisma": "^0.5.4"
+	},
+	"prisma": {
+		"schema": "schema.prisma",
+		"seed": "tsx ./seed.ts"
+	}
+}

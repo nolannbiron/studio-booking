@@ -1,0 +1,17 @@
+{
+	"name": "@repo/schemas",
+	"version": "1.0.0",
+	"files": [
+		"user",
+		"auth",
+		"team",
+		"release-note"
+	],
+	"devDependencies": {
+		"@repo/prisma": "*",
+		"@repo/tsconfig": "*"
+	},
+	"dependencies": {
+		"zod": "^3.21.4"
+	}
+}

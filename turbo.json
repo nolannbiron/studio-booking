@@ -1,0 +1,173 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["^yarn.lock", ".env", ".env.test"],
+	"globalDotEnv": [".env"],
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": [".next/**", "!.next/cache/**"]
+		},
+		"lint": {
+			"dependsOn": ["^lint"],
+			"cache": false
+		},
+		"test": {
+			"dependsOn": ["^test"],
+			"dotEnv": [".env.test.local", ".env.test", ".env.local", ".env"]
+		},
+		"dev": {
+			"cache": false,
+			"persistent": true,
+			"dotEnv": [".env"]
+		},
+		"start": {
+			"cache": false,
+			"dotEnv": [".env"]
+		},
+		"@repo/api#start": {
+			"cache": false
+		},
+		"@repo/api#test": {
+			"cache": false,
+			"dotEnv": [".env.test"]
+		},
+		"@repo/api#build": {
+			"cache": false,
+			"env": [
+				"NODE_ENV",
+				"JWT_SECRET",
+				"GOOGLE_CLIENT_ID",
+				"GOOGLE_CLIENT_SECRET",
+				"GITHUB_CLIENT_ID",
+				"GITHUB_CLIENT_SECRET",
+				"DATABASE_URL",
+				"PORT"
+			]
+		},
+		"@repo/api#dev": {
+			"dependsOn": ["@repo/emails#build"],
+			"cache": false,
+			"dotEnv": [".env"]
+		},
+		"@repo/controllers": { "env": ["JWT_SECRET"] },
+		"@repo/stripe": {
+			"env": ["STRIPE_SECRET_KEY"]
+		},
+		"@repo/payments#start": {
+			"cache": false
+		},
+		"@repo/payments#dev": {
+			"cache": false,
+			"env": ["NODE_ENV", "DATABASE_URL", "PAYMENTS_API_PORT", "STRIPE_WEBHOOK_SECRET"]
+		},
+		"@repo/payments#stripe:webhook": {
+			"cache": false,
+			"env": ["NODE_ENV", "DATABASE_URL", "PAYMENTS_API_PORT", "STRIPE_WEBHOOK_SECRET"]
+		},
+		"@repo/prisma": {
+			"env": ["DATABASE_URL"],
+			"dotEnv": [".env"]
+		},
+		"@repo/prisma#db-setup": {
+			"env": ["DATABASE_URL"],
+			"dotEnv": [".env"]
+		},
+		"@repo/prisma#db-setup-test": {
+			"env": ["DATABASE_URL"],
+			"dotEnv": [".env.test"]
+		},
+		"@repo/web#test": {
+			"env": ["NEXT_PUBLIC_IS_E2E"],
+			"dotEnv": [".env"]
+		},
+		"@repo/emails": {
+			"env": ["RESEND_API_KEY"],
+			"dotEnv": [".env"]
+		}
+	},
+	"globalEnv": [
+		"WEBAPP_URL",
+		"NEXT_PUBLIC_WEBSITE_URL",
+		"NODE_ENV",
+		"ALLOWED_HOSTNAMES",
+		"ANALYZE",
+		"AUTH_BEARER_TOKEN_VERCEL",
+		"BUILD_ID",
+		"APP_APP_CREDENTIAL_ENCRYPTION_KEY",
+		"APP_CREDENTIAL_SYNC_ENDPOINT",
+		"APP_CREDENTIAL_SYNC_SECRET",
+		"APP_CREDENTIAL_SYNC_SECRET_HEADER_NAME",
+		"APP_ENV",
+		"APP_LICENSE_KEY",
+		"APP_QA_EMAIL",
+		"APP_QA_PASSWORD",
+		"APP_TELEMETRY_DISABLED",
+		"APP_CREDENTIAL_SYNC_HEADER_NAME",
+		"JWT_SECRET",
+		"APP_CREDENTIAL_SYNC_SECRET",
+		"CI",
+		"DATABASE_URL",
+		"DEBUG",
+
+		"EMAIL_FROM",
+		"EMAIL_SERVER_HOST",
+		"EMAIL_SERVER_PASSWORD",
+		"EMAIL_SERVER_PORT",
+		"EMAIL_SERVER_USER",
+		"EMAIL_SERVER",
+		"AVATARAPI_USERNAME",
+		"AVATARAPI_PASSWORD",
+		"GOOGLE_API_CREDENTIALS",
+		"GOOGLE_LOGIN_ENABLED",
+		"IP_BANLIST",
+		"NEXT_PUBLIC_DISABLE_SIGNUP",
+		"NEXT_PUBLIC_EMBED_LIB_URL",
+		"NEXT_PUBLIC_HOSTED_CAL_FEATURES",
+		"NEXT_PUBLIC_SENDER_ID",
+		"NEXT_PUBLIC_SENDGRID_SENDER_NAME",
+		"NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID",
+		"NEXT_PUBLIC_STRIPE_PRICING_TABLE_PUBLISHABLE_KEY",
+		"NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS",
+		"NEXT_PUBLIC_VERCEL_URL",
+		"NEXT_PUBLIC_GTM_ID",
+		"NEXT_PUBLIC_DEBUG",
+		"NEXT_PUBLIC_COOKIE_DOMAIN",
+		"NEXTAUTH_SECRET",
+		"NEXTAUTH_URL",
+		"NODE_ENV",
+		"ORGANIZATIONS_ENABLED",
+		"ORGANIZATIONS_AUTOLINK",
+		"PAYMENT_FEE_FIXED",
+		"PROJECT_ID_VERCEL",
+		"RESERVED_SUBDOMAINS",
+		"SENDGRID_API_KEY",
+		"SENDGRID_EMAIL",
+		"SENDGRID_SYNC_API_KEY",
+		"SENTRY_DISABLE_SERVER_WEBPACK_PLUGIN",
+		"STRIPE_CLIENT_ID",
+		"STRIPE_PRIVATE_KEY",
+		"STRIPE_PRODUCT_ID_ESSENTIALS",
+		"STRIPE_PRODUCT_ID_SCALE",
+		"STRIPE_PRODUCT_ID_STARTER",
+		"STRIPE_WEBHOOK_SECRET",
+		"STRIPE_WEBHOOK_SECRET_APPS",
+		"TEAM_ID_VERCEL",
+		"TELEMETRY_DEBUG",
+		"TWILIO_MESSAGING_SID",
+		"TWILIO_PHONE_NUMBER",
+		"TWILIO_SID",
+		"TWILIO_TOKEN",
+		"TWILIO_VERIFY_SID",
+		"UPSTASH_REDIS_REST_TOKEN",
+		"UPSTASH_REDIS_REST_URL",
+		"VERCEL_ENV",
+		"VERCEL_URL",
+		"RESEND_API_KEY",
+		"LOCAL_TESTING_DOMAIN_VERCEL",
+		"NEXT_PUBLIC_ROOT_DOMAIN",
+		"NEXT_PUBLIC_WEBAPP_URL",
+		"NEXT_PUBLIC_API_URL",
+		"INTEGRATION_TEST_MODE",
+		"NEXT_PUBLIC_IS_E2E"
+	]
+}

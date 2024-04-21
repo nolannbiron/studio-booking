@@ -1,0 +1,29 @@
+version: '3.8'
+name: repo-dev
+services:
+    postgres:
+        container_name: postgres
+        image: postgres:14
+        ports:
+            - '5450:5432' # expose pg on port 5450 to not collide with pg from elswhere
+        user: postgres
+        restart: always
+        networks:
+            - repo-dev
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: 'repo'
+            POSTGRES_USER: 'postgres'
+            POSTGRES_PASSWORD: 'postgres'
+            POSTGRES_HOST_AUTH_METHOD: trust
+
+networks:
+    repo-dev:
+        external: true
+        name: repo-dev
+
+volumes:
+    db_data:
+    db_data-test:
+# docker-compose up --force-recreate -d --build

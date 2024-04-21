@@ -1,0 +1,7 @@
+{
+	"extends": "@repo/tsconfig/react-library",
+	"compilerOptions": {
+		"resolveJsonModule": true
+	},
+	"include": ["../../apps/web/next-env.d.ts", "../types/*.d.ts", "src"]
+}

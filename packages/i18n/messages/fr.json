@@ -1,0 +1,125 @@
+{
+	"general": {
+		"thanks": "Merci",
+		"search": "Rechercher"
+	},
+	"button": {
+		"cancel": "Annuler",
+		"ok": "OK",
+		"save": "Enregistrer",
+		"create_team": "Créer une équipe",
+		"upload": "Ajouter un fichier",
+		"remove": "Supprimer",
+		"continue": "Continuer",
+		"logout": "Déconnexion",
+		"sort": "Trier par",
+		"add_filter": "Ajouter un filtre"
+	},
+	"team": {
+		"create": {
+			"header": "Créer une équipe",
+			"description": "Créez une nouvelle équipe en remplissant les champs ci-dessous."
+		},
+		"choose": {
+			"header": "Séléctionnez une équipe",
+			"description": "Séléctionnez une équipe dans la liste ci-dessous."
+		},
+		"form": {
+			"logo": "Votre logo",
+			"logo_subtitle": "Fichier au format *.jpg, *.jpeg, *.png avec une taille maximale de 2 Mo.",
+			"name": "Nom de votre équipe",
+			"slug": "Slug de votre équipe",
+			"websiteUrl": "Site web"
+		}
+	},
+	"account": {
+		"form": {
+			"email": "Adresse e-mail",
+			"password": "Mot de passe",
+			"password_confirmation": "Confirmer le mot de passe",
+			"first_name": "Prénom",
+			"last_name": "Nom",
+			"picture": "Photo de profil",
+			"change_email": "Changer l'adresse e-mail",
+			"locale": "Langue",
+			"select_locale": "Sélectionnez une langue"
+		}
+	},
+	"navbar": {
+		"dashboard": {
+			"feedback": "Feedbacks",
+			"release-notes": "Notes de version"
+		},
+		"settings": {
+			"title": "Paramètres",
+			"account": "Paramètres du compte",
+			"team": "Paramètres de l'équipe",
+			"profile": "Mon compte",
+			"notifications": "Notifications",
+			"referral": "Parrainage",
+			"team_general": "Général",
+			"team_members": "Membres",
+			"team_billing": "Facturation"
+		},
+		"theme": {
+			"label": "Thème",
+			"dark": "Sombre",
+			"light": "Clair",
+			"system": "Système"
+		}
+	},
+	"locale": {
+		"en": "Anglais",
+		"fr": "Français"
+	},
+	"emails": {
+		"hello": "Bonjour, {{name, string}}",
+		"team_signature": "L'équipe, {{team, string}}",
+		"verify_email": {
+			"click_here": "Cliquez ici pour vérifier votre adresse e-mail.",
+			"button_label": "Vérifier l'adresse e-mail",
+			"ignore_this_email": "Si vous n'avez pas créé de compte, vous pouvez ignorer cet e-mail."
+		},
+		"forgot_password": {
+			"click_here": "Cliquez ici pour réinitialiser votre mot de passe.",
+			"button_label": "Réinitialiser le mot de passe",
+			"ignore_this_email": "Si vous n'essayez pas de réinitialiser votre mot de passe, vous pouvez ignorer cet e-mail."
+		}
+	},
+	"errors": {
+		"incorrect-username-password": "Nom d'utilisateur ou mot de passe incorrect.",
+		"incorrect-email-password": "Adresse e-mail ou mot de passe incorrect.",
+		"user-not-found": "Utilisateur introuvable.",
+		"incorrect-password": "Mot de passe incorrect.",
+		"missing-password": "Mot de passe manquant.",
+		"two-factor-disabled": "L'authentification à deux facteurs est désactivée pour cet utilisateur.",
+		"two-factor-already-enabled": "L'authentification à deux facteurs est déjà activée pour cet utilisateur.",
+		"two-factor-setup-required": "La configuration de l'authentification à deux facteurs est requise pour cet utilisateur.",
+		"second-factor-required": "Le second facteur est requis.",
+		"incorrect-two-factor-code": "Code à deux facteurs incorrect.",
+		"internal-server-error": "Erreur interne du serveur.",
+		"new-password-matches-old": "Le nouveau mot de passe doit être différent de l'ancien.",
+		"rate-limit-exceeded": "Limite de taux dépassée.",
+		"third-party-identity-provider-enabled": "Le fournisseur d'identité tiers est activé.",
+		"social-identity-provider-required": "Le fournisseur d'identité sociale est requis.",
+		"email-already-exists": "L'adresse e-mail existe déjà.",
+		"username-already-exists": "Le nom d'utilisateur existe déjà.",
+		"phone-already-exists": "Le numéro de téléphone existe déjà.",
+		"user-account-locked": "Compte utilisateur verrouillé.",
+		"missing-backup-codes": "Codes de secours manquants.",
+		"incorrect-backup-code": "Code de secours incorrect.",
+		"slug-not-available": "Slug non disponible."
+	},
+	"filters": {
+		"choose_filter": "Choisir un filtre"
+	},
+	"sort": {
+		"sort_by": "Trier par",
+		"date": "Date",
+		"update_date": "Dernière mise à jour",
+		"creation_date": "Date de création",
+		"sentiment": "Sentiment",
+		"type": "Type",
+		"attributes": "Attributs"
+	}
+}

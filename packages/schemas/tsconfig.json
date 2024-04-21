@@ -1,0 +1,12 @@
+{
+	"extends": "@repo/tsconfig/base.json",
+	"compilerOptions": {
+		"lib": ["ES2015"],
+		// "target": "ESNext",
+		// "moduleResolution": "NodeNext",
+		// "module": "NodeNext",
+		"outDir": "./dist"
+	},
+	"exclude": ["node_modules", "dist"],
+	"include": ["**/*.ts"]
+}

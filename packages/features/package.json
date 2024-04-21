@@ -1,0 +1,14 @@
+{
+	"name": "@repo/features",
+	"sideEffects": false,
+	"version": "1.0.0",
+	"main": "index.ts",
+	"dependencies": {
+		"@repo/dayjs": "*",
+		"@repo/ui": "*",
+		"next-auth": "^4.24.7"
+	},
+	"devDependencies": {
+		"@testing-library/react-hooks": "^8.0.1"
+	}
+}

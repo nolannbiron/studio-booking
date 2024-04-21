@@ -1,0 +1,41 @@
+{
+	"name": "@repo/emails",
+	"sideEffects": false,
+	"version": "0.1.0",
+	"main": "index.ts",
+	"types": "index.ts",
+	"scripts": {
+		"dev": "email dev -p 3003"
+	},
+	"dependencies": {
+		"@react-email/body": "^0.0.7",
+		"@react-email/button": "^0.0.14",
+		"@react-email/container": "^0.0.11",
+		"@react-email/font": "^0.0.5",
+		"@react-email/head": "^0.0.7",
+		"@react-email/heading": "^0.0.11",
+		"@react-email/html": "^0.0.7",
+		"@react-email/img": "^0.0.7",
+		"@react-email/link": "^0.0.7",
+		"@react-email/preview": "^0.0.8",
+		"@react-email/render": "^0.0.12",
+		"@react-email/tailwind": "^0.0.15",
+		"@react-email/text": "^0.0.7",
+		"@repo/dayjs": "*",
+		"@repo/i18n": "*",
+		"class-variance-authority": "^0.7.0",
+		"entities": "^4.5.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@repo/schemas": "*",
+		"@repo/tsconfig": "*",
+		"@repo/types": "*",
+		"react-email": "^2.1.1",
+		"tsup": "^7.2.0"
+	},
+	"peerDependencies": {
+		"@repo/lib": "*"
+	}
+}

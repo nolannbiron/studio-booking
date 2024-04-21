@@ -1,0 +1,10 @@
+{
+	"extends": "@repo/tsconfig/base.json",
+	"compilerOptions": {
+		"strict": true,
+		"outDir": "dist",
+		"target": "es2015"
+	},
+	"include": ["**/*.ts", "../types/*.d.ts"],
+	"exclude": ["dist", "build", "node_modules"]
+}
