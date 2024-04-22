@@ -17,7 +17,7 @@ import Link from 'next/link'
 import { Suspense, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-const GithubAuthButton = dynamic(() => import('../buttons/github-auth-button').then((mod) => mod.default))
+const FacebookAuthButton = dynamic(() => import('../buttons/facebook-auth-button').then((mod) => mod.default))
 const GoogleAuthButton = dynamic(() => import('../buttons/google-auth-button').then((mod) => mod.default))
 
 export default function RegisterForm(): JSX.Element {
@@ -139,7 +139,7 @@ export default function RegisterForm(): JSX.Element {
 			</div>
 			<div className="grid grid-cols-2 gap-2 sm:w-full">
 				<Suspense fallback={<></>}>
-					<GithubAuthButton>Github</GithubAuthButton>
+					<FacebookAuthButton>Facebook</FacebookAuthButton>
 					<GoogleAuthButton>Google</GoogleAuthButton>
 				</Suspense>
 			</div>

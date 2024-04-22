@@ -2,6 +2,7 @@
 	"name": "repo",
 	"private": true,
 	"scripts": {
+		"postinstall": "yarn prisma generate",
 		"dev:api": "dotenv -- turbo run dev --scope=\"@repo/api\"",
 		"build:api": "dotenv -- turbo run build --scope=\"@repo/api\"",
 		"start:api": "dotenv -- turbo run start --scope=\"@repo/api\"",

@@ -1,7 +1,4 @@
-import { TagRepository } from '@repo/lib/server/repository/tag'
 import { TeamRepository } from '@repo/lib/server/repository/team'
-import type { TDeleteTagRequest, TGetTagsRequest, TUpdateTagRequest } from '@repo/schemas/release-note'
-import { type TCreateTagRequest } from '@repo/schemas/release-note'
 import { ZTeamCreateMemberSchema, ZTeamUpdateMemberSchema, ZTeamUpdateSchema } from '@repo/schemas/team'
 import type {
 	TCreateTeam,
@@ -182,78 +179,6 @@ const teamRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done: (
 
 				await TeamRepository.delete({
 					id: req.params.teamId
-				})
-
-				return res.send({ success: true }).status(200)
-			} catch (e) {
-				return res.code(400).send({ success: false, message: e })
-			}
-		}
-	})
-
-	app.route<TGetTagsRequest>({
-		method: 'GET',
-		url: '/team/:teamId/tags',
-		preHandler: app.Auth.TeamAdmin,
-		handler: async (req, res) => {
-			try {
-				const tags = await TagRepository.getAllTagsForTeam({
-					teamId: req.params.teamId
-				})
-
-				return res.send({ success: true, tags }).status(200)
-			} catch (e) {
-				return res.code(400).send({ success: false, message: e })
-			}
-		}
-	})
-
-	app.route<TCreateTagRequest>({
-		method: 'POST',
-		url: '/team/:teamId/tag',
-		preHandler: app.Auth.TeamAdmin,
-		handler: async (req, res) => {
-			try {
-				const tag = await TagRepository.createTag({
-					data: req.body,
-					teamId: req.params.teamId
-				})
-
-				return res.send({ success: true, tag }).status(200)
-			} catch (e) {
-				return res.code(400).send({ success: false, message: e })
-			}
-		}
-	})
-
-	app.route<TUpdateTagRequest>({
-		method: 'PATCH',
-		url: '/team/:teamId/tag/:tagId',
-		preHandler: app.Auth.TeamAdmin,
-		handler: async (req, res) => {
-			try {
-				const tag = await TagRepository.updateTag({
-					tagId: req.params.tagId,
-					teamId: req.params.teamId,
-					data: req.body
-				})
-
-				return res.send({ success: true, tag }).status(200)
-			} catch (e) {
-				return res.code(400).send({ success: false, message: e })
-			}
-		}
-	})
-
-	app.route<TDeleteTagRequest>({
-		method: 'DELETE',
-		url: '/team/:teamId/tag/:tagId',
-		preHandler: app.Auth.TeamAdmin,
-		handler: async (req, res) => {
-			try {
-				await TagRepository.deleteTag({
-					tagId: req.params.tagId,
-					teamId: req.params.teamId
 				})
 
 				return res.send({ success: true }).status(200)

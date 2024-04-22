@@ -5,12 +5,12 @@ import log from '@repo/lib/logger'
 import { safeStringify } from '@repo/lib/safeStringify'
 import { prisma } from '@repo/prisma'
 import type { Membership, Team } from '@repo/prisma/client'
-import { IdentityProvider, MembershipRole } from '@repo/prisma/enums'
+import { AuthProvider, MembershipRole } from '@repo/prisma/enums'
 import { teamMetadataSchema } from '@repo/prisma/zod-utils'
 import type { AuthOptions, Session } from 'next-auth'
 import type { JWT } from 'next-auth/jwt'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import GithubProvider from 'next-auth/providers/github'
+import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
 import type { Provider } from 'next-auth/providers/index'
 
@@ -26,7 +26,7 @@ const IS_GOOGLE_LOGIN_ENABLED = !!(
 	GOOGLE_LOGIN_ENABLED
 )
 
-const IS_GITHUB_LOGIN_ENABLED = process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET
+const IS_FACEBOOK_LOGIN_ENABLED = process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET
 
 // const loginWithTotp = async (email: string) =>
 // 	`/auth/login?totp=${await (await import('./signJwt')).default({ email })}`
@@ -51,7 +51,7 @@ export const checkIfUserBelongsToActiveTeam = <T extends UserTeams>(user: T) =>
 		return metadata.success && metadata.data?.subscriptionId
 	})
 
-const checkIfUserShouldBelongToOrg = async (idP: IdentityProvider, email: string) => {
+const checkIfUserShouldBelongToOrg = async (idP: AuthProvider, email: string) => {
 	const [orgUsername, apexDomain] = email.split('@')
 	if (!ORGANIZATIONS_AUTOLINK || idP !== 'GOOGLE') return { orgUsername, orgId: undefined }
 	const existingOrg = await prisma.team.findFirst({
@@ -100,15 +100,17 @@ const providers: Provider[] = [
 	})
 ]
 
-if (IS_GITHUB_LOGIN_ENABLED) {
+if (IS_FACEBOOK_LOGIN_ENABLED) {
 	providers.push(
-		GithubProvider({
-			clientId: process.env.GITHUB_CLIENT_ID ?? '',
-			clientSecret: process.env.GITHUB_CLIENT_SECRET ?? '',
+		FacebookProvider({
+			allowDangerousEmailAccountLinking: true,
+			clientId: process.env.FACEBOOK_CLIENT_ID ?? '',
+			clientSecret: process.env.FACEBOOK_CLIENT_SECRET ?? '',
 			profile(profile) {
+				console.log(profile)
 				return {
 					...profile,
-					avatarUrl: profile.avatar_url,
+					avatarUrl: profile.picture?.data?.url,
 					fullName: profile.name,
 					firstName: profile.name.split(' ')[0],
 					lastName: profile.name.split(' ')[1],
@@ -139,12 +141,12 @@ if (IS_GOOGLE_LOGIN_ENABLED) {
 
 const adapter = RepoAdapter(prisma)
 
-const mapIdentityProvider = (providerName: string) => {
+const mapAuthProvider = (providerName: string) => {
 	switch (providerName) {
-		case 'github':
-			return IdentityProvider.GITHUB
+		case 'facebook':
+			return AuthProvider.FACEBOOK
 		default:
-			return IdentityProvider.GOOGLE
+			return AuthProvider.GOOGLE
 	}
 }
 
@@ -274,16 +276,16 @@ export const AUTH_OPTIONS: AuthOptions = {
 					return token
 				}
 
-				const idP = account.provider === 'google' ? IdentityProvider.GOOGLE : IdentityProvider.GITHUB
+				const idP = account.provider === 'google' ? AuthProvider.GOOGLE : AuthProvider.FACEBOOK
 
 				const existingUser = await prisma.user.findFirst({
 					where: {
 						AND: [
 							{
-								identityProvider: idP
+								authProvider: idP
 							},
 							{
-								identityProviderId: account.providerAccountId
+								authProviderId: account.providerAccountId
 							}
 						]
 					}
@@ -375,7 +377,7 @@ export const AUTH_OPTIONS: AuthOptions = {
 			}
 
 			if (account?.provider) {
-				const idP: IdentityProvider = mapIdentityProvider(account.provider)
+				const idP: AuthProvider = mapAuthProvider(account.provider)
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore-error TODO validate email_verified key on profile
 				// user.email_verified = user.email_verified || !!user.emailVerified || profile.email_verified
@@ -393,8 +395,8 @@ export const AUTH_OPTIONS: AuthOptions = {
 						}
 					},
 					where: {
-						identityProvider: idP,
-						identityProviderId: account.providerAccountId
+						authProvider: idP,
+						authProviderId: account.providerAccountId
 					}
 				})
 
@@ -406,14 +408,14 @@ export const AUTH_OPTIONS: AuthOptions = {
 							// If old user without Account entry we link their google account
 							if (existingUser.accounts.length === 0) {
 								const linkAccountWithUserData = { ...account, userId: existingUser.id }
-								await adapter.linkAccount?.(linkAccountWithUserData)
+								await adapter.linkAccount(linkAccountWithUserData)
 							}
 						} catch (error) {
 							if (error instanceof Error) {
 								console.error('Error while linking account of already existing user')
 							}
 						}
-						// if (existingUser.twoFactorEnabled && existingUser.identityProvider === idP) {
+						// if (existingUser.twoFactorEnabled && existingUser.authProvider === idP) {
 						// 	return loginWithTotp(existingUser.email)
 						// } else {
 						return true
@@ -458,7 +460,7 @@ export const AUTH_OPTIONS: AuthOptions = {
 					// if self-hosted then we can allow auto-merge of identity providers if email is verified
 					if (
 						existingUserWithEmail.emailVerified &&
-						existingUserWithEmail.identityProvider !== IdentityProvider.JWT
+						existingUserWithEmail.authProvider !== AuthProvider.JWT
 					) {
 						// if (existingUserWithEmail.twoFactorEnabled) {
 						// 	return loginWithTotp(existingUserWithEmail.email)
@@ -480,8 +482,8 @@ export const AUTH_OPTIONS: AuthOptions = {
 								firstName: user.firstName,
 								lastName: user.lastName,
 								fullName: user.fullName,
-								identityProvider: idP,
-								identityProviderId: account.providerAccountId
+								authProvider: idP,
+								authProviderId: account.providerAccountId
 							}
 						})
 
@@ -492,18 +494,18 @@ export const AUTH_OPTIONS: AuthOptions = {
 						// }
 					}
 
-					// User signs up with email/password and then tries to login with Google/Github using the same email
+					// User signs up with email/password and then tries to login with Google/Facebook using the same email
 					if (
-						existingUserWithEmail.identityProvider === IdentityProvider.JWT &&
-						(idP === IdentityProvider.GOOGLE || idP === IdentityProvider.GITHUB)
+						existingUserWithEmail.authProvider === AuthProvider.JWT &&
+						(idP === AuthProvider.GOOGLE || idP === AuthProvider.FACEBOOK)
 					) {
 						const updatedUser = await prisma.user.update({
 							where: { email: existingUserWithEmail.email },
 							// also update email to the IdP email
 							data: {
 								email: user.email,
-								identityProvider: idP,
-								identityProviderId: account.providerAccountId
+								authProvider: idP,
+								authProviderId: account.providerAccountId
 							}
 						})
 
@@ -537,7 +539,7 @@ export const AUTH_OPTIONS: AuthOptions = {
 						// } else {
 						return true
 						// }
-					} else if (existingUserWithEmail.identityProvider === IdentityProvider.JWT) {
+					} else if (existingUserWithEmail.authProvider === AuthProvider.JWT) {
 						return '/auth/error?error=use-password-login'
 					}
 
@@ -563,9 +565,9 @@ export const AUTH_OPTIONS: AuthOptions = {
 						...(user.image && { avatarUrl: user.image }),
 						email: user.email,
 						avatarUrl: user.avatarUrl,
-						identityProvider: idP,
+						authProvider: idP,
 						avatarColor: getRandomAvatarColor(),
-						identityProviderId: account.providerAccountId,
+						authProviderId: account.providerAccountId,
 						...(orgId && {
 							// organization: { connect: { id: orgId } },
 							teams: {
@@ -580,7 +582,7 @@ export const AUTH_OPTIONS: AuthOptions = {
 				})
 
 				const linkAccountNewUserData = { ...account, userId: newUser.id }
-				await adapter.linkAccount?.(linkAccountNewUserData)
+				await adapter.linkAccount(linkAccountNewUserData)
 
 				// if (account.twoFactorEnabled) {
 				// 	return loginWithTotp(newUser.email)

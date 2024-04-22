@@ -42,6 +42,6 @@ export const userPrivateProfileSelect = Prisma.validator<Prisma.UserSelect>()({
 	createdAt: true,
 	updatedAt: true,
 	isRoot: true,
-	identityProvider: true,
-	identityProviderId: true
+	authProvider: true,
+	authProviderId: true
 })

@@ -1,13 +1,13 @@
 import type { Prisma, User } from '@prisma/client'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { sendAccountVerifyEmail } from '@repo/emails'
-import type { PrismaClient } from '@repo/prisma/client'
-import type { Adapter } from 'next-auth/adapters'
+import type { Account, PrismaClient, VerificationToken } from '@repo/prisma/client'
 
 import { AuthRepository } from '../server/repository/auth'
 import { getRandomAvatarColor } from './getRandomAvatarColor'
 
-export default function RepoAdapter(prismaClient: PrismaClient): Adapter {
+/** @return { import("next-auth/adapters").Adapter } */
+export default function RepoAdapter(prismaClient: PrismaClient) {
 	return {
 		createUser: async (data: Prisma.UserCreateInput) => {
 			const user = await prismaClient.user.create({
@@ -29,7 +29,10 @@ export default function RepoAdapter(prismaClient: PrismaClient): Adapter {
 		},
 		getUser: (id: string) => prismaClient.user.findUnique({ where: { id: id } }),
 		getUserByEmail: (email: User['email']) => prismaClient.user.findUnique({ where: { email } }),
-		async getUserByAccount(provider_providerAccountId) {
+		async getUserByAccount(provider_providerAccountId: {
+			providerAccountId: Account['providerAccountId']
+			provider: User['authProvider']
+		}) {
 			let _account
 			const account = await prismaClient.account.findUnique({
 				where: {
@@ -43,9 +46,10 @@ export default function RepoAdapter(prismaClient: PrismaClient): Adapter {
 				? _account
 				: null
 		},
-		updateUser: ({ id, ...data }) => prismaClient.user.update({ where: { id }, data }),
+		updateUser: ({ id, ...data }: Prisma.UserUncheckedCreateInput) =>
+			prismaClient.user.update({ where: { id }, data }),
 		deleteUser: (id: User['id']) => prismaClient.user.delete({ where: { id } }),
-		async createVerificationToken(data) {
+		async createVerificationToken(data: VerificationToken) {
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { id: _, ...verificationToken } = await prismaClient.verificationToken.create({
 				data
@@ -69,6 +73,11 @@ export default function RepoAdapter(prismaClient: PrismaClient): Adapter {
 				}
 				throw error
 			}
-		}
+		},
+		linkAccount: (data: Prisma.AccountCreateInput) => prismaClient.account.create({ data }),
+		// @NOTE: All methods below here are not being used but leaved if they are required
+		unlinkAccount: (
+			provider_providerAccountId: Prisma.AccountProviderProviderAccountIdCompoundUniqueInput
+		) => prismaClient.account.delete({ where: { provider_providerAccountId } })
 	}
 }

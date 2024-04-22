@@ -24,40 +24,6 @@ app.register(import('@fastify/rate-limit'), {
 	allowList: whiteList
 })
 
-// app.register(oauthPlugin, {
-// 	name: 'googleOAuth2',
-// 	scope: ['profile', 'email'],
-// 	credentials: {
-// 		client: {
-// 			id: process.env.GOOGLE_CLIENT_ID ?? '',
-// 			secret: process.env.GOOGLE_CLIENT_SECRET ?? ''
-// 		},
-// 		auth: oauthPlugin.GOOGLE_CONFIGURATION
-// 	},
-// 	startRedirectPath: '/v1/login/google',
-// 	callbackUri: 'http://localhost:3004/v1/login/google/callback',
-// 	callbackUriParams: {
-// 		access_type: 'offline'
-// 	}
-// })
-
-// app.register(oauthPlugin, {
-// 	name: 'githubOAuth2',
-// 	scope: ['user:email', 'read:user'],
-// 	credentials: {
-// 		client: {
-// 			id: process.env.GITHUB_CLIENT_ID ?? '',
-// 			secret: process.env.GITHUB_CLIENT_SECRET ?? ''
-// 		},
-// 		auth: oauthPlugin.GITHUB_CONFIGURATION
-// 	},
-// 	startRedirectPath: '/v1/login/github',
-// 	callbackUri: 'http://localhost:3004/v1/login/github/callback',
-// 	callbackUriParams: {
-// 		access_type: 'offline'
-// 	}
-// })
-
 app.decorate('Auth', AuthMiddleware)
 
 app.register(cors, {

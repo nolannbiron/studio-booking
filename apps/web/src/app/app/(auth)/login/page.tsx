@@ -1,3 +1,5 @@
+'use client'
+
 import { Card, CardContent } from '@repo/ui/card'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'

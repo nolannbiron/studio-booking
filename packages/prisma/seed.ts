@@ -3,12 +3,6 @@ import { getRandomAvatarColor } from '@repo/features/auth/lib/getRandomAvatarCol
 import { hashPassword } from '@repo/features/auth/lib/hashPassword'
 
 import { prisma } from './'
-import { Source } from './enums'
-
-const randomSource = (): Source => {
-	const sources = Object.values(Source)
-	return sources[Math.floor(Math.random() * sources.length)]
-}
 
 const seed = async () => {
 	const firstName = faker.person.firstName()
@@ -40,31 +34,7 @@ const seed = async () => {
 					create: {
 						name: faker.company.name(),
 						slug: faker.helpers.slugify(faker.company.name()),
-						color: color,
-						tags: {
-							createMany: {
-								data: [
-									{
-										name: 'Beta',
-										backgroundColor: '#4ade80',
-										textColor: '#052e16'
-									},
-									{
-										name: 'New',
-										backgroundColor: '#60a5fa',
-										textColor: '#172554'
-									}
-								]
-							}
-						},
-						feedbacks: {
-							createMany: {
-								data: Array.from({ length: 5 }, () => ({
-									content: faker.lorem.sentences(),
-									source: randomSource()
-								}))
-							}
-						}
+						color: color
 					}
 				}
 			}

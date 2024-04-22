@@ -1,4 +1,3 @@
-import type { OAuth2Namespace } from '@fastify/oauth2'
 import 'fastify'
 
 declare module 'fastify' {
@@ -9,7 +8,5 @@ declare module 'fastify' {
 	}
 	interface FastifyInstance {
 		Auth: typeof import('@repo/features/auth/server/middleware').AuthMiddleware
-		googleOAuth2: OAuth2Namespace
-		githubOAuth2: OAuth2Namespace
 	}
 }

@@ -1,6 +1,6 @@
 import { sendAccountForgotPasswordEmail, sendAccountVerifyEmail } from '@repo/emails'
 import { prisma, userPrivateProfileSelect } from '@repo/prisma'
-import { IdentityProvider, Prisma } from '@repo/prisma/client'
+import { AuthProvider, Prisma } from '@repo/prisma/client'
 import type { TLoginBody, TRegisterBody } from '@repo/schemas/auth'
 import type { TPrivateUser } from '@repo/schemas/user'
 import { createSigner, createVerifier } from 'fast-jwt'
@@ -35,13 +35,13 @@ export class AuthRepository {
 			throw ErrorCode.IncorrectEmailPassword
 		}
 
-		if (user.identityProvider !== IdentityProvider.JWT) {
-			throw ErrorCode.ThirdPartyIdentityProviderEnabled
+		if (user.authProvider !== AuthProvider.JWT) {
+			throw ErrorCode.ThirdPartyAuthProviderEnabled
 		}
-		if (!user.password && user.identityProvider == IdentityProvider.JWT) {
+		if (!user.password && user.authProvider == AuthProvider.JWT) {
 			throw ErrorCode.IncorrectEmailPassword
 		}
-		if (!user.password && user.identityProvider !== IdentityProvider.JWT) {
+		if (!user.password && user.authProvider !== AuthProvider.JWT) {
 			throw ErrorCode.IncorrectEmailPassword
 		}
 
@@ -82,7 +82,7 @@ export class AuthRepository {
 				avatarColor: getRandomAvatarColor(),
 				fullName: `${capitalizedFirstName} ${capitalizedLastName}`,
 				password: hashedPassword,
-				identityProvider: IdentityProvider.JWT
+				authProvider: AuthProvider.JWT
 			},
 			select: userPrivateProfileSelect
 		})

@@ -1,4 +1,4 @@
-import { IdentityProvider, Locale } from '@repo/prisma/enums'
+import { AuthProvider, Locale } from '@repo/prisma/enums'
 import * as z from 'zod'
 
 export const ZUserSchema = z.object({
@@ -11,8 +11,8 @@ export const ZUserSchema = z.object({
 	avatarColor: z.string().nullish(),
 	password: z.string().nullish(),
 	isRoot: z.boolean(),
-	identityProvider: z.nativeEnum(IdentityProvider),
-	identityProviderId: z.string().nullish(),
+	authProvider: z.nativeEnum(AuthProvider),
+	authProviderId: z.string().nullish(),
 	metadata: z.any(),
 	emailVerified: z.date().nullish(),
 	locale: z.nativeEnum(Locale).nullish(),
@@ -37,8 +37,8 @@ export const ZPublicUserSchema = ZUserSchema.omit({
 	password: true,
 	isRoot: true,
 	backupCodes: true,
-	identityProvider: true,
-	identityProviderId: true,
+	authProvider: true,
+	authProviderId: true,
 	metadata: true
 })
 

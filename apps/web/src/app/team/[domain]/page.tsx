@@ -5,7 +5,7 @@ export default async function ClientRedirectPage() {
 	const session = await getServerSession()
 
 	if (!session) {
-		redirect('/releases')
+		redirect('/')
 	}
 
 	return redirect('/dashboard')

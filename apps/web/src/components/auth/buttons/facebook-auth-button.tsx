@@ -5,10 +5,10 @@ import { cn } from '@repo/ui/lib/utils'
 import { signIn } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { BsGithub } from 'react-icons/bs'
+import { BsFacebook } from 'react-icons/bs'
 import { toast } from 'sonner'
 
-export default function GithubAuthButton({ children }: { children: React.ReactNode }) {
+export default function FacebookAuthButton({ children }: { children: React.ReactNode }) {
 	const [loading, setLoading] = useState(false)
 
 	// Get error message added by next/auth in URL.
@@ -27,7 +27,7 @@ export default function GithubAuthButton({ children }: { children: React.ReactNo
 			type="button"
 			onClick={() => {
 				setLoading(true)
-				signIn('github')
+				signIn('facebook')
 			}}
 			className={cn({
 				'cursor-not-allowed': loading
@@ -37,7 +37,7 @@ export default function GithubAuthButton({ children }: { children: React.ReactNo
 				<span>Loading...</span>
 			) : (
 				<>
-					<BsGithub className="h-4 w-4" />
+					<BsFacebook className="h-4 w-4" />
 					{children}
 				</>
 			)}

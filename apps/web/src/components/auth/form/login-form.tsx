@@ -18,7 +18,7 @@ import { Suspense, useState } from 'react'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 
-const GithubAuthButton = dynamic(() => import('../buttons/github-auth-button').then((mod) => mod.default))
+const FacebookAuthButton = dynamic(() => import('../buttons/facebook-auth-button').then((mod) => mod.default))
 const GoogleAuthButton = dynamic(() => import('../buttons/google-auth-button').then((mod) => mod.default))
 
 export default function LoginForm(): JSX.Element {
@@ -107,7 +107,7 @@ export default function LoginForm(): JSX.Element {
 			</div>
 			<div className="grid gap-2 sm:w-full">
 				<Suspense fallback={<></>}>
-					<GithubAuthButton>Login with Github</GithubAuthButton>
+					<FacebookAuthButton>Login with Facebook</FacebookAuthButton>
 					<GoogleAuthButton>Login with Google</GoogleAuthButton>
 				</Suspense>
 			</div>
