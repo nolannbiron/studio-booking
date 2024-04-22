@@ -1,5 +1,5 @@
 import { Sentiment } from '@repo/prisma/enums'
-import type { TSentimentResponse, TServerApiSentimentResponse } from '@repo/schemas/feedback'
+import type { TSentimentResponse, TServerApiSentimentResponse } from '@repo/schemas/contact'
 
 import { HUGGING_FACE_API_KEY } from '../../constants'
 

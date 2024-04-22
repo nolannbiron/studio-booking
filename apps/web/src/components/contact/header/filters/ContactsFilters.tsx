@@ -1,12 +1,12 @@
 'use client'
 
-import { FEEDBACK_SORT_OPTIONS } from '@/components/feedback/header/sort/const'
+import { CONTACT_SORT_OPTIONS } from '@/components/contact/header/sort/const'
 import NewFilterWrapper from '@/components/filters/NewFilter'
 import { DATE_SORT_OPTIONS } from '@/components/filters/const'
 import { useTranslation } from '@repo/i18n/next/client'
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel } from '@repo/ui/dropdown-menu'
 
-export default function FeedbackFilters(): JSX.Element {
+export default function ContactsFilters(): JSX.Element {
 	const { t } = useTranslation()
 
 	return (
@@ -22,7 +22,7 @@ export default function FeedbackFilters(): JSX.Element {
 					</DropdownMenuItem>
 				))}
 
-				{FEEDBACK_SORT_OPTIONS.map((opt) => (
+				{CONTACT_SORT_OPTIONS.map((opt) => (
 					<DropdownMenuItem key={opt.value}>
 						{opt.icon && <span className="mr-2">{opt.icon}</span>}
 						{t(`sort.${opt.value}`)}

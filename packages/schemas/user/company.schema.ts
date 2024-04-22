@@ -7,14 +7,14 @@ export const ZCompanySchema = z.object({
 	name: z.string(),
 	avatarUrl: z.string().nullish(),
 	websiteUrl: z.string().nullish(),
-	feedbackUsers: z.lazy(() => ZExternalUserSchema.array()),
+	contactUsers: z.lazy(() => ZExternalUserSchema.array()),
 	createdAt: z.string(),
 	updatedAt: z.string()
 })
 
 export const ZCreateCompanySchema = ZCompanySchema.omit({
 	id: true,
-	feedbackUsers: true,
+	contactUsers: true,
 	createdAt: true,
 	updatedAt: true
 })

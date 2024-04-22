@@ -13,7 +13,7 @@ import {
 	CommandShortcut
 } from '@repo/ui/command'
 import * as React from 'react'
-import { FiCalendar, FiSearch } from 'react-icons/fi'
+import { FiSearch, FiUsers } from 'react-icons/fi'
 
 export function CommandSearch() {
 	const { t } = useTranslation()
@@ -57,8 +57,8 @@ export function CommandSearch() {
 					<CommandEmpty>No results found.</CommandEmpty>
 					<CommandGroup heading="Suggestions">
 						<CommandItem>
-							<FiCalendar className="mr-2 h-4 w-4" />
-							<span>{t('navbar.dashboard.feedback')}</span>
+							<FiUsers className="mr-2 h-4 w-4" />
+							<span>{t('navbar.dashboard.contacts')}</span>
 						</CommandItem>
 						{/* <CommandItem>
 							<FaceIcon className="mr-2 h-4 w-4" />

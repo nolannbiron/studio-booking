@@ -1,3 +1,5 @@
+'use client'
+
 import TeamSettingsRouting from '@/components/navigation/team/TeamSettingsRouting'
 import { useTranslation } from '@repo/i18n/next/client'
 import type { TTeam } from '@repo/schemas/team'

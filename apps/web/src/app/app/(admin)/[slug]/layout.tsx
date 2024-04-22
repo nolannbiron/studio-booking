@@ -1,7 +1,7 @@
 import TeamLayout from '@/app/app/(admin)/[slug]/team-layout'
 import { getTeam } from '@/lib/server/team/getTeam'
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { type ReactNode } from 'react'
 
 import { AdminProviders } from './admin-providers'
@@ -20,7 +20,7 @@ export default async function AuthLayout({
 	const res = await getTeam({ teamSlugOrId: slug })
 
 	if (!res.success) {
-		return redirect('/logout')
+		return notFound()
 	}
 
 	return (

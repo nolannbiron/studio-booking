@@ -7,7 +7,7 @@ const RedirectApp = dynamic(() => import('@/app/app/redirect-app'))
 export default async function AppLayout() {
 	const session = await getServerSession()
 
-	if (!session) return redirect('/login')
+	if (!session) return redirect(`https://${process.env.NEXT_PUBLIC_AUTH_WEBAPP_URL}/login`)
 
 	return <RedirectApp />
 }

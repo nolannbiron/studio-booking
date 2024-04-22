@@ -1,4 +1,5 @@
-// 'use client'
+'use client'
+
 import TeamPickerDropdownGroup from '@/components/navigation/team/team-picker-popover/TeamPickerDropdownGroup'
 import ThemePickerSubMenu from '@/components/navigation/team/team-picker-popover/ThemePickerSubMenu'
 import { useGetTeams } from '@/lib/client-api/team/hooks/useGetTeams'

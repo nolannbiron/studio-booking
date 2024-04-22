@@ -51,7 +51,7 @@ export default function LoginForm(): JSX.Element {
 				return toast.error(t(`errors.${response.error as ErrorCode}`))
 			}
 
-			replace('/')
+			replace(`https://app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
 		})
 	}
 

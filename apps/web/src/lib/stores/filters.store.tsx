@@ -1,10 +1,10 @@
-import { feedbackSortOptionsEnum } from '@/components/feedback/header/sort/const'
+import { contactSortOptionsEnum } from '@/components/contact/header/sort/const'
 import { dateSortOptionsEnum } from '@/components/filters/const'
 import { parseAsJson, useQueryState } from 'nuqs'
 import { z } from 'zod'
 
 export const filtersSchema = z.object({
-	sortBy: dateSortOptionsEnum.or(feedbackSortOptionsEnum).optional()
+	sortBy: dateSortOptionsEnum.or(contactSortOptionsEnum).optional()
 })
 
 export type TFilters = z.infer<typeof filtersSchema>

@@ -1,3 +1,5 @@
+'use client'
+
 import TeamSidebarElement from '@/components/navigation/team/routes/TeamSidebarElement'
 import { useDashboardRoutes } from '@/components/navigation/team/routes/dashboard-routes'
 

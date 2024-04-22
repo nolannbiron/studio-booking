@@ -47,8 +47,8 @@
 	},
 	"navbar": {
 		"dashboard": {
-			"feedback": "Feedbacks",
-			"release-notes": "Notes de version"
+			"contacts": "Contacts",
+			"appointments": "Rendez-vous"
 		},
 		"settings": {
 			"title": "Paramètres",

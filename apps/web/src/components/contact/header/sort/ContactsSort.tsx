@@ -1,6 +1,6 @@
 'use client'
 
-import { FEEDBACK_SORT_OPTIONS } from '@/components/feedback/header/sort/const'
+import { CONTACT_SORT_OPTIONS } from '@/components/contact/header/sort/const'
 import SortPopover from '@/components/filters/SortPopover'
 import { DATE_SORT_OPTIONS } from '@/components/filters/const'
 import type { TFilters } from '@/lib/stores/filters.store'
@@ -9,7 +9,7 @@ import { useTranslation } from '@repo/i18n/next/client'
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel } from '@repo/ui/dropdown-menu'
 import { FiCheck } from 'react-icons/fi'
 
-export default function FeedbackSort(): JSX.Element {
+export default function ContactsSort(): JSX.Element {
 	const { t } = useTranslation()
 	const { filters, setFilters } = useFiltersStore()
 
@@ -42,7 +42,7 @@ export default function FeedbackSort(): JSX.Element {
 				<DropdownMenuLabel className="text-muted-foreground pb-0.5 text-xs">
 					{t('sort.attributes')}
 				</DropdownMenuLabel>
-				{FEEDBACK_SORT_OPTIONS.map((opt) => (
+				{CONTACT_SORT_OPTIONS.map((opt) => (
 					<DropdownMenuItem
 						key={opt.value}
 						className="justify-between"
