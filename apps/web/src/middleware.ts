@@ -45,20 +45,14 @@ export default async function middleware(req: NextRequest) {
 	if (hostname === `auth.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
 		if (
 			!session &&
-			path !== '/login' &&
-			path !== '/register' &&
-			path !== '/forgot-password' &&
+			!path.startsWith('/login') &&
+			!path.startsWith('/register') &&
+			!path.startsWith('/forgot-password') &&
 			!path.startsWith('/reset-password')
 		) {
 			return NextResponse.redirect(new URL('/login', req.url))
-		} else if (
-			session &&
-			(path === '/login' ||
-				path === '/register' ||
-				path === '/forgot-password' ||
-				path.startsWith('/reset-password'))
-		) {
-			return NextResponse.redirect(`https://app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
+		} else if (session && path !== '/logout') {
+			return NextResponse.redirect(`https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
 		}
 
 		return NextResponse.rewrite(new URL(`/auth${path === '/' ? '' : path}`, req.url))

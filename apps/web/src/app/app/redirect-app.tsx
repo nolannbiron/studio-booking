@@ -3,10 +3,17 @@
 import Loader from '@/components/loader'
 import { useGetTeams } from '@/lib/client-api/team/hooks/useGetTeams'
 import { setLocalTeam, useGetLocalTeam } from '@/lib/stores/team.store'
+import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function RedirectApp(): JSX.Element {
+	useSession({
+		required: true,
+		onUnauthenticated() {
+			redirect(`https://${process.env.NEXT_PUBLIC_AUTH_WEBAPP_URL}/login`)
+		}
+	})
 	const team = useGetLocalTeam()
 	const { data } = useGetTeams()
 

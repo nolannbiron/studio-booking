@@ -23,9 +23,9 @@ export const userPrivateProfileSelect = Prisma.validator<Prisma.UserSelect>()({
 	avatarColor: true,
 	locale: true,
 	teams: {
-		// where: {
-		// 	accepted: true
-		// },
+		where: {
+			accepted: true
+		},
 		select: {
 			role: true,
 			userId: true,

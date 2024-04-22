@@ -102,7 +102,8 @@ export class TeamRepository {
 									id: userId
 								}
 							},
-							role: 'OWNER'
+							role: 'OWNER',
+							accepted: true
 						}
 					}
 				},

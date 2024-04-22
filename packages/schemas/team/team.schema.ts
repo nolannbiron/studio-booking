@@ -31,7 +31,7 @@ export const ZTeamMembershipPublicSchema = ZTeamMembershipSchema.omit({
 	teamId: true,
 	userId: true
 }).extend({
-	user: ZPublicUserSchema
+	user: z.lazy(() => ZPublicUserSchema)
 })
 
 export const ZTeamSchema = z.object({

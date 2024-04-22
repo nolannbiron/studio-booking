@@ -48,8 +48,6 @@ export async function getServerSession() {
 		where: {
 			email: token.user.email.toLowerCase()
 		}
-		// TODO: Re-enable once we get confirmation from compliance that this is okay.
-		// cacheStrategy: { ttl: 60, swr: 1 },
 	})
 
 	if (!userFromDb) {
@@ -81,14 +79,13 @@ export async function getServerSession() {
 			fullName: user.fullName,
 			email: user.email,
 			emailVerified: user.emailVerified,
-			// email_verified: user.emailVerified !== null,
-			createdAt: user.createdAt,
-			updatedAt: user.updatedAt,
+			email_verified: user.emailVerified !== null,
 			avatarUrl: user.avatarUrl,
 			avatarColor: user.avatarColor,
 			locale: user.locale,
 			accessToken: accessToken,
-			refreshToken: refreshToken
+			refreshToken: refreshToken,
+			hasActiveTeam: !!user.teams && !!user.teams.length
 		}
 	}
 

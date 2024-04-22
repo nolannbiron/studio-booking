@@ -13,7 +13,6 @@ import { toast } from '@repo/ui/sonner'
 import { signIn } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { Suspense, useState } from 'react'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
@@ -24,8 +23,6 @@ const GoogleAuthButton = dynamic(() => import('../buttons/google-auth-button').t
 export default function LoginForm(): JSX.Element {
 	const { t } = useTranslation()
 	const [isLoading, setIsLoading] = useState(false)
-	// const searchParams = useSearchParams()
-	const { replace } = useRouter()
 
 	const form = useForm<TLoginBody>({
 		resolver: zodResolver(ZLoginBody),
@@ -43,15 +40,12 @@ export default function LoginForm(): JSX.Element {
 
 		signIn('credentials', {
 			email: values.email,
-			password: values.password,
-			redirect: false
+			password: values.password
 		}).then((response) => {
 			if (response?.error) {
 				setIsLoading(false)
 				return toast.error(t(`errors.${response.error as ErrorCode}`))
 			}
-
-			replace(`https://app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
 		})
 	}
 
