@@ -20,7 +20,7 @@ export default function TeamSidebarElement({ name, path, icon }: TRoute): JSX.El
 		<Link className="cursor-default" key={path} href={`/${team.slug}${path}`}>
 			<div
 				className={cn('flex cursor-pointer items-center gap-2 rounded-md px-3 py-1.5', {
-					'bg-muted/70': isActive,
+					'bg-accent': isActive,
 					'hover:bg-accent': !isActive
 				})}
 			>
