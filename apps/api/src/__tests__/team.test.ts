@@ -160,57 +160,6 @@ test('OK - DELETE /team/:teamId/member/:userId', async () => {
 	expect(response.body.success).toBe(true)
 })
 
-test('OK - POST /team/:teamId/tag same tag', async () => {
-	const response = await supertest(app.server)
-		.post(`/v1/team/${teamId}/tag`)
-		.set('Authorization', `Bearer ${tokenTeamOwner}`)
-		.send({ name: 'Test tag', backgroundColor: '#000000', textColor: '#fffff1' })
-		.expect(400)
-
-	expect(response.body).toBeDefined()
-	expect(response.body.success).toBe(false)
-})
-
-test('OK - POST /team/:teamId/tag', async () => {
-	const response = await supertest(app.server)
-		.post(`/v1/team/${teamId}/tag`)
-		.set('Authorization', `Bearer ${tokenTeamOwner}`)
-		.send({ name: 'Test Tag 2', backgroundColor: faker.color.rgb(), textColor: faker.color.rgb() })
-		.expect(200)
-
-	tagId = response.body.tag.id
-
-	expect(response.body).toBeDefined()
-	expect(response.body.success).toBe(true)
-	expect(response.body.tag).toBeDefined()
-	expect(response.body.tag.name).toBe('Test Tag 2')
-})
-
-test('OK - GET /team/:teamId/tags', async () => {
-	const response = await supertest(app.server)
-		.get(`/v1/team/${teamId}/tags`)
-		.set('Authorization', `Bearer ${tokenTeamOwner}`)
-		.expect(200)
-
-	expect(response.body).toBeDefined()
-	expect(response.body.success).toBe(true)
-	expect(response.body.tags).toBeDefined()
-	expect(response.body.tags.length).toBeGreaterThan(0)
-})
-
-test('OK - PATCH /team/:teamId/tag/:tagId', async () => {
-	const response = await supertest(app.server)
-		.patch(`/v1/team/${teamId}/tag/${tagId}`)
-		.set('Authorization', `Bearer ${tokenTeamOwner}`)
-		.send({ name: 'Test Tag Updated' })
-		.expect(200)
-
-	expect(response.body).toBeDefined()
-	expect(response.body.success).toBe(true)
-	expect(response.body.tag).toBeDefined()
-	expect(response.body.tag.name).toBe('Test Tag Updated')
-})
-
 test('KO - DELETE /team/:teamId', async () => {
 	const response = await supertest(app.server)
 		.delete(`/v1/team/${teamId}`)

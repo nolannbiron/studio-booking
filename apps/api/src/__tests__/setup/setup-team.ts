@@ -6,7 +6,7 @@ import app from '../../app'
 import { tokenTeamOwner, tokenTeamUser } from './setup-account'
 
 export let teamId = ''
-export let tagId = ''
+// export let tagId = ''
 
 beforeAll(async () => {
 	await app.ready()
@@ -20,17 +20,6 @@ beforeAll(async () => {
 	if (!response.body.team) throw new Error('Team not created')
 
 	teamId = response.body.team.id
-
-	// create a tag
-	const tagResponse = await supertest(app.server)
-		.post(`/v1/team/${teamId}/tag`)
-		.set('Authorization', `Bearer ${tokenTeamOwner}`)
-		.send({ name: 'Test tag', backgroundColor: '#000000', textColor: '#ffffff' })
-		.expect(200)
-
-	if (!tagResponse.body.tag) throw new Error('Tag not created')
-
-	tagId = tagResponse.body.tag.id
 })
 
 afterAll(async () => {

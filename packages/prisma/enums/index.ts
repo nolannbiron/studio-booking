@@ -38,3 +38,13 @@ export const Visibility = {
 } as const;
 
 export type Visibility = (typeof Visibility)[keyof typeof Visibility];
+
+export const ContactType = {
+  ARTIST: "ARTIST",
+  GROUP: "GROUP",
+  LABEL: "LABEL",
+  MANAGER: "MANAGER",
+  COMPANY: "COMPANY",
+} as const;
+
+export type ContactType = (typeof ContactType)[keyof typeof ContactType];

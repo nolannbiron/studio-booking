@@ -9,7 +9,7 @@ import { ZodError } from 'zod'
 
 import routes from './routes'
 
-console.log('NODE_ENV', process.env.NODE_ENV)
+// console.log('NODE_ENV', process.env.NODE_ENV)
 
 const app = fastify({
 	// logger: process.env.NODE_ENV === 'production' ? false : true
@@ -49,15 +49,6 @@ app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
 routes(app)
-
-app.get('/login/google/callback', async function (request, reply) {
-	const { token } = await this.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(request)
-
-	// if later you need to refresh the token you can use
-	// const { token: newToken } = await this.getNewAccessTokenUsingRefreshToken(token)
-
-	reply.send({ access_token: token.access_token })
-})
 
 app.route({
 	method: 'GET',
