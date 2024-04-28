@@ -83,12 +83,12 @@ const config = {
 			variables: {
 				DEFAULT: {
 					background: ' 0 0% 98.5%',
-					foreground: '0 0% 3%',
+					foreground: '220 7.89% 14.9%',
 					navbar: '0 0% 98.43%',
 					card: '0 0% 100%',
-					'card-foreground': '0 0% 3%',
+					'card-foreground': '220 7.89% 14.9%',
 					popover: '0 0% 100%',
-					'popover-foreground': '0 0% 3%',
+					'popover-foreground': '220 7.89% 14.9%',
 					primary: '231 90% 64%',
 					'primary-foreground': '220 9.68% 93.92%',
 					secondary: ' 0 0% 96.1%',

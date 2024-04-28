@@ -37,12 +37,7 @@ export function CommandSearch() {
 
 	return (
 		<>
-			<Button
-				onClick={handleOpen}
-				size="sm"
-				variant="outline"
-				className="group w-full justify-between pr-1.5"
-			>
+			<Button onClick={handleOpen} variant="outline" className="group w-full justify-between pr-1.5">
 				<div className="text-muted-foreground flex items-center gap-2">
 					<FiSearch />
 					<span>{t('general.search')}...</span>

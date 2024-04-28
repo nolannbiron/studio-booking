@@ -19,7 +19,7 @@ export default async function ChooseTeam({ teams }: { teams: TTeam[] }) {
 					<ChooseTeamItem key={team.id} team={team} />
 				))}
 				<Separator />
-				<Button variant="outline" size="sm" className="w-full">
+				<Button variant="outline" className="w-full">
 					<FiPlus />
 					<span className="text-sm">Create a new team</span>
 				</Button>

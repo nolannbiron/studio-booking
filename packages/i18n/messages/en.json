@@ -10,7 +10,9 @@
 		"remove": "Remove",
 		"continue": "Continue",
 		"logout": "Logout",
-		"reset_password": "Reset Password"
+		"reset_password": "Reset Password",
+		"sort": "Sort by",
+		"add_filter": "Add Filter"
 	},
 	"team": {
 		"create": {
@@ -106,5 +108,17 @@
 		"missing-backup-codes": "Missing backup codes.",
 		"incorrect-backup-code": "Incorrect backup code.",
 		"slug-not-available": "Slug is not available."
+	},
+	"filters": {
+		"choose_filter": "Choose a filter"
+	},
+	"sort": {
+		"sort_by": "Sort by",
+		"date": "Date",
+		"updatedAt": "Last Update Date",
+		"createdAt": "Creation Date",
+		"name": "Name",
+		"type": "Type",
+		"attributes": "Attributes"
 	}
 }

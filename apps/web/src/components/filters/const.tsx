@@ -1,21 +1,19 @@
+import type { TDateSortName } from '@repo/schemas/filters/base-filters.schema'
+import { dateSortEnum } from '@repo/schemas/filters/base-filters.schema'
 import { MdOutlineCalendarToday, MdOutlineEditCalendar } from 'react-icons/md'
-import { z } from 'zod'
-
-export const dateSortOptionsEnum = z.enum(['creation_date', 'update_date'])
-type DateSortOptionName = z.infer<typeof dateSortOptionsEnum>
 
 export type SortOption<T extends string> = {
 	value: T
 	icon?: React.ReactNode
 }
 
-export const DATE_SORT_OPTIONS: SortOption<DateSortOptionName>[] = [
+export const DATE_SORT_OPTIONS: SortOption<TDateSortName>[] = [
 	{
-		value: dateSortOptionsEnum.enum.creation_date,
+		value: dateSortEnum.enum.createdAt,
 		icon: <MdOutlineCalendarToday />
 	},
 	{
-		value: dateSortOptionsEnum.enum.update_date,
+		value: dateSortEnum.enum.updatedAt,
 		icon: <MdOutlineEditCalendar />
 	}
 ]

@@ -92,12 +92,12 @@ export default function CreateTeam(): JSX.Element {
 						<div className="flex flex-col gap-3">
 							<div className="text-sm">{t('team.form.logo')}</div>
 							<div className="flex gap-2">
-								<Button size="sm" variant="outline">
+								<Button variant="outline">
 									<FiUpload />
 									{t('button.upload')}
 								</Button>
 
-								<Button size="sm" disabled variant="outline">
+								<Button disabled variant="outline">
 									{t('button.remove')}
 								</Button>
 							</div>
@@ -150,7 +150,7 @@ export default function CreateTeam(): JSX.Element {
 					/>
 				</div>
 
-				<Button isLoading={isPending || isLoading} size="sm" className="w-full" type="submit">
+				<Button isLoading={isPending || isLoading} className="w-full" type="submit">
 					{t('button.continue')}
 				</Button>
 			</form>

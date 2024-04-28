@@ -38,7 +38,7 @@ export default function TeamSettings({ team }: { team: TTeam }) {
 					<TeamAvatar size="xl" className="rounded-full" team={{ ...team, ...form.getValues() }} />
 					<div className="space-y-2">
 						<h1 className="text-lg">{t('team.form.logo')}</h1>
-						<Button type="button" size="sm">
+						<Button type="button">
 							<FiUpload />
 							<span>{t('button.upload')}</span>
 						</Button>

@@ -32,8 +32,8 @@ const buttonVariants = cva(
 				unstyled: 'text-foreground hover:text-foreground bg-transparent hover:bg-transparent'
 			},
 			size: {
-				default: 'h-10 px-4 py-2',
-				sm: 'h-8 px-3.5',
+				default: 'h-8 px-3 py-2',
+				md: 'h-9 px-4 py-2',
 				lg: 'h-11 px-8 text-base/6',
 				xl: 'h-12 px-8 py-2 text-lg',
 				'icon-xs': 'h-7 w-7',

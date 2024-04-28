@@ -2,7 +2,6 @@
 
 import TeamPickerDropdownGroup from '@/components/navigation/team/team-picker-popover/TeamPickerDropdownGroup'
 import ThemePickerSubMenu from '@/components/navigation/team/team-picker-popover/ThemePickerSubMenu'
-import { useGetTeams } from '@/lib/client-api/team/hooks/useGetTeams'
 import { useTeamStore } from '@/lib/stores/team.store'
 import { useTranslation } from '@repo/i18n/next/client'
 import type { TTeam } from '@repo/schemas/team'
@@ -21,9 +20,8 @@ import Link from 'next/link'
 import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
 import { HiSelector } from 'react-icons/hi'
 
-export default function TeamPicker({ team }: { team: TTeam }) {
+export default function TeamPicker({ team, teams }: { team: TTeam; teams: TTeam[] }) {
 	const { t } = useTranslation()
-	const { data } = useGetTeams()
 	const { setTeam } = useTeamStore()
 
 	const handleLogout = () => {
@@ -48,7 +46,7 @@ export default function TeamPicker({ team }: { team: TTeam }) {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent alignOffset={6} sideOffset={6} className="min-w-72 max-w-72" align="start">
-				<TeamPickerDropdownGroup teams={data?.teams} />
+				<TeamPickerDropdownGroup teams={teams} />
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<Link href={`/${team.slug}/settings/account`}>

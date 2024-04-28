@@ -1,4 +1,6 @@
-import { prisma } from '@repo/prisma'
+import { getRandomAvatarColor } from '@repo/features/auth/lib/getRandomAvatarColor'
+import { prisma, userPublicProfileSelect } from '@repo/prisma'
+import type { Prisma } from '@repo/prisma/client'
 import type {
 	TCreateContactRequest,
 	TDeleteContactRequest,
@@ -6,6 +8,7 @@ import type {
 	TGetContactsRequest,
 	TUpdateContactRequest
 } from '@repo/schemas/contact'
+import type { TContactFilters } from '@repo/schemas/filters/contact-filters.schema'
 import type { FastifyRequest } from 'fastify'
 
 export class ContactRepository {
@@ -27,7 +30,8 @@ export class ContactRepository {
 							email: req.body.email,
 							fullName: req.body.name,
 							firstName: req.body.name.split(' ')[0] || '',
-							lastName: req.body.name.split(' ')[1] || ''
+							lastName: req.body.name.split(' ')[1] || '',
+							avatarColor: getRandomAvatarColor()
 						}
 					}
 				}
@@ -39,9 +43,7 @@ export class ContactRepository {
 
 	static async update(req: FastifyRequest<TUpdateContactRequest>) {
 		const contact = await prisma.contact.update({
-			where: {
-				id: req.params.contactId
-			},
+			where: req.params,
 			data: req.body
 		})
 
@@ -50,22 +52,27 @@ export class ContactRepository {
 
 	static async remove(req: FastifyRequest<TDeleteContactRequest>) {
 		await prisma.contact.delete({
-			where: {
-				id: req.params.contactId,
-				teamId: req.params.teamId
-			}
+			where: req.params
 		})
 	}
 
 	static async getAll(req: FastifyRequest<TGetContactsRequest>) {
+		const filters = this.#buildFilters(req.query)
+		const sort = this.#buildSort(req.query)
+
 		const contacts = await prisma.contact.findMany({
 			where: {
-				teamId: req.params.teamId,
-				...(req.body.filters ?? {})
+				...(filters ?? {}),
+				teamId: req.params.teamId
 			},
-			take: req.body.limit,
-			skip: req.body.offset,
-			orderBy: req.body.sort
+			// take: req.body?.limit,
+			// skip: req.body?.offset,
+			orderBy: sort,
+			include: {
+				user: {
+					select: userPublicProfileSelect
+				}
+			}
 		})
 
 		return contacts
@@ -73,9 +80,11 @@ export class ContactRepository {
 
 	static async getOne(req: FastifyRequest<TGetContactRequest>) {
 		const contact = await prisma.contact.findFirst({
-			where: {
-				teamId: req.params.teamId,
-				id: req.params.contactId
+			where: req.params,
+			include: {
+				user: {
+					select: userPublicProfileSelect
+				}
 			}
 		})
 
@@ -84,5 +93,29 @@ export class ContactRepository {
 		}
 
 		return contact
+	}
+
+	static #buildFilters(filters?: TContactFilters): Prisma.ContactWhereInput | undefined {
+		if (!filters) return undefined
+
+		return {
+			...(filters?.type ? { type: { in: filters.type } } : {}),
+			...(filters?.search
+				? {
+						OR: [
+							{ name: { contains: filters.search, mode: 'insensitive' } },
+							{ email: { contains: filters.search, mode: 'insensitive' } },
+							{ phone: { contains: filters.search, mode: 'insensitive' } },
+							{ user: { email: { contains: filters.search, mode: 'insensitive' } } }
+						]
+					}
+				: {})
+		}
+	}
+
+	static #buildSort(
+		filters?: TContactFilters
+	): Prisma.ContactOrderByWithRelationAndSearchRelevanceInput | undefined {
+		return !!filters?.sortBy ? { [filters.sortBy]: 'desc' } : { createdAt: 'desc' }
 	}
 }

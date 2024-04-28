@@ -61,7 +61,7 @@ export default function AccountSettings({ user }: { user: TPublicUser }) {
 					/>
 					<div className="space-y-2">
 						<h1 className="text-lg">{t('account.form.picture')}</h1>
-						<Button type="button" size="sm">
+						<Button type="button">
 							<FiUpload />
 							<span>{t('button.upload')}</span>
 						</Button>

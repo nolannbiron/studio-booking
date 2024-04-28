@@ -11,20 +11,23 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 const TEAM_STORAGE_KEY = 'team:storage'
 interface TeamState {
 	team?: TTeam
+	teams: TTeam[]
 }
 
 type TeamActions = {
 	setTeam: (team?: TTeam) => void
+	setTeams: (teams?: TTeam[]) => void
 }
 
 export type TeamStore = TeamState & TeamActions
 
 export const defaultInitState: TeamState = {
-	team: undefined
+	team: undefined,
+	teams: []
 }
 
-export const initTeamStore = ({ team }: TeamState): TeamState => {
-	return { team }
+export const initTeamStore = (state: TeamState): TeamState => {
+	return state
 }
 
 export const createTeamStore = (initState: TeamState = defaultInitState) => {
@@ -32,7 +35,8 @@ export const createTeamStore = (initState: TeamState = defaultInitState) => {
 		persist(
 			(set) => ({
 				...initState,
-				setTeam: (team) => set({ team })
+				setTeam: (team) => set({ team }),
+				setTeams: (teams) => set({ teams })
 			}),
 			{
 				name: TEAM_STORAGE_KEY,
@@ -45,21 +49,20 @@ export const createTeamStore = (initState: TeamState = defaultInitState) => {
 export interface TeamStoreProviderProps {
 	children: ReactNode
 	team?: TTeam
+	teams?: TTeam[]
 }
 
-export const TeamStoreProvider = ({ children, team }: TeamStoreProviderProps) => {
+export const TeamStoreProvider = ({ children, team, teams = [] }: TeamStoreProviderProps) => {
 	const storeRef = useRef<StoreApi<TeamStore>>()
 
 	if (!storeRef.current) {
-		storeRef.current = createTeamStore(initTeamStore({ team }))
+		storeRef.current = createTeamStore(initTeamStore({ team, teams }))
 	}
 
-	//if team changes
+	//if team or teams changes
 	useEffect(() => {
-		if (team) {
-			storeRef.current?.setState({ team })
-		}
-	}, [team])
+		storeRef.current?.setState({ team, teams })
+	}, [team, teams])
 
 	return (
 		<>

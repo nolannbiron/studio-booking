@@ -1,3 +1,5 @@
+'use client'
+
 import type { TRoute } from '@/components/navigation/team/routes/type'
 import { useTranslation } from '@repo/i18n/next/client'
 import { usePathname } from 'next/navigation'

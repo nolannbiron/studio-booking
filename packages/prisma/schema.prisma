@@ -288,13 +288,39 @@ enum ContactType {
     COMPANY
 }
 
+enum ContactGenre {
+    BLUES
+    CLASSICAL
+    COUNTRY
+    DANCE
+    ELECTRONIC
+    HIP_HOP
+    JAZZ
+    POP
+    RAP
+    REGGAE
+    ROCK
+    SOUL
+    OTHERS
+}
+
 model Contact {
     id    String  @id @default(uuid())
     name  String
     email String
     phone String?
 
-    type ContactType
+    type  ContactType?
+    genre ContactGenre?
+
+    instagram String?
+    facebook  String?
+    twitter   String?
+    youtube   String?
+    tiktok    String?
+    spotify   String?
+    snapchat  String?
+    website   String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

@@ -1,8 +1,7 @@
 'use client'
 
-import { CONTACT_SORT_OPTIONS } from '@/components/contact/header/sort/const'
+import { CONTACT_FILTERS_OPTIONS } from '@/components/contact/header/filters/const'
 import NewFilterWrapper from '@/components/filters/NewFilter'
-import { DATE_SORT_OPTIONS } from '@/components/filters/const'
 import { useTranslation } from '@repo/i18n/next/client'
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel } from '@repo/ui/dropdown-menu'
 
@@ -15,17 +14,10 @@ export default function ContactsFilters(): JSX.Element {
 				<DropdownMenuLabel className="text-muted-foreground pb-0.5 text-xs">
 					{t('filters.choose_filter')}
 				</DropdownMenuLabel>
-				{DATE_SORT_OPTIONS.map((opt) => (
+				{CONTACT_FILTERS_OPTIONS.map((opt) => (
 					<DropdownMenuItem key={opt.value}>
 						{opt.icon && <span className="mr-2">{opt.icon}</span>}
-						{t(`sort.${opt.value}`)}
-					</DropdownMenuItem>
-				))}
-
-				{CONTACT_SORT_OPTIONS.map((opt) => (
-					<DropdownMenuItem key={opt.value}>
-						{opt.icon && <span className="mr-2">{opt.icon}</span>}
-						{t(`sort.${opt.value}`)}
+						{t(`filters.contact.${opt.value}`)}
 					</DropdownMenuItem>
 				))}
 			</DropdownMenuGroup>

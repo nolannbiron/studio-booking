@@ -18,12 +18,8 @@ export default function TeamPickerDropdownGroup({ teams }: { teams?: TTeam[] }):
 	const teamOptions: ComboboxOption[] = useMemo(() => {
 		const options =
 			teams?.map((item) => ({
-				label: (
-					<div className="flex w-full items-center gap-2">
-						<TeamAvatar size="2xs" team={item} />
-						<span className="shrink truncate text-sm">{item.name}</span>
-					</div>
-				),
+				icon: <TeamAvatar size="2xs" team={item} />,
+				label: item.name,
 				value: item.id
 			})) ?? []
 
@@ -57,7 +53,10 @@ export default function TeamPickerDropdownGroup({ teams }: { teams?: TTeam[] }):
 					className="flex cursor-pointer items-center justify-between gap-4 truncate"
 					onClick={() => handleChangeTeam(option.value)}
 				>
-					{option.label}
+					<div className="flex items-center gap-2">
+						{option.icon}
+						{option.label}
+					</div>
 
 					{team?.id === option.value && (
 						<IoIosCheckmarkCircle className="h-4 w-4 shrink-0 text-blue-600" />

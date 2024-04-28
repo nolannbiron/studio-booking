@@ -29,7 +29,7 @@ const contactRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done
 
 	app.route<TGetContactRequest>({
 		method: 'GET',
-		url: '/team/:teamId/contact/:contactId',
+		url: '/team/:teamId/contact/:id',
 		preHandler: app.Auth.TeamUser,
 		handler: async (req, res) => {
 			try {
@@ -48,10 +48,10 @@ const contactRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done
 	app.route<TCreateContactRequest>({
 		method: 'POST',
 		url: '/team/:teamId/contact',
-		preHandler: app.Auth.TeamUser,
 		schema: {
 			body: ZCreateContactSchema
 		},
+		preHandler: app.Auth.TeamUser,
 		handler: async (req, res) => {
 			try {
 				if (!req.user) throw 'User not found'
@@ -68,7 +68,7 @@ const contactRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done
 
 	app.route<TUpdateContactRequest>({
 		method: 'PATCH',
-		url: '/team/:teamId/contact/:contactId',
+		url: '/team/:teamId/contact/:id',
 		preHandler: app.Auth.TeamUser,
 		schema: {
 			body: ZUpdateContactSchema
@@ -89,7 +89,7 @@ const contactRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done
 
 	app.route<TDeleteContactRequest>({
 		method: 'DELETE',
-		url: '/team/:teamId/contact/:contactId',
+		url: '/team/:teamId/contact/:id',
 		preHandler: app.Auth.TeamUser,
 		handler: async (req, res) => {
 			try {

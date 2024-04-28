@@ -15,6 +15,7 @@
 		"@repo/schemas": "*",
 		"@repo/ui": "*",
 		"@tanstack/react-query": "^5.28.9",
+		"@tanstack/react-table": "^8.16.0",
 		"cal-sans": "^1.0.1",
 		"next": "^14.2.2",
 		"next-auth": "^4.24.7",

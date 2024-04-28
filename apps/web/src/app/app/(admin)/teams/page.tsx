@@ -25,7 +25,7 @@ export default async function TeamsPage() {
 					<ChooseTeamItem key={team.id} team={team} />
 				))}
 				<Separator />
-				<Button variant="outline" size="sm" className="w-full">
+				<Button variant="outline" className="w-full">
 					<FiPlus />
 					<span className="text-sm">{t('button.create_team')}</span>
 				</Button>

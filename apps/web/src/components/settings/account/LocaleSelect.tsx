@@ -18,16 +18,10 @@ export default function LocaleSelect({
 	const [selectedLocale, setSelectedLocale] = useState(locale)
 
 	const options = supportedLocales.map((locale) => ({
-		label: (
-			<div className="flex items-center gap-2">
-				<span>{getFlagEmoji(locale === 'en' ? 'gb' : locale)}</span>
-				<span>
-					{t(`locale.${locale}`, {
-						lng: locale
-					})}
-				</span>
-			</div>
-		),
+		icon: getFlagEmoji(locale === 'en' ? 'gb' : locale),
+		label: t(`locale.${locale}`, {
+			lng: locale
+		}),
 		value: locale
 	}))
 
@@ -39,7 +33,7 @@ export default function LocaleSelect({
 	return (
 		<div>
 			<Combobox options={options} onSelect={handleSelect} value={selectedLocale ?? undefined}>
-				<Button type="button" variant="outline" size="sm" className="w-full justify-between">
+				<Button type="button" variant="outline" className="w-full justify-between">
 					{selectedLocale ? (
 						<div className="flex items-center gap-2">
 							<span>{getFlagEmoji(selectedLocale === 'en' ? 'gb' : selectedLocale)}</span>

@@ -3,17 +3,17 @@
 import { CONTACT_SORT_OPTIONS } from '@/components/contact/header/sort/const'
 import SortPopover from '@/components/filters/SortPopover'
 import { DATE_SORT_OPTIONS } from '@/components/filters/const'
-import type { TFilters } from '@/lib/stores/filters.store'
-import { useFiltersStore } from '@/lib/stores/filters.store'
+import { useContactsFiltersStore } from '@/lib/stores/contact/contacts-filters.store'
 import { useTranslation } from '@repo/i18n/next/client'
+import type { TContactFilters } from '@repo/schemas/filters/contact-filters.schema'
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel } from '@repo/ui/dropdown-menu'
 import { FiCheck } from 'react-icons/fi'
 
 export default function ContactsSort(): JSX.Element {
 	const { t } = useTranslation()
-	const { filters, setFilters } = useFiltersStore()
+	const { filters, setFilters } = useContactsFiltersStore()
 
-	const handleSelect = (value: TFilters['sortBy']) => {
+	const handleSelect = (value: TContactFilters['sortBy']) => {
 		setFilters({ sortBy: value === filters?.sortBy ? undefined : value })
 	}
 

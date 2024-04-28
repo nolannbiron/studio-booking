@@ -23,7 +23,8 @@ const seed = async () => {
 
 	for (let i = 0; i < 3; i++) {
 		const color = getRandomAvatarColor()
-		await prisma.membership.create({
+
+		const membership = await prisma.membership.create({
 			data: {
 				user: {
 					connect: {
@@ -87,9 +88,48 @@ const seed = async () => {
 				}
 			}
 		})
+
+		createRandomContacts(membership.teamId)
 	}
 
 	console.log(`User created: ${user.email}`)
+}
+
+async function createRandomContacts(teamId: string) {
+	const contacts = Array.from({ length: 10 }, (_, i) => {
+		const color = getRandomAvatarColor()
+		const contactName = fakerFR.person.fullName()
+
+		return prisma.contact.create({
+			data: {
+				email: fakerFR.internet.email(),
+				name: contactName,
+				team: {
+					connect: {
+						id: teamId
+					}
+				},
+				user: {
+					connectOrCreate: {
+						where: {
+							email: `test_contact_${i}@test.fr`
+						},
+						create: {
+							email: `test_contact_${i}@test.fr`,
+							fullName: contactName,
+							avatarColor: color,
+							firstName: contactName.split(' ')[0] || '',
+							lastName: contactName.split(' ')[1] || '',
+							locale: 'fr',
+							emailVerified: new Date()
+						}
+					}
+				}
+			}
+		})
+	})
+
+	await Promise.all(contacts)
 }
 
 seed()

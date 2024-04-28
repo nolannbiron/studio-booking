@@ -1,18 +1,16 @@
 import type { SortOption } from '@/components/filters/const'
-import { IoMdHappy } from 'react-icons/io'
+import type { TContactSortName } from '@repo/schemas/filters/contact-filters.schema'
+import { contactSortEnum } from '@repo/schemas/filters/contact-filters.schema'
 import { MdArrowDropDown } from 'react-icons/md'
-import { z } from 'zod'
+import { TbSortAscendingLetters } from 'react-icons/tb'
 
-export const contactSortOptionsEnum = z.enum(['sentiment', 'type'])
-type ContactSortOptionName = z.infer<typeof contactSortOptionsEnum>
-
-export const CONTACT_SORT_OPTIONS: SortOption<ContactSortOptionName>[] = [
+export const CONTACT_SORT_OPTIONS: SortOption<TContactSortName>[] = [
 	{
-		value: contactSortOptionsEnum.enum.sentiment,
-		icon: <IoMdHappy />
+		value: contactSortEnum.enum.name,
+		icon: <TbSortAscendingLetters />
 	},
 	{
-		value: contactSortOptionsEnum.enum.type,
+		value: contactSortEnum.enum.type,
 		icon: <MdArrowDropDown />
 	}
 ]

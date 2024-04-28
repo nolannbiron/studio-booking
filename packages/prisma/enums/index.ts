@@ -48,3 +48,21 @@ export const ContactType = {
 } as const;
 
 export type ContactType = (typeof ContactType)[keyof typeof ContactType];
+
+export const ContactGenre = {
+  BLUES: "BLUES",
+  CLASSICAL: "CLASSICAL",
+  COUNTRY: "COUNTRY",
+  DANCE: "DANCE",
+  ELECTRONIC: "ELECTRONIC",
+  HIP_HOP: "HIP_HOP",
+  JAZZ: "JAZZ",
+  POP: "POP",
+  RAP: "RAP",
+  REGGAE: "REGGAE",
+  ROCK: "ROCK",
+  SOUL: "SOUL",
+  OTHERS: "OTHERS",
+} as const;
+
+export type ContactGenre = (typeof ContactGenre)[keyof typeof ContactGenre];

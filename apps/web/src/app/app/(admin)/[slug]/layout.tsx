@@ -1,5 +1,6 @@
 import TeamLayout from '@/app/app/(admin)/[slug]/team-layout'
 import { getTeam } from '@/lib/server/team/getTeam'
+import { getTeamsForUser } from '@/lib/server/team/getTeamsForUser'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { type ReactNode } from 'react'
@@ -18,14 +19,17 @@ export default async function AuthLayout({
 	params: { slug: string }
 }) {
 	const res = await getTeam({ teamSlugOrId: slug })
+	const teams = await getTeamsForUser()
 
-	if (!res.success) {
+	if (!res.success || !teams) {
 		return notFound()
 	}
 
 	return (
-		<AdminProviders team={res.team}>
-			<TeamLayout team={res.team}>{children}</TeamLayout>
+		<AdminProviders teams={teams} team={res.team}>
+			<TeamLayout teams={teams} team={res.team}>
+				{children}
+			</TeamLayout>
 		</AdminProviders>
 	)
 }

@@ -3,10 +3,10 @@ import { CommandSearch } from '@/components/navigation/team/command-search/Comma
 import TeamPicker from '@/components/navigation/team/team-picker-popover/TeamPickerPopover'
 import type { TTeam } from '@repo/schemas/team'
 
-export default function TeamDashboardSidebar({ team }: { team: TTeam }) {
+export default function TeamDashboardSidebar({ team, teams }: { team: TTeam; teams: TTeam[] }) {
 	return (
 		<>
-			<TeamPicker team={team} />
+			<TeamPicker teams={teams} team={team} />
 
 			<div />
 

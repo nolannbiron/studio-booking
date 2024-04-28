@@ -1,7 +1,8 @@
 {
 	"general": {
 		"thanks": "Merci",
-		"search": "Rechercher"
+		"search": "Rechercher",
+		"fill_in": "Renseigner"
 	},
 	"button": {
 		"cancel": "Annuler",
@@ -13,7 +14,8 @@
 		"continue": "Continuer",
 		"logout": "Déconnexion",
 		"sort": "Trier par",
-		"add_filter": "Ajouter un filtre"
+		"add_filter": "Ajouter un filtre",
+		"create_contact": "Créer un contact"
 	},
 	"team": {
 		"create": {
@@ -111,15 +113,44 @@
 		"slug-not-available": "Slug non disponible."
 	},
 	"filters": {
-		"choose_filter": "Choisir un filtre"
+		"choose_filter": "Choisir un filtre",
+		"contact": {
+			"type": "Type de contact"
+		}
 	},
 	"sort": {
 		"sort_by": "Trier par",
 		"date": "Date",
-		"update_date": "Dernière mise à jour",
-		"creation_date": "Date de création",
-		"sentiment": "Sentiment",
+		"updatedAt": "Dernière mise à jour",
+		"createdAt": "Date de création",
+		"name": "Nom",
 		"type": "Type",
 		"attributes": "Attributs"
+	},
+	"contact": {
+		"type": {
+			"ARTIST": "Artiste",
+			"MANAGER": "Manager",
+			"GROUP": "Groupe",
+			"COMPANY": "Entreprise",
+			"LABEL": "Label",
+			"select_type": "Sélectionnez un type"
+		},
+		"genre": {
+			"select_genre": "Sélectionnez un genre",
+			"BLUES": "Blues",
+			"CLASSICAL": "Classique",
+			"COUNTRY": "Country",
+			"DANCE": "Dance",
+			"ELECTRONIC": "Électro",
+			"HIP_HOP": "Hip-Hop",
+			"JAZZ": "Jazz",
+			"POP": "Pop",
+			"RAP": "Rap",
+			"REGGAE": "Reggae",
+			"ROCK": "Rock",
+			"SOUL": "Soul",
+			"OTHERS": "Autres"
+		}
 	}
 }
