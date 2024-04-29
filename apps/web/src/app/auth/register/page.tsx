@@ -1,8 +1,11 @@
 import RegisterForm from '@/components/auth/form/register-form'
+import { createTranslation } from '@repo/i18n/next/server'
 import { Card, CardContent } from '@repo/ui/card'
 import Link from 'next/link'
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+	const { t } = await createTranslation()
+
 	return (
 		<div className="mx-auto grid h-full w-full 2xl:p-8">
 			<Card className="h-full w-full max-2xl:rounded-none max-2xl:border-0">
@@ -20,7 +23,7 @@ export default function RegisterPage() {
 
 							<div className="text-muted-foreground space-y-4 text-center text-sm">
 								<Link href="/login" className="font-bold hover:underline">
-									Already have an account?
+									{t('auth.already_have_an_account')}
 								</Link>
 							</div>
 						</div>

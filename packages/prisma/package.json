@@ -28,7 +28,7 @@
 		"@prisma/generator-helper": "^5.11.0",
 		"prisma": "^5.11.0",
 		"tsx": "^4.7.1",
-		"typescript": "5.2.2",
+		"typescript": "5.4.5",
 		"zod-prisma": "^0.5.4"
 	},
 	"prisma": {

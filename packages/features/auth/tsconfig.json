@@ -1,11 +1,12 @@
 {
-	"extends": "@repo/tsconfig/nextjs.json",
+	"extends": "@repo/tsconfig/react-library.json",
 	"compilerOptions": {
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"module": "ESNext",
-		"target": "ES5",
+		"module": "NodeNext",
+		"target": "ESNext",
+		"moduleResolution": "NodeNext",
 		"jsx": "react-jsx"
 	},
-	"exclude": ["node_modules"],
-	"include": ["./**/*.ts", "../../types/*.d.ts", "../../apps/web/next-env.d.ts"]
+	"include": ["**/*.ts", "**/*.tsx", "../../types/*.d.ts", "../../apps/web/next-env.d.ts"],
+	"exclude": ["node_modules"]
 }
