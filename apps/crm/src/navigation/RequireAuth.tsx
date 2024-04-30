@@ -25,7 +25,7 @@ export default function RequireAuth({ children }: { children?: React.ReactNode }
 		if (data?.user && !Object.keys(currentTeam).length && data.user.teams.length > 0) {
 			setCurrentTeam({ ...data.user.teams[0].team, role: data.user.teams[0].role })
 		} else if (
-			Object.keys(currentTeam).length &&
+			!!Object.keys(currentTeam).length &&
 			!data?.user.teams.find((team) => team.team.id === currentTeam.id)
 		) {
 			if (data?.user.teams && data?.user.teams.length > 0) {

@@ -48,7 +48,7 @@ export default function TeamPicker() {
 					<div className="flex flex-row items-center gap-3 truncate">
 						{currentTeam.id && <TeamAvatar className="shrink-0" size="xs" team={currentTeam} />}
 
-						<span className="shrink truncate font-semibold">{currentTeam?.name}</span>
+						<span className="shrink truncate text-lg font-semibold">{currentTeam?.name}</span>
 					</div>
 					{width !== NavbarSize.SM && <HiSelector className="text-muted-foreground shrink-0" />}
 				</Button>

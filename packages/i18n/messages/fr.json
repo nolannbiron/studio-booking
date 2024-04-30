@@ -178,10 +178,19 @@
 		"terms": "En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité."
 	},
 	"forgot-password": {
+		"title": "Mot de passe oublié",
+		"subtitle": "Entrez votre adresse e-mail ci-dessous pour réinitialiser votre mot de passe.",
 		"back_to_login": "Retour à la connexion",
 		"success": "Un e-mail vous a été envoyé à l'adresse {{email, string}} pour réinitialiser votre mot de passe.",
 		"submit": "Envoyer le lien de réinitialisation",
 		"reset_success": "Votre mot de passe a été réinitialisé avec succès.",
 		"reset_submit": "Réinitialiser le mot de passe"
+	},
+	"reset-password": {
+		"submit": "Réinitialiser le mot de passe",
+		"title": "Réinitialiser votre mot de passe",
+		"link_expired": "Oups ! Ce lien n'est plus valide",
+		"link_expired_label": "Le lien de réinitialisation de mot de passe a expiré. Veuillez en demander un nouveau.",
+		"label": "Entrez votre nouveau mot de passe ci-dessous."
 	}
 }

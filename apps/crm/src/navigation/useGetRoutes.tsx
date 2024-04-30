@@ -18,7 +18,13 @@ import type { TRoutesConfig } from './types'
 const RequireAnonymous = lazy(() => import('@/navigation/RequireAnonymous'))
 const RequireAuth = lazy(() => import('@/navigation/RequireAuth'))
 const LoginPage = lazy(() => import('@/pages/auth/login/LoginPage'))
+const RegisterPage = lazy(() => import('@/pages/auth/register/RegisterPage'))
+const ForgotPasswordPage = lazy(() => import('@/pages/auth/forgot-password/ForgotPasswordPage'))
+const ResetPasswordPage = lazy(() => import('@/pages/auth/reset-password/ResetPasswordPage'))
 const AccountSettingsPage = lazy(() => import('@/pages/settings/account/AccountSettingsPage'))
+const ContactsPage = lazy(() => import('@/pages/contacts/ContactsPage'))
+const CreateTeamPage = lazy(() => import('@/pages/create-team/CreateTeamPage'))
+const TeamSettingsPage = lazy(() => import('@/pages/settings/team/TeamSettingsPage'))
 
 export const useGetRoutes = (): TRoutesConfig => {
 	const { t } = useTranslation()
@@ -47,7 +53,27 @@ export const useGetRoutes = (): TRoutesConfig => {
 				element: (
 					<Suspense fallback={<Loading withText fullScreen />}>
 						<RequireAnonymous>
-							<></>
+							<RegisterPage />
+						</RequireAnonymous>
+					</Suspense>
+				)
+			},
+			{
+				path: '/forgot-password',
+				element: (
+					<Suspense fallback={<Loading withText fullScreen />}>
+						<RequireAnonymous>
+							<ForgotPasswordPage />
+						</RequireAnonymous>
+					</Suspense>
+				)
+			},
+			{
+				path: '/reset-password',
+				element: (
+					<Suspense fallback={<Loading withText fullScreen />}>
+						<RequireAnonymous>
+							<ResetPasswordPage />
 						</RequireAnonymous>
 					</Suspense>
 				)
@@ -108,7 +134,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
-										<></>
+										<ContactsPage />
 									</RequireAuth>
 								</Suspense>
 							)
@@ -160,7 +186,9 @@ export const useGetRoutes = (): TRoutesConfig => {
 					icon: <FiSettings />,
 					element: (
 						<Suspense fallback={<Loading withText fullScreen />}>
-							<RequireAuth>{/* <TeamGeneralSettingsPage /> */}</RequireAuth>
+							<RequireAuth>
+								<TeamSettingsPage />
+							</RequireAuth>
 						</Suspense>
 					)
 				},
@@ -186,6 +214,18 @@ export const useGetRoutes = (): TRoutesConfig => {
 				}
 			]
 		},
-		general: [...baseRoutes.general]
+		general: [
+			...baseRoutes.general,
+			{
+				path: '/create-team',
+				element: (
+					<Suspense fallback={<Loading withText fullScreen />}>
+						<RequireAuth>
+							<CreateTeamPage />
+						</RequireAuth>
+					</Suspense>
+				)
+			}
+		]
 	}
 }

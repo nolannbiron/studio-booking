@@ -16,7 +16,7 @@ export default function Routing(): JSX.Element {
 		<Routes>
 			<Route path="*" element={<>404</>} />
 			<Route path="/404" element={<>404</>} />
-			<Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <></>} />
+			<Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
 			{routes.auth.map((route) => (
 				<Route key={route.path} path={route.path} element={route.element} />
 			))}

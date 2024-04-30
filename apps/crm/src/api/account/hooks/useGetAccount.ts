@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 export const useGetAccount = () => {
 	const { jwt } = useAuthStore()
 	const { setCurrentUser } = useUserStore()
-	return useQuery<TPrivateUserReply, Error>({
+	return useQuery<TPrivateUserReply, Error, TPrivateUserReply>({
 		queryKey: accountKeys.me,
 		queryFn: () =>
 			axios.get('/me').then((res) => {

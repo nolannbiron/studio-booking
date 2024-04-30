@@ -9,9 +9,7 @@ export const useCreateContact = () => {
 
 	return useMutation<TContactReply, Error, TCreateContact & { teamId: string }>({
 		mutationFn: ({ teamId, ...data }) =>
-			axios
-				.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/team/${teamId}/contact`, data)
-				.then((res) => res.data),
+			axios.post(`/team/${teamId}/contact`, data).then((res) => res.data),
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({ queryKey: contactKeys.list({ teamId: variables.teamId }) })
 		}

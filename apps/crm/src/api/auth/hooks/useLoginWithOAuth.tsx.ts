@@ -16,9 +16,18 @@ export function useLoginWithOAuth() {
 	return useMutation<any, AxiosError, TLoginWithOAuth, any>({
 		mutationFn: ({ type }) =>
 			axios
-				.post(`https://${import.meta.env.NEXT_PUBLIC_AUTH_WEBAPP_URL}/api/auth/signin/${type}`, {
-					csrfToken: data?.csrfToken
-				})
+				.post(
+					`https://${import.meta.env.NEXT_PUBLIC_AUTH_WEBAPP_URL}/api/auth/signin/${type}?callbackUrl=https://app.studio.localhost/`,
+					{
+						csrfToken: data?.csrfToken,
+						json: true
+					},
+					{
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded'
+						}
+					}
+				)
 				.then((res) => res.data)
 	})
 }

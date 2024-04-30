@@ -69,7 +69,10 @@ export const ZTeamUpdateSchema = ZTeamSchema.omit({
 	updatedAt: true
 }).partial()
 
-export const ZTeamCreateSchema = ZTeamSchema.omit({
+export const ZTeamCreateSchema = ZTeamSchema.required({
+	name: true,
+	slug: true
+}).omit({
 	id: true,
 	createdAt: true,
 	updatedAt: true,

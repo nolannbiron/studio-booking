@@ -8,6 +8,9 @@ declare type PartialOn<T, K extends keyof T> = Omit<T, K> & {
 declare type NullableOn<T, K extends keyof T> = Omit<T, K> & {
 	[P in K]: T[P] | null
 }
+declare type NonNullableOn<T, K extends keyof T> = Omit<T, K> & {
+	[P in K]: NonNullable<T[P]>
+}
 declare type DeepPartial<T> = Partial<{ [P in keyof T]: DeepPartial<T[P]> }>
 type DeepRequired<T> = T extends Primitive
 	? Required<T>

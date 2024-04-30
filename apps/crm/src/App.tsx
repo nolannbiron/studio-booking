@@ -2,6 +2,7 @@ import Routing from '@/navigation/Routing'
 import { getLocaleCookie, setLocaleCookie } from '@/setLocaleCookie'
 import { useUserStore } from '@/state/user.state'
 import { LocaleProvider } from '@repo/i18n/hooks/locale-provider'
+import { Toaster } from '@repo/ui/sonner'
 import { ThemeProvider } from '@repo/ui/theme'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
@@ -25,6 +26,7 @@ function App() {
 				<BrowserRouter>
 					<QueryClientProvider client={queryClient}>
 						<Routing />
+						<Toaster />
 					</QueryClientProvider>
 				</BrowserRouter>
 			</ThemeProvider>

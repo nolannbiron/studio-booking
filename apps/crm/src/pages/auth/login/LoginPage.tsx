@@ -4,11 +4,13 @@ import { AuthLoginForm } from '@repo/feature-auth/components/AuthLoginForm'
 import { useTranslation } from '@repo/i18n/next/client'
 import type { TLoginBody } from '@repo/schemas/auth'
 import { Card, CardContent } from '@repo/ui/card'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function LoginPage(): JSX.Element {
 	const { t } = useTranslation()
 	const { login } = useAuthStore()
+	const navigate = useNavigate()
+	// const { mutate: loginWithOAuth } = useLoginWithOAuth()
 	const { mutate } = useLogin()
 
 	const handleSubmit = (values: TLoginBody) => {
@@ -19,6 +21,17 @@ export default function LoginPage(): JSX.Element {
 		})
 	}
 
+	// const handleAuthProviderClick = (type: AvailableAuthProviders) => {
+	// 	loginWithOAuth(
+	// 		{ type: type.toLowerCase() },
+	// 		{
+	// 			onSuccess: (data) => {
+	// 				window.location = data.url
+	// 			}
+	// 		}
+	// 	)
+	// }
+
 	return (
 		<div className="flex h-full w-full items-center justify-center px-4">
 			<div className="mx-auto grid w-full max-w-md gap-6">
@@ -27,7 +40,12 @@ export default function LoginPage(): JSX.Element {
 				</div>
 				<Card className="h-fit">
 					<CardContent className="p-6">
-						<AuthLoginForm onSubmit={handleSubmit} isLoading={false} />
+						<AuthLoginForm
+							// onAuthProviderClick={handleAuthProviderClick}
+							onSubmit={handleSubmit}
+							onClickForgotPassword={() => navigate('/forgot-password')}
+							isLoading={false}
+						/>
 					</CardContent>
 				</Card>
 				<div className="text-muted-foreground text-center text-base">

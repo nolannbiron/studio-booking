@@ -20,8 +20,7 @@ export function AuthForgotPasswordForm({
 	isSuccess,
 	isLoading,
 	email: baseEmail,
-	onSubmit,
-	onBack
+	onSubmit
 }: AuthForgotPasswordFormProps): JSX.Element {
 	const { t } = useTranslation()
 	const form = useForm<TForgotPassword>({
@@ -47,10 +46,6 @@ export function AuthForgotPasswordForm({
 				<p className="">
 					{t('forgot-password.success', { email: form.getValues().email ?? baseEmail })}
 				</p>
-
-				<Button size="md" onClick={onBack} variant="outline">
-					{t('forgot-password.back_to_login')}
-				</Button>
 			</div>
 		</div>
 	)

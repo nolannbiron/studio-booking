@@ -1,4 +1,5 @@
 import { Providers } from '@/app/providers'
+import { getServerSession } from '@repo/feature-auth/lib/getServerSession'
 import { getLocale } from '@repo/i18n/next/server'
 import '@repo/ui/index.css'
 import { Inter } from 'next/font/google'
@@ -19,12 +20,15 @@ const inter = Inter({
 })
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
+	const session = await getServerSession()
 	const locale = getLocale()
 
 	return (
 		<html suppressHydrationWarning className={`${myFont.variable} ${inter.variable}`} lang={locale}>
 			<body>
-				<Providers locale={locale}>{children}</Providers>
+				<Providers session={session} locale={locale}>
+					{children}
+				</Providers>
 			</body>
 		</html>
 	)

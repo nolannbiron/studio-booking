@@ -597,11 +597,12 @@ export const AUTH_OPTIONS: AuthOptions = {
 		 * Used to handle the navigation right after successful login or logout
 		 */
 		async redirect({ url, baseUrl }) {
-			log.debug('callbacks:redirect', safeStringify({ url, baseUrl }))
+			log.debug('callbacks:redirect', safeStringify({ url, baseUrl, hostname: new URL(url).hostname }))
 			// Allows relative callback URLs
 			if (url.startsWith('/')) return `${baseUrl}${url}`
 			// Allows callback URLs on the same domain
-			else if (new URL(url).hostname === new URL(AUTH_WEBAPP_URL).hostname) return url
+			else if (new URL(url).hostname === new URL(WEBAPP_URL).hostname) return url
+			else if (new URL(url).hostname === new URL(AUTH_WEBAPP_URL).hostname) return WEBAPP_URL
 
 			return baseUrl
 		}

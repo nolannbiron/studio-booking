@@ -1,5 +1,3 @@
-import logger from '@repo/lib/logger'
-import { safeStringify } from '@repo/lib/safeStringify'
 import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
@@ -30,18 +28,6 @@ export default async function middleware(req: NextRequest) {
 
 	const session = await getToken({ req, secret: process.env.JWT_SECRET })
 
-	logger.info('middleware', safeStringify({ hostname, path, session }))
-
-	// rewrites for app pages
-	if (hostname === `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
-		if (!session) {
-			// redirect to auth.domain if not logged in
-			return NextResponse.redirect(`https://auth.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/login`)
-		}
-
-		return NextResponse.rewrite(new URL(`/app${path === '/' ? '' : path}`, req.url))
-	}
-
 	if (hostname === `auth.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
 		if (
 			!session &&
@@ -52,7 +38,7 @@ export default async function middleware(req: NextRequest) {
 		) {
 			return NextResponse.redirect(new URL('/login', req.url))
 		} else if (session && path !== '/logout') {
-			return NextResponse.redirect(`https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
+			return NextResponse.redirect(`${process.env.NEXT_PUBLIC_WEBAPP_URL}`)
 		}
 
 		return NextResponse.rewrite(new URL(`/auth${path === '/' ? '' : path}`, req.url))
@@ -62,12 +48,6 @@ export default async function middleware(req: NextRequest) {
 	if (hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
 		return NextResponse.rewrite(new URL(`/marketing${path === '/' ? '' : path}`, req.url))
 	}
-
-	// if (path.startsWith('/dashboard') || path.startsWith('/settings')) {
-	// 	if (!session) {
-	// 		return NextResponse.redirect('https://app.cal.localhost/login')
-	// 	}
-	// }
 
 	// rewrite everything else to `/client/[domain]/[slug] dynamic route
 	return NextResponse.rewrite(
