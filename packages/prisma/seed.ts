@@ -4,6 +4,22 @@ import { hashPassword } from '@repo/features/auth/lib/hashPassword'
 
 import { prisma } from './'
 
+const defaultGenres = {
+	BLUES: 'Blues',
+	CLASSICAL: 'Classique',
+	COUNTRY: 'Country',
+	DANCE: 'Dance',
+	ELECTRONIC: 'Électro',
+	HIP_HOP: 'Hip-Hop',
+	JAZZ: 'Jazz',
+	POP: 'Pop',
+	RAP: 'Rap',
+	REGGAE: 'Reggae',
+	ROCK: 'Rock',
+	SOUL: 'Soul',
+	OTHERS: 'Autres'
+}
+
 const seed = async () => {
 	const firstName = fakerFR.person.firstName()
 	const lastName = fakerFR.person.lastName()
@@ -38,52 +54,14 @@ const seed = async () => {
 						name: fakerFR.company.name(),
 						slug: fakerFR.helpers.slugify(fakerFR.company.name()),
 						color: color,
-						studio: {
-							create: {
-								description: fakerFR.lorem.sentence(),
-								minBookingDuration: 2,
-								visibility: 'PUBLIC',
-								pictures: {
-									create: {
-										url: fakerFR.image.url({ height: 400, width: 400 }),
-										order: i
-									}
-								},
-								services: {
-									createMany: {
-										data: [
-											{
-												name: 'Photography',
-												isActive: true,
-												description: fakerFR.lorem.sentence(),
-												price: 100,
-												duration: 2
-											},
-											{
-												name: 'Videography',
-												isActive: true,
-												description: fakerFR.lorem.sentence(),
-												price: 150,
-												duration: 3
-											}
-										]
-									}
-								},
-								amenities: Array.from({ length: 3 }, () => fakerFR.lorem.word()),
-								equipment: Array.from({ length: 3 }, () => fakerFR.lorem.word()),
-								address: {
-									create: {
-										postalCode: fakerFR.location.zipCode(),
-										number: fakerFR.location.buildingNumber(),
-										street: fakerFR.location.street(),
-										city: fakerFR.location.city(),
-										country: fakerFR.location.country(),
-										coordinates: {
-											lat: fakerFR.location.latitude(),
-											lng: fakerFR.location.longitude()
-										}
-									}
-								}
+						websiteUrl: fakerFR.internet.url(),
+						genres: {
+							createMany: {
+								data: Object.entries(defaultGenres).map(([key, value]) => ({
+									value: key,
+									label: value,
+									bgColor: getRandomAvatarColor()
+
 							}
 						}
 					}

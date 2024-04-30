@@ -146,8 +146,7 @@
 		"type": {
 			"ARTIST": "Artiste",
 			"MANAGER": "Manager",
-			"GROUP": "Groupe",
-			"COMPANY": "Entreprise",
+			"BAND": "Groupe",
 			"LABEL": "Label",
 			"select_type": "Sélectionnez un type"
 		},

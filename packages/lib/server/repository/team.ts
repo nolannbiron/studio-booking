@@ -50,6 +50,17 @@ export class TeamRepository {
 				]
 			},
 			include: {
+				genres: {
+					select: {
+						id: true,
+						label: true,
+						value: true,
+						color: true,
+						bgColor: true,
+						createdAt: true,
+						updatedAt: true
+					}
+				},
 				members: {
 					select: {
 						id: true,

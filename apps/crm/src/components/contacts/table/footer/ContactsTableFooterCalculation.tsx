@@ -32,7 +32,7 @@ export default function ContactsTableFooterCalculation(
 	info: HeaderContext<TContactsTableRow, unknown>
 ): JSX.Element {
 	const { footer, setFooter } = useContactsTableStore()
-	const [value, setValue] = useState(footer?.[info.column.id] || undefined)
+	const [value, setValue] = useState<TContactsTableFooterType>(footer?.[info.column.id] || undefined)
 
 	useEffect(() => {
 		setValue(footer?.[info.column.id] || undefined)
@@ -42,9 +42,17 @@ export default function ContactsTableFooterCalculation(
 		const contact = row.getValue(info.column.id) as { props: { contact: TContact } }
 		const columnName = info.column.id as keyof TContact
 
-		if (!contact || !contact.props) return acc + 1
+		if (value?.includes('Filled')) {
+			if (!contact || !contact.props) return acc
 
-		return !contact.props.contact[columnName] ? acc + 1 : acc
+			return contact.props.contact[columnName] ? acc + 1 : acc
+		} else if (value?.includes('Empty')) {
+			if (!contact || !contact.props) return acc + 1
+
+			return !contact.props.contact[columnName] ? acc + 1 : acc
+		}
+
+		return acc
 	}, 0)
 
 	const handleChange = (value: TContactsTableFooterType) => {
@@ -53,10 +61,14 @@ export default function ContactsTableFooterCalculation(
 		setFooter({ ...footer, [info.column.id]: value })
 	}
 
-	const optionsWithNone = useMemo(
+	const optionsWithNone: ComboboxOption<TContactsTableFooterType>[] = useMemo(
 		() => (!value ? options : [...options, { label: 'None', value: undefined }]),
 		[value]
 	)
+
+	const countValue = value?.includes('average')
+		? `${(count / info.table.getCenterRows().length) * 100}%`
+		: count
 
 	return (
 		<Combobox
@@ -72,11 +84,11 @@ export default function ContactsTableFooterCalculation(
 						</div>
 					) : value.includes('Filled') ? (
 						<>
-							<span className="text-foreground font-bold">{count}</span> filled
+							<span className="text-foreground font-bold">{countValue}</span> filled
 						</>
 					) : (
 						<>
-							<span className="text-foreground font-bold">{count}</span> empty
+							<span className="text-foreground font-bold">{countValue}</span> empty
 						</>
 					)}
 				</span>

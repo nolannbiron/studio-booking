@@ -44,7 +44,12 @@ export class ContactRepository {
 	static async update(req: FastifyRequest<TUpdateContactRequest>) {
 		const contact = await prisma.contact.update({
 			where: req.params,
-			data: req.body
+			data: {
+				...req.body,
+				genres: {
+					connect: (req.body.genres ?? []).map((genreId) => ({ id: genreId }))
+				}
+			}
 		})
 
 		return contact
@@ -69,6 +74,7 @@ export class ContactRepository {
 			// skip: req.body?.offset,
 			orderBy: sort,
 			include: {
+				genres: true,
 				user: {
 					select: userPublicProfileSelect
 				}
@@ -82,6 +88,7 @@ export class ContactRepository {
 		const contact = await prisma.contact.findFirst({
 			where: req.params,
 			include: {
+				genres: true,
 				user: {
 					select: userPublicProfileSelect
 				}

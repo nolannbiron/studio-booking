@@ -4,7 +4,7 @@ import { Combobox } from '@repo/ui/combobox'
 import type { PropsWithChildren } from 'react'
 import { useState } from 'react'
 
-const contactTypes: ContactType[] = ['ARTIST', 'COMPANY', 'GROUP', 'LABEL', 'MANAGER']
+const contactTypes: ContactType[] = ['ARTIST', 'BAND', 'LABEL', 'MANAGER']
 
 export default function ContactTypeCombobox({
 	value,

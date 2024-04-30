@@ -1,4 +1,3 @@
-import { CommandMenu } from '@/components/layouts/sidebar/search/CommandMenu'
 import { NavbarSize, useNavbarStore } from '@/state/navbar.state'
 import { useUserStore } from '@/state/user.state'
 import { useActivePath } from '@repo/hooks'
@@ -69,10 +68,6 @@ export default function Header(): JSX.Element {
 						</div>
 					</div>
 					<div className="flex items-center justify-end gap-3">
-						<div className="hidden !min-w-[240px] sm:flex">
-							<CommandMenu />
-						</div>
-
 						<UserAvatar className="rounded-full" size="xs" user={currentUser} />
 					</div>
 				</div>

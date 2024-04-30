@@ -1,3 +1,4 @@
+import { CommandMenu } from '@/components/layouts/sidebar/search/CommandMenu'
 import TeamPicker from '@/components/layouts/sidebar/team-picker-popover/TeamPickerPopover'
 import { useGetRoutes } from '@/navigation/useGetRoutes'
 import { useLocation } from 'react-router-dom'
@@ -11,6 +12,10 @@ export default function SidebarContent({ onClick }: { onClick?: () => void }): J
 	return (
 		<div className="flex flex-col overflow-hidden">
 			<TeamPicker />
+
+			<div className="px-2 pb-2 pt-4">
+				<CommandMenu />
+			</div>
 
 			<div className="group" onClick={onClick}>
 				{navbar.main.enabled &&

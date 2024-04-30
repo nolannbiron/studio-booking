@@ -43,7 +43,8 @@ export const ZPublicUserSchema = ZUserSchema.omit({
 	backupCodes: true,
 	authProvider: true,
 	authProviderId: true,
-	metadata: true
+	metadata: true,
+	teams: true
 })
 
 export const ZPrivateUserSchema = ZUserSchema.omit({

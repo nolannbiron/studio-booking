@@ -119,8 +119,8 @@ model Team {
     members            Membership[]
     orgSettings        OrganizationSettings?
     verificationTokens VerificationToken[]
-    studio             StudioDetails?
     contacts           Contact[]
+    genres             ContactGenre[]
 
     @@map("teams")
 }
@@ -205,103 +205,45 @@ model Feature {
     @@map("features")
 }
 
-model Address {
-    id          String  @id @default(uuid())
-    number      String?
-    street      String?
-    city        String
-    postalCode  String
-    country     String
-    coordinates Json?
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    studio   StudioDetails @relation(fields: [studioId], references: [id], onDelete: Cascade)
-    studioId String        @unique
-
-    @@map("addresses")
-}
-
-model Picture {
-    id    String @id @default(uuid())
-    url   String
-    order Int?
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    studio   StudioDetails @relation(fields: [studioId], references: [id], onDelete: Cascade)
-    studioId String
-
-    @@map("pictures")
-}
-
-model Service {
-    id          String  @id @default(uuid())
-    name        String
-    description String?
-    price       Float?
-    duration    Int?
-    isActive    Boolean
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    studio   StudioDetails @relation(fields: [studioId], references: [id], onDelete: Cascade)
-    studioId String
-
-    @@map("services")
-}
-
-enum Visibility {
-    PUBLIC
-    PRIVATE
-}
-
-model StudioDetails {
-    id                 String   @id @default(uuid())
-    description        Json
-    minBookingDuration Float?
-    amenities          String[]
-    equipment          String[]
-
-    address    Address?
-    pictures   Picture[]
-    services   Service[]
-    visibility Visibility @default(PRIVATE)
-
-    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-    teamId String @unique
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@map("studio_details")
-}
-
 enum ContactType {
     ARTIST
-    GROUP
+    BAND
     LABEL
     MANAGER
-    COMPANY
 }
 
-enum ContactGenre {
-    BLUES
-    CLASSICAL
-    COUNTRY
-    DANCE
-    ELECTRONIC
-    HIP_HOP
-    JAZZ
-    POP
-    RAP
-    REGGAE
-    ROCK
-    SOUL
-    OTHERS
+// enum ContactGenreEnum {
+//     BLUES
+//     CLASSICAL
+//     COUNTRY
+//     DANCE
+//     ELECTRONIC
+//     HIP_HOP
+//     JAZZ
+//     POP
+//     RAP
+//     REGGAE
+//     ROCK
+//     SOUL
+//     OTHERS
+// }
+
+model ContactGenre {
+    id      String @id @default(uuid())
+    value   String
+    label   String
+    bgColor String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+    teamId String
+
+    contacts Contact[] @relation("GenreContacts")
+
+    @@unique([teamId, value], name: "unique_genre")
+    @@map("contact_genres")
 }
 
 model Contact {
@@ -310,8 +252,8 @@ model Contact {
     email String
     phone String?
 
-    type  ContactType?
-    genre ContactGenre?
+    type   ContactType?
+    genres ContactGenre[] @relation("GenreContacts")
 
     instagram String?
     facebook  String?

@@ -1,6 +1,7 @@
 import { MembershipRole } from '@repo/prisma/enums'
 import { z } from 'zod'
 
+import { ZContactGenreSchema } from '../contact/contact-genre.schema'
 import { ZPublicUserSchema } from '../user'
 
 export const ZTeamMembershipSchema = z.object({
@@ -58,6 +59,7 @@ export const ZTeamSchema = z.object({
 		.refine((slug) => {
 			return /^[a-z0-9-]+$/.test(slug)
 		}),
+	genres: z.array(ZContactGenreSchema),
 	createdAt: z.date(),
 	updatedAt: z.date()
 })
@@ -65,6 +67,7 @@ export const ZTeamSchema = z.object({
 export const ZTeamUpdateSchema = ZTeamSchema.omit({
 	id: true,
 	users: true,
+	genres: true,
 	createdAt: true,
 	updatedAt: true
 }).partial()
@@ -74,6 +77,7 @@ export const ZTeamCreateSchema = ZTeamSchema.required({
 	slug: true
 }).omit({
 	id: true,
+	genres: true,
 	createdAt: true,
 	updatedAt: true,
 	users: true
@@ -91,7 +95,7 @@ export const ZTeamUpdateMemberSchema = ZTeamCreateMemberSchema.omit({
 export type TTeam = z.infer<typeof ZTeamSchema>
 export type TUpdateTeam = z.infer<typeof ZTeamUpdateSchema>
 export type TCreateTeam = z.infer<typeof ZTeamCreateSchema>
-export type TTeamWithMembers = TTeam & { members: z.infer<typeof ZTeamMembershipSchema>[] }
+export type TTeamWithMembers = TTeam & { members: Omit<TTeamMembership, 'team'>[] }
 export type TTeamCreateMember = z.infer<typeof ZTeamCreateMemberSchema>
 export type TTeamMembership = z.infer<typeof ZTeamMembershipSchema>
 

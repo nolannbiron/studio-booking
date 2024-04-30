@@ -1,24 +1,7 @@
-import { useTranslation } from '@repo/i18n/next/client'
-import type { ContactGenre } from '@repo/prisma/enums'
+import { useTeamStore } from '@/state/team.state'
+import type { ComboboxOption } from '@repo/ui/combobox'
 import { Combobox } from '@repo/ui/combobox'
 import type { PropsWithChildren } from 'react'
-import { useState } from 'react'
-
-const contactGenres: ContactGenre[] = [
-	'BLUES',
-	'CLASSICAL',
-	'COUNTRY',
-	'DANCE',
-	'ELECTRONIC',
-	'HIP_HOP',
-	'JAZZ',
-	'POP',
-	'RAP',
-	'REGGAE',
-	'ROCK',
-	'SOUL',
-	'OTHERS'
-]
 
 export default function ContactGenreCombobox({
 	value,
@@ -26,30 +9,24 @@ export default function ContactGenreCombobox({
 	children,
 	fullWidth
 }: PropsWithChildren<{
-	value?: ContactGenre | null
-	onSelect: (genre: ContactGenre) => void
+	value?: string | string[] | null
+	onSelect: (genreId: string) => void
 	fullWidth?: boolean
 }>) {
-	const { t } = useTranslation()
-	const [selectedGenre, setSelectedGenre] = useState(value)
+	const { currentTeam } = useTeamStore()
+	// const { t } = useTranslation()
 
-	const options = contactGenres.map((genre) => ({
-		label: t(`contact.genre.${genre}`),
-		value: genre
+	const options: ComboboxOption<string>[] = currentTeam.genres.map((genre) => ({
+		label: genre.label,
+		value: genre.id
 	}))
 
 	const handleSelect = (value: string) => {
-		setSelectedGenre(value as ContactGenre)
-		onSelect(value as ContactGenre)
+		onSelect(value)
 	}
 
 	return (
-		<Combobox
-			fullWidth={fullWidth}
-			options={options}
-			onSelect={handleSelect}
-			value={selectedGenre ?? undefined}
-		>
+		<Combobox fullWidth={fullWidth} options={options} onSelect={handleSelect} value={value ?? undefined}>
 			{children}
 		</Combobox>
 	)
