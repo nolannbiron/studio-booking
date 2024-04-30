@@ -1,8 +1,8 @@
 'use client'
 
-import { CheckIcon } from '@radix-ui/react-icons'
 import type { PopoverContentProps, PopoverProps } from '@radix-ui/react-popover'
 import { useCallback, useEffect, useState } from 'react'
+import { IoIosCheckmarkCircle } from 'react-icons/io'
 
 import { cn } from '../../lib/utils'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './command'
@@ -103,9 +103,9 @@ export function Combobox<T>({
 										{option.icon}
 										<span className="shrink truncate text-sm">{option.label}</span>
 									</div>
-									<CheckIcon
+									<IoIosCheckmarkCircle
 										className={cn(
-											'ml-auto h-4 w-4',
+											'ml-auto h-4 w-4 overflow-hidden rounded-full text-blue-600',
 											value === option.value ? 'opacity-100' : 'opacity-0'
 										)}
 									/>

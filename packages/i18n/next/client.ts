@@ -13,6 +13,8 @@ import { LANGUAGE_COOKIE, getOptions, supportedLocales } from '../settings'
 
 const runsOnServerSide = typeof window === 'undefined'
 
+export const COOKIE_DOMAIN = process.env.NEXT_PUBLIC_COOKIE_DOMAIN
+
 // Initialize i18next for the client side
 i18next
 	.use(initReactI18next)
@@ -26,10 +28,10 @@ i18next
 			order: ['cookie', 'navigator'],
 			// If `lookupCookie` is not set, it will use `i18next` as the cookie name
 			lookupCookie: LANGUAGE_COOKIE,
-			cookieDomain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
+			cookieDomain: COOKIE_DOMAIN,
 
 			cookieOptions: {
-				domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
+				domain: COOKIE_DOMAIN,
 				secure: process.env.NODE_ENV === 'production'
 			},
 			// This will automatically update the cookie

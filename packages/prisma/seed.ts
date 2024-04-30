@@ -26,6 +26,8 @@ const seed = async () => {
 
 		const membership = await prisma.membership.create({
 			data: {
+				accepted: true,
+				role: 'OWNER',
 				user: {
 					connect: {
 						id: user.id

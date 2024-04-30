@@ -85,6 +85,17 @@
 		"@repo/emails": {
 			"env": ["RESEND_API_KEY"],
 			"dotEnv": [".env"]
+		},
+		"@repo/crm": {
+			"dotEnv": [".env"]
+		},
+		"@repo/crm#dev": {
+			"cache": false,
+			"dotEnv": [".env"]
+		},
+		"@repo/crm#preview": {
+			"cache": false,
+			"dotEnv": [".env"]
 		}
 	},
 	"globalEnv": [

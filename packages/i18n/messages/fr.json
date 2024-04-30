@@ -4,8 +4,15 @@
 		"search": "Rechercher",
 		"fill_in": "Renseigner",
 		"or": "ou",
-		"or_continue_with": "Ou continuer avec"
+		"or_continue_with": "Ou continuer avec",
+		"loading": "Chargement...",
+		"open": "Ouvrir",
+		"close": "Fermer",
+		"no_results": "Aucun résultat",
+		"command": "Taper une commande ou rechercher...",
+		"open_sidebar": "Ouvrir la barre latérale"
 	},
+
 	"button": {
 		"cancel": "Annuler",
 		"ok": "OK",
@@ -55,7 +62,10 @@
 	"navbar": {
 		"dashboard": {
 			"contacts": "Contacts",
-			"appointments": "Rendez-vous"
+			"appointments": "Rendez-vous",
+			"home": "Dashboard",
+			"tasks": "Tâches",
+			"notes": "Notes"
 		},
 		"settings": {
 			"title": "Paramètres",

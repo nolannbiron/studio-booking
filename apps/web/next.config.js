@@ -10,6 +10,18 @@ require('dotenv').config({ path: '../../.env' })
 
 // if (!process.env.NEXTAUTH_URL) throw new Error('Please set NEXTAUTH_URL')
 
+const headers = [
+	'Accept',
+	'Accept-Version',
+	'Content-Length',
+	'Content-MD5',
+	'Content-Type',
+	'Date',
+	'X-Api-Version',
+	'X-CSRF-Token',
+	'X-Requested-With'
+]
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	transpilePackages: [
@@ -40,8 +52,21 @@ const nextConfig = {
 	async headers() {
 		return [
 			{
-				source: '/auth/:path*',
+				source: '/api/auth/:path*',
 				headers: [
+					{
+						key: 'Access-Control-Allow-Credentials',
+						value: 'true'
+					},
+					{ key: 'Access-Control-Allow-Origin', value: '*' },
+					{
+						key: 'Access-Control-Allow-Methods',
+						value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
+					},
+					{
+						key: 'Access-Control-Allow-Headers',
+						value: headers.join(', ')
+					},
 					{
 						key: 'X-Frame-Options',
 						value: 'DENY'

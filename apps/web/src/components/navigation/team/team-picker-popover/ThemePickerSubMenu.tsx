@@ -8,13 +8,13 @@ import {
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger
 } from '@repo/ui/dropdown-menu'
-import { useTheme } from '@repo/ui/theme'
+import { useNextTheme } from '@repo/ui/theme'
 import { FiMonitor, FiMoon, FiSun } from 'react-icons/fi'
 import { IoIosCheckmarkCircle } from 'react-icons/io'
 
 export default function ThemePickerSubMenu(): JSX.Element {
 	const { t } = useTranslation()
-	const { theme, setTheme, resolvedTheme } = useTheme()
+	const { theme, setTheme, resolvedTheme } = useNextTheme()
 
 	return (
 		<DropdownMenuSub>

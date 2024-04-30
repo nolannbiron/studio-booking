@@ -7,7 +7,7 @@ export type Paths<T extends string> = {
 export function useActivePath<T extends string>(paths: Paths<T>): T | undefined {
 	const location = useLocation()
 	const pathnames = location.pathname.split('/').filter((x) => x)
-	const activePath = pathnames[0]
+	const activePath = pathnames[pathnames.length - 1]
 
 	return paths[activePath]
 }

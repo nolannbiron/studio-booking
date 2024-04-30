@@ -27,14 +27,28 @@ export const userPrivateProfileSelect = Prisma.validator<Prisma.UserSelect>()({
 			accepted: true
 		},
 		select: {
+			id: true,
+			accepted: true,
 			role: true,
 			userId: true,
 			teamId: true,
 			createdAt: true,
 			updatedAt: true,
 			team: {
-				include: {
-					members: false
+				select: {
+					id: true,
+					name: true,
+					color: true,
+					logoUrl: true,
+					createdAt: true,
+					slug: true,
+					updatedAt: true,
+					websiteUrl: true,
+					members: false,
+					contacts: false,
+					orgSettings: false,
+					studio: false,
+					verificationTokens: false
 				}
 			}
 		}

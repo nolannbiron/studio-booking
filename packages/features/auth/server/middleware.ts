@@ -22,6 +22,7 @@ export class AuthMiddleware {
 
 			request.user = user
 		} catch (err) {
+			console.error(err)
 			return
 		}
 	}
@@ -42,6 +43,7 @@ export class AuthMiddleware {
 
 			request.user = user
 		} catch (err) {
+			console.error(err)
 			reply.status(401).send({ success: false, message: err })
 			return
 		}
@@ -55,6 +57,7 @@ export class AuthMiddleware {
 
 			return
 		} catch (err) {
+			console.error(err)
 			reply.status(401).send({ success: false, message: err })
 			return
 		}
@@ -81,6 +84,7 @@ export class AuthMiddleware {
 
 			return
 		} catch (err) {
+			console.error(err)
 			reply.status(401).send({ success: false, message: err })
 			return
 		}
@@ -111,6 +115,7 @@ export class AuthMiddleware {
 
 			return
 		} catch (err) {
+			console.error(err)
 			reply.status(401).send({ success: false, message: err })
 			return
 		}
@@ -139,6 +144,7 @@ export class AuthMiddleware {
 
 			return
 		} catch (err) {
+			console.error(err)
 			reply.status(401).send({ success: false, message: err })
 			return
 		}

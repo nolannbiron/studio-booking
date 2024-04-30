@@ -1,8 +1,9 @@
-import { contactKeys } from '@/lib/client-api/contact/contactKeys'
+import { axios } from '@/api/axios'
+import { contactKeys } from '@/api/contact/contactKeys'
+import { useAuthStore } from '@/state/auth.state'
 import type { TContactsReply } from '@repo/schemas/contact'
 import type { TContactFilters } from '@repo/schemas/filters/contact-filters.schema'
 import { useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 
 export const useGetTeamContacts = ({
 	teamId,
@@ -11,11 +12,7 @@ export const useGetTeamContacts = ({
 	teamId?: string
 	filters: TContactFilters | null
 }) => {
-	const { data: session } = useSession({
-		required: true
-	})
-
-	const user = session?.user
+	const { jwt } = useAuthStore()
 
 	const queryParams = new URLSearchParams()
 	if (filters) {
@@ -29,21 +26,7 @@ export const useGetTeamContacts = ({
 	return useQuery<TContactsReply, Error, TContactsReply>({
 		queryKey: contactKeys.list({ teamId, filters }),
 		queryFn: () =>
-			fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/team/${teamId}/contacts?${queryParams.toString()}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${user?.accessToken}`
-				}
-			}).then(async (res) => {
-				const data = await res.json()
-
-				if (!res.ok) {
-					throw new Error(data.message)
-				}
-
-				return data
-			}) as Promise<TContactsReply>,
-		enabled: !!teamId && !!user?.accessToken
+			axios.get(`/team/${teamId}/contacts?${queryParams.toString()}`).then((res) => res.data),
+		enabled: !!teamId && !!jwt?.token
 	})
 }

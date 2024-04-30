@@ -1,6 +1,12 @@
 {
 	"general": {
-		"thanks": "Thanks"
+		"thanks": "Thanks",
+		"loading": "Loading...",
+		"close": "Close",
+		"open": "Open",
+		"search": "Search",
+		"or": "or",
+		"or_continue_with": "Or continue with"
 	},
 	"button": {
 		"cancel": "Cancel",
@@ -12,7 +18,10 @@
 		"logout": "Logout",
 		"reset_password": "Reset Password",
 		"sort": "Sort by",
-		"add_filter": "Add Filter"
+		"add_filter": "Add Filter",
+		"create_contact": "Create Contact",
+		"login": "Login",
+		"register": "Register"
 	},
 	"team": {
 		"create": {
@@ -47,7 +56,10 @@
 	"navbar": {
 		"dashboard": {
 			"contacts": "Contacts",
-			"appointments": "Appointments"
+			"appointments": "Appointments",
+			"home": "Dashboard",
+			"tasks": "Tasks",
+			"notes": "Notes"
 		},
 		"settings": {
 			"title": "Settings",

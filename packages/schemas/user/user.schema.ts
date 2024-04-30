@@ -1,7 +1,7 @@
 import { AuthProvider, Locale } from '@repo/prisma/enums'
 import * as z from 'zod'
 
-import { ZTeamSchema } from '../team'
+import { ZTeamMembershipSchema } from '../team'
 
 export const ZUserSchema = z.object({
 	id: z.string(),
@@ -20,10 +20,7 @@ export const ZUserSchema = z.object({
 	locale: z.nativeEnum(Locale).nullish(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
-	teams: z
-		.lazy(() => ZTeamSchema)
-		.array()
-		.nullish()
+	teams: z.lazy(() => ZTeamMembershipSchema).array()
 })
 
 export const ZCreateUserSchema = ZUserSchema.pick({

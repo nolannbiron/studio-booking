@@ -80,25 +80,31 @@ export function AuthLoginForm({
 					</Button>
 				</form>
 			</Form>
-			<div className="flex items-center gap-4">
-				<Separator className="shrink" />
-				<span className="text-muted-foreground shrink-0 text-sm capitalize">{t('general.or')}</span>
-				<Separator className="shrink" />
-			</div>
-			<div className="grid gap-2 sm:w-full">
-				<AuthProviderButton
-					isLoading={isLoading}
-					onClick={onAuthProviderClick}
-					type="FACEBOOK"
-					label={t('auth.login_with_facebook')}
-				/>
-				<AuthProviderButton
-					isLoading={isLoading}
-					onClick={onAuthProviderClick}
-					type="GOOGLE"
-					label={t('auth.login_with_google')}
-				/>
-			</div>
+			{!!onAuthProviderClick && (
+				<>
+					<div className="flex items-center gap-4">
+						<Separator className="shrink" />
+						<span className="text-muted-foreground shrink-0 text-sm capitalize">
+							{t('general.or')}
+						</span>
+						<Separator className="shrink" />
+					</div>
+					<div className="grid gap-2 sm:w-full">
+						<AuthProviderButton
+							isLoading={isLoading}
+							onClick={onAuthProviderClick}
+							type="FACEBOOK"
+							label={t('auth.login_with_facebook')}
+						/>
+						<AuthProviderButton
+							isLoading={isLoading}
+							onClick={onAuthProviderClick}
+							type="GOOGLE"
+							label={t('auth.login_with_google')}
+						/>
+					</div>
+				</>
+			)}
 		</div>
 	)
 }

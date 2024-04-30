@@ -10,7 +10,8 @@ export const ZTeamMembershipSchema = z.object({
 	userId: z.string(),
 	teamId: z.string(),
 	createdAt: z.date(),
-	updatedAt: z.date()
+	updatedAt: z.date(),
+	team: z.lazy(() => ZTeamSchema)
 })
 
 export const ZTeamMembershipForPublicUserSchema = ZTeamMembershipSchema.extend({
@@ -89,6 +90,7 @@ export type TUpdateTeam = z.infer<typeof ZTeamUpdateSchema>
 export type TCreateTeam = z.infer<typeof ZTeamCreateSchema>
 export type TTeamWithMembers = TTeam & { members: z.infer<typeof ZTeamMembershipSchema>[] }
 export type TTeamCreateMember = z.infer<typeof ZTeamCreateMemberSchema>
+export type TTeamMembership = z.infer<typeof ZTeamMembershipSchema>
 
 export type TTeamUpdateMember = z.infer<typeof ZTeamUpdateMemberSchema>
 

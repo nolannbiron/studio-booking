@@ -15,7 +15,7 @@ import { UserAvatar } from '@repo/ui/user/UserAvatar'
 import { useEffect } from 'react'
 import { FiUpload } from 'react-icons/fi'
 
-export default function AccountSettings({ user }: { user: TPublicUser }) {
+export default function AccountSettingsPage({ user }: { user: TPublicUser }) {
 	const { t } = useTranslation()
 	const { mutate } = useUpdateMe()
 	const form = useForm<TUpdateUser>({

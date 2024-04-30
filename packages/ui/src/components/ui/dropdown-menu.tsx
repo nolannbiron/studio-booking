@@ -1,8 +1,9 @@
 'use client'
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { CheckIcon, ChevronRightIcon, DotFilledIcon } from '@radix-ui/react-icons'
+import { ChevronRightIcon, DotFilledIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
+import { IoIosCheckmarkCircle } from 'react-icons/io'
 
 import { cn } from '../../lib/utils'
 
@@ -106,7 +107,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
 	>
 		<span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
 			<DropdownMenuPrimitive.ItemIndicator>
-				<CheckIcon className="h-4 w-4" />
+				<IoIosCheckmarkCircle className="h-4 w-4 shrink-0 text-blue-600" />
 			</DropdownMenuPrimitive.ItemIndicator>
 		</span>
 		{children}

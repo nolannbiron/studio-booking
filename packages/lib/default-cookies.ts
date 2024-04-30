@@ -63,7 +63,7 @@ export function defaultCookies(useSecureCookies: boolean): CookiesOptions {
 			name: `${cookiePrefix}next-auth.nonce`,
 			options: {
 				httpOnly: true,
-				sameSite: 'lax',
+				sameSite: 'none',
 				path: '/',
 				secure: useSecureCookies
 			}

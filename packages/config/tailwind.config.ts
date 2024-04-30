@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
 
 const config = {
-	darkMode: ['class'],
+	darkMode: 'class',
 	content: [
 		'../../packages/features/**/*.{js,ts,jsx,tsx}',
 		'../../packages/ui/**/*.{js,ts,jsx,tsx}',
@@ -82,7 +82,7 @@ const config = {
 			},
 			variables: {
 				DEFAULT: {
-					background: ' 0 0% 98.5%',
+					background: '0 0% 100%',
 					foreground: '220 7.89% 14.9%',
 					navbar: '0 0% 98.43%',
 					card: '0 0% 100%',

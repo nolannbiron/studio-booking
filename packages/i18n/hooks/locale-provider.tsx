@@ -4,24 +4,25 @@ import type { Locale } from '@repo/prisma/enums'
 import { createContext, useContext, useEffect } from 'react'
 
 import { FALLBACK_LOCALE } from '../settings'
-import { setLocaleCookie } from './action'
 
 const Context = createContext<Locale>(FALLBACK_LOCALE)
 
 export function LocaleProvider({
 	children,
 	value,
-	isCookieDefined
+	isCookieDefined,
+	action
 }: {
 	children: React.ReactNode
 	value: Locale
 	isCookieDefined: boolean
+	action: (locale: Locale) => void
 }) {
 	useEffect(() => {
 		if (!isCookieDefined && value) {
-			setLocaleCookie(value)
+			action(value)
 		}
-	}, [isCookieDefined, value])
+	}, [isCookieDefined, value, action])
 
 	return <Context.Provider value={value}>{children}</Context.Provider>
 }
