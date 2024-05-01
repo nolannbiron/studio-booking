@@ -11,30 +11,21 @@ export const useUpdateContact = () => {
 		mutationFn: ({ teamId, contactId, ...data }) =>
 			axios.patch(`/team/${teamId}/contact/${contactId}`, data).then((res) => res.data),
 		onSuccess: (data, variables) => {
-			// queryClient.invalidateQueries({ queryKey: contactKeys.list({ teamId: variables.teamId }) })
 			queryClient.setQueriesData<TContactsReply>(
 				{ queryKey: contactKeys.list({ teamId: variables.teamId }) },
 				(oldData) => {
-					if (!oldData) {
-						return oldData
-					}
-
-					if (!oldData.success) {
-						return oldData
-					}
+					if (!oldData) return oldData
 
 					return {
 						...oldData,
 						contacts: oldData.contacts.map((contact) => {
-							if (contact.id === variables.contactId) {
-								return {
-									...contact,
-									...variables,
-									genres: data.contact.genres
-								}
-							}
+							if (contact.id !== variables.contactId) return contact
 
-							return contact
+							return {
+								...contact,
+								...variables,
+								genres: data.contact.genres
+							}
 						})
 					}
 				}

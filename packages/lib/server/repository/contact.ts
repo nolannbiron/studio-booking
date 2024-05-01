@@ -49,6 +49,9 @@ export class ContactRepository {
 				genres: {
 					connect: (req.body.genres ?? []).map((genreId) => ({ id: genreId }))
 				}
+			},
+			include: {
+				genres: true
 			}
 		})
 

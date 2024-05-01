@@ -7,17 +7,18 @@ export default function ContactGenreCombobox({
 	value,
 	onSelect,
 	children,
-	fullWidth
+	fullWidth,
+	open
 }: PropsWithChildren<{
 	value?: string | string[] | null
 	onSelect: (genreId: string) => void
 	fullWidth?: boolean
+	open: boolean
 }>) {
 	const { currentTeam } = useTeamStore()
-	// const { t } = useTranslation()
 
 	const options: ComboboxOption<string>[] = currentTeam.genres.map((genre) => ({
-		label: genre.label,
+		label: genre.title,
 		value: genre.id
 	}))
 
@@ -26,7 +27,13 @@ export default function ContactGenreCombobox({
 	}
 
 	return (
-		<Combobox fullWidth={fullWidth} options={options} onSelect={handleSelect} value={value ?? undefined}>
+		<Combobox
+			open={open}
+			fullWidth={fullWidth}
+			options={options}
+			onSelect={handleSelect}
+			value={value ?? undefined}
+		>
 			{children}
 		</Combobox>
 	)

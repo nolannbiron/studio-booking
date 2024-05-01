@@ -39,8 +39,8 @@ export const columns = [
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
-	columnHelper.accessor('genre', {
-		id: 'genre',
+	columnHelper.accessor('genres', {
+		id: 'genres',
 		header: () => (
 			<div className="flex items-center gap-2">
 				<PiGuitar className="text-muted-foreground" />

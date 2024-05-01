@@ -53,10 +53,9 @@ export class TeamRepository {
 				genres: {
 					select: {
 						id: true,
-						label: true,
+						title: true,
 						value: true,
 						color: true,
-						bgColor: true,
 						createdAt: true,
 						updatedAt: true
 					}

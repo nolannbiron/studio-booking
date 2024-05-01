@@ -2,7 +2,6 @@ import { useTranslation } from '@repo/i18n/next/client'
 import type { ContactType } from '@repo/prisma/enums'
 import { Combobox } from '@repo/ui/combobox'
 import type { PropsWithChildren } from 'react'
-import { useState } from 'react'
 
 const contactTypes: ContactType[] = ['ARTIST', 'BAND', 'LABEL', 'MANAGER']
 
@@ -10,14 +9,15 @@ export default function ContactTypeCombobox({
 	value,
 	onSelect,
 	children,
-	fullWidth
+	fullWidth,
+	open
 }: PropsWithChildren<{
 	value?: ContactType | null
 	onSelect: (type: ContactType) => void
 	fullWidth?: boolean
+	open: boolean
 }>) {
 	const { t } = useTranslation()
-	const [selectedType, setSelectedType] = useState(value)
 
 	const options = contactTypes.map((type) => ({
 		label: t(`contact.type.${type}`),
@@ -25,17 +25,11 @@ export default function ContactTypeCombobox({
 	}))
 
 	const handleSelect = (value: string) => {
-		setSelectedType(value as ContactType)
 		onSelect(value as ContactType)
 	}
 
 	return (
-		<Combobox
-			options={options}
-			fullWidth={fullWidth}
-			onSelect={handleSelect}
-			value={selectedType ?? undefined}
-		>
+		<Combobox open={open} options={options} fullWidth={fullWidth} onSelect={handleSelect} value={value}>
 			{children}
 		</Combobox>
 	)

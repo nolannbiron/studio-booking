@@ -1,6 +1,7 @@
 import { fakerFR } from '@faker-js/faker'
 import { getRandomAvatarColor } from '@repo/features/auth/lib/getRandomAvatarColor'
 import { hashPassword } from '@repo/features/auth/lib/hashPassword'
+import { getRandomTagColor } from '@repo/lib/tag-colors'
 
 import { prisma } from './'
 
@@ -59,9 +60,9 @@ const seed = async () => {
 							createMany: {
 								data: Object.entries(defaultGenres).map(([key, value]) => ({
 									value: key,
-									label: value,
-									bgColor: getRandomAvatarColor()
-
+									title: value,
+									color: getRandomTagColor()
+								}))
 							}
 						}
 					}

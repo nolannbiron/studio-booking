@@ -3962,6 +3962,7 @@ __metadata:
     "@types/react": "npm:^18.2.0"
     "@types/react-dom": "npm:^18.2.0"
     "@types/react-router-dom": "npm:^5.3.3"
+    "@types/use-double-click": "npm:^1.0.5"
     "@typescript-eslint/eslint-plugin": "npm:^7.2.0"
     "@typescript-eslint/parser": "npm:^7.2.0"
     "@vitejs/plugin-react-swc": "npm:^3.5.0"
@@ -3978,6 +3979,7 @@ __metadata:
     sass: "npm:^1.75.0"
     tailwindcss: "npm:^3.3.0"
     typescript: "npm:^5.4.5"
+    use-double-click: "npm:^1.0.5"
     vite: "npm:^5.2.0"
     vite-tsconfig-paths: "npm:^4.3.2"
     zod: "npm:^3.22.5"
@@ -5222,6 +5224,15 @@ __metadata:
   version: 1.4.6
   resolution: "@types/tinycolor2@npm:1.4.6"
   checksum: 10c0/922020c3326460e9d8502c8a98f80db69f06fd14e07fe5a48e8ffe66175762298a9bd51263f2a0c9a40632886a74975a3ff79396defcdbeac0dc176e3e5056e8
+  languageName: node
+  linkType: hard
+
+"@types/use-double-click@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@types/use-double-click@npm:1.0.5"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10c0/12cd4843b84ed7ac0916cd1fee97c1affdf932bea24a9d18965ccc6e7be4219a94cf0b3e218349747835587a3fb327ae1823bca95c6c12cbd7ffbb570d1b399c
   languageName: node
   linkType: hard
 
@@ -15231,6 +15242,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/d232c37160fe3970c99255da19b5fb5299fb5926a5d6141d928a87feb47732c323d29be2f8137d3b1e5499c70d284cd1d9cfad703cc58179db8be24d7dd8f1f2
+  languageName: node
+  linkType: hard
+
+"use-double-click@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "use-double-click@npm:1.0.5"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 10c0/a9bb4e83156d9203c8ceceb438076f4072c717c5a9782b71333372d6a79ceb4daa9ad6d1c78eddb4d84cf9be791e31a1db53b2f359611b9e1c1affea4668a26d
   languageName: node
   linkType: hard
 

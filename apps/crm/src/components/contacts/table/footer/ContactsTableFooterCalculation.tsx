@@ -33,23 +33,30 @@ export default function ContactsTableFooterCalculation(
 ): JSX.Element {
 	const { footer, setFooter } = useContactsTableStore()
 	const [value, setValue] = useState<TContactsTableFooterType>(footer?.[info.column.id] || undefined)
+	const [open, setOpen] = useState(false)
 
 	useEffect(() => {
 		setValue(footer?.[info.column.id] || undefined)
 	}, [footer, info.column.id])
 
 	const count = info.table.getCenterRows().reduce((acc, row) => {
-		const contact = row.getValue(info.column.id) as { props: { contact: TContact } }
+		const contact = row.getValue(info.column.id) as { props?: { contact?: TContact } } | undefined
 		const columnName = info.column.id as keyof TContact
 
 		if (value?.includes('Filled')) {
 			if (!contact || !contact.props) return acc
 
-			return contact.props.contact[columnName] ? acc + 1 : acc
+			const key = contact?.props?.contact?.[columnName]
+			const isValid = !key ? false : Array.isArray(key) && key?.length > 0 ? true : false
+
+			return isValid ? acc + 1 : acc
 		} else if (value?.includes('Empty')) {
 			if (!contact || !contact.props) return acc + 1
 
-			return !contact.props.contact[columnName] ? acc + 1 : acc
+			const key = contact?.props?.contact?.[columnName]
+			const isValid = !key ? false : Array.isArray(key) && key?.length > 0 ? true : false
+
+			return !isValid ? acc + 1 : acc
 		}
 
 		return acc
@@ -72,6 +79,8 @@ export default function ContactsTableFooterCalculation(
 
 	return (
 		<Combobox
+			open={open}
+			onOpenChange={setOpen}
 			value={value}
 			options={optionsWithNone}
 			onSelect={(value) => handleChange(value as TContactsTableFooterType)}

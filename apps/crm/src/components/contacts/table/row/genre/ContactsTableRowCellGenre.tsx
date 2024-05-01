@@ -1,13 +1,21 @@
 import { useUpdateContact } from '@/api/contact/hooks/useUpdateContact'
 import ContactGenreCombobox from '@/components/contacts/generics/ContactGenreCombobox'
+import TableSelectableCell from '@/components/contacts/table/row/TableSelectableCell'
+import ContactsTableRowCellGenreItems from '@/components/contacts/table/row/genre/ContactsTableRowCellGenreItems'
 import { useTeamStore } from '@/state/team.state'
 import type { TContact } from '@repo/schemas/contact'
-import { Badge } from '@repo/ui/badge'
 import { useEffect, useState } from 'react'
 
-export default function ContactsTableRowCellGenre({ contact }: { contact: TContact }): JSX.Element {
+export default function ContactsTableRowCellGenre({
+	contact,
+	cellId
+}: {
+	contact: TContact
+	cellId: string
+}): JSX.Element {
 	const { currentTeam } = useTeamStore()
 	const { mutate } = useUpdateContact()
+	const [isOpen, setIsOpen] = useState(false)
 	const [genreIds, setGenreIds] = useState<string[]>(contact.genres?.map((g) => g.id) ?? [])
 
 	useEffect(() => {
@@ -22,27 +30,28 @@ export default function ContactsTableRowCellGenre({ contact }: { contact: TConta
 			? contact.genres.filter((g) => g.id !== genreId).map((g) => g.id)
 			: [...(contact.genres?.map((g) => g.id) ?? []), genreId]
 
-		mutate({
-			teamId: currentTeam.id,
-			contactId: contact.id,
-			genres: newGenres
-		})
+		mutate(
+			{
+				teamId: currentTeam.id,
+				contactId: contact.id,
+				genres: newGenres
+			},
+			{
+				onSuccess(data) {
+					setGenreIds(data.contact.genres?.map((g) => g.id) ?? [])
+					setIsOpen(false)
+				}
+			}
+		)
 	}
 
 	return (
-		<ContactGenreCombobox onSelect={handleSelect} value={genreIds}>
-			<div className="hover:bg-muted/30 flex h-full w-full cursor-pointer items-center gap-3 px-3">
-				{!!contact.genres?.length ? (
-					contact.genres.map((genre) => (
-						<Badge key={genre.value} className="text-muted-foreground text-sm">
-							{genre.label}
-						</Badge>
-					))
-				) : (
-					// <span className="text-muted-foreground">{t('general.fill_in')}</span>
-					<></>
-				)}
-			</div>
-		</ContactGenreCombobox>
+		<TableSelectableCell isExpandable onOpenPopoverChange={setIsOpen} cellId={cellId}>
+			<ContactGenreCombobox open={isOpen} onSelect={handleSelect} value={genreIds}>
+				<div className="flex h-full w-full flex-nowrap items-center gap-1 overflow-hidden truncate px-1.5">
+					<ContactsTableRowCellGenreItems genres={contact.genres ?? []} />
+				</div>
+			</ContactGenreCombobox>
+		</TableSelectableCell>
 	)
 }

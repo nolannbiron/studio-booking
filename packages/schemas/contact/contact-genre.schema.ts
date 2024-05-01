@@ -2,9 +2,9 @@ import { z } from 'zod'
 
 export const ZContactGenreSchema = z.object({
 	id: z.string(),
+	title: z.string(),
 	value: z.string(),
-	label: z.string(),
-	bgColor: z.string(),
+	color: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date()
 })

@@ -4,10 +4,12 @@ import { columns } from '@/components/contacts/table/columns'
 import ContactsTableRowCellGenre from '@/components/contacts/table/row/genre/ContactsTableRowCellGenre'
 import ContactsTableRowCellName from '@/components/contacts/table/row/name/ContactsTableRowCellName'
 import ContactsTableRowCellType from '@/components/contacts/table/row/type/ContactsTableRowCellType'
+import { useContactsTableStore } from '@/components/contacts/table/store/contacts-table.store'
+import { useIsOutsideClick } from '@repo/hooks'
 import type { TContact } from '@repo/schemas/contact'
 import { cn } from '@repo/ui/lib/utils'
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 export type TContactsTableRow = {
 	[key in keyof TContact]?: JSX.Element
@@ -19,14 +21,18 @@ export default function ContactsTable({
 	contacts: TContact[]
 	isLoading: boolean
 }): JSX.Element {
+	const ref = useRef<HTMLTableElement>(null)
+	const { setSelectedCell } = useContactsTableStore()
 	const [columnsState] = useState<typeof columns>(() => [...columns])
+
+	useIsOutsideClick(ref, () => setSelectedCell(''))
 
 	const data = useMemo<TContactsTableRow[]>(
 		() =>
 			contacts.map((contact) => ({
-				name: <ContactsTableRowCellName contact={contact} />,
-				type: <ContactsTableRowCellType contact={contact} />,
-				genre: <ContactsTableRowCellGenre contact={contact} />
+				name: <ContactsTableRowCellName cellId={`${contact.id}_name`} contact={contact} />,
+				type: <ContactsTableRowCellType cellId={`${contact.id}_type`} contact={contact} />,
+				genres: <ContactsTableRowCellGenre cellId={`${contact.id}_genre`} contact={contact} />
 			})),
 		[contacts]
 	)
@@ -36,15 +42,23 @@ export default function ContactsTable({
 		columns: columnsState,
 		columnResizeMode: 'onChange',
 		columnResizeDirection: 'ltr',
-		getCoreRowModel: getCoreRowModel(),
-		debugTable: true,
-		debugHeaders: true,
-		debugColumns: true
+		getCoreRowModel: getCoreRowModel()
+		// debugTable: true,
+		// debugHeaders: true,
+		// debugColumns: true
 	})
 
+	// const isHorizontalScolling = useMemo(() => {
+	// 	if (!ref.current) return false
+	// 	return ref.current.scrollWidth > ref.current.clientWidth
+	// }, [ref.current])
+
+	// console.log(isHorizontalScolling)
+
 	return (
-		<div className="h-full w-full max-w-full overflow-x-scroll">
+		<div tabIndex={-1} className="h-full w-full max-w-full overflow-x-scroll focus-visible:outline-none">
 			<table
+				ref={ref}
 				style={{
 					width: table.getCenterTotalSize()
 				}}
@@ -61,9 +75,9 @@ export default function ContactsTable({
 										maxWidth: `${header.column.columnDef.maxSize}px`
 									}}
 									className={cn(
-										'bg-background before:border-input before:border-t-tranparent relative h-10 p-0 text-sm font-medium before:absolute before:left-0 before:top-0 before:h-full before:w-full before:border-b before:border-r',
+										'bg-background before:border-input before:border-t-tranparent relative h-10 p-0 text-sm font-medium before:absolute before:left-0 before:top-0 before:z-0 before:h-full before:w-full before:border-b before:border-r',
 										{
-											'sticky left-0 z-40 block': header.id === 'name'
+											'sticky left-0 z-20 block': header.id === 'name'
 										}
 									)}
 								>
@@ -89,15 +103,13 @@ export default function ContactsTable({
 										maxWidth: `${cell.column.getSize()}px`
 									}}
 									className={cn(
-										'bg-background before:border-input before:border-t-tranparent relative h-10 p-0 text-sm font-medium before:absolute before:left-0 before:top-0 before:h-full before:w-full before:border-b before:border-r',
+										'bg-background before:border-input before:border-t-tranparent relative h-10 w-auto p-0 text-sm font-medium before:absolute before:left-0 before:top-0 before:h-full before:w-full before:border-b before:border-r',
 										{
 											'sticky left-0 z-40': cell.column.id === 'name'
 										}
 									)}
 								>
-									<div className="relative h-full">
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
-									</div>
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
 								</td>
 							))}
 						</tr>

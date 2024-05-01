@@ -15,6 +15,7 @@ export default function LocaleSelect({
 	onSelect: (locale: Locale) => void
 }) {
 	const { t } = useTranslation()
+	const [open, setOpen] = useState(false)
 	const [selectedLocale, setSelectedLocale] = useState(locale)
 
 	useEffect(() => {
@@ -36,7 +37,14 @@ export default function LocaleSelect({
 
 	return (
 		<div>
-			<Combobox fullWidth options={options} onSelect={handleSelect} value={selectedLocale ?? undefined}>
+			<Combobox
+				open={open}
+				onOpenChange={setOpen}
+				fullWidth
+				options={options}
+				onSelect={handleSelect}
+				value={selectedLocale ?? undefined}
+			>
 				<Button type="button" variant="outline" className="w-full justify-between">
 					{selectedLocale ? (
 						<div className="flex items-center gap-2">

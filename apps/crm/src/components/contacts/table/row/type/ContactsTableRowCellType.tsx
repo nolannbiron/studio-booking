@@ -1,28 +1,56 @@
 import { useUpdateContact } from '@/api/contact/hooks/useUpdateContact'
 import ContactTypeCombobox from '@/components/contacts/generics/ContactTypeCombobox'
+import TableSelectableCell from '@/components/contacts/table/row/TableSelectableCell'
 import { useTeamStore } from '@/state/team.state'
 import { useTranslation } from '@repo/i18n/next/client'
 import type { ContactType } from '@repo/prisma/enums'
 import type { TContact } from '@repo/schemas/contact'
+import { useState } from 'react'
 
-export default function ContactsTableRowCellType({ contact }: { contact: TContact }): JSX.Element {
+export default function ContactsTableRowCellType({
+	contact,
+	cellId
+}: {
+	contact: TContact
+	cellId: string
+}): JSX.Element {
 	const { t } = useTranslation()
 	const { currentTeam } = useTeamStore()
 	const { mutate } = useUpdateContact()
+	const [isOpen, setIsOpen] = useState(false)
+	const [value, setValue] = useState<ContactType | null>(contact.type ?? null)
 
 	const handleSelect = (type: ContactType) => {
 		if (!currentTeam.id) return
-		mutate({
-			teamId: currentTeam.id,
-			contactId: contact.id,
-			type: type === contact.type ? null : type
-		})
+
+		const newType = type === contact.type ? null : type
+
+		mutate(
+			{
+				teamId: currentTeam.id,
+				contactId: contact.id,
+				type: newType
+			},
+			{
+				onSuccess(data) {
+					setValue(data.contact.type ?? null)
+					setIsOpen(false)
+				}
+			}
+		)
 	}
+
 	return (
-		<ContactTypeCombobox onSelect={handleSelect} value={contact.type}>
-			<div className="hover:bg-muted/30 flex h-full w-full cursor-pointer items-center gap-3 px-3">
-				{contact.type ? <span>{t(`contact.type.${contact.type}`)}</span> : <></>}
-			</div>
-		</ContactTypeCombobox>
+		<TableSelectableCell
+			onDelete={() => console.log('delete', value)}
+			onOpenPopoverChange={setIsOpen}
+			cellId={cellId}
+		>
+			<ContactTypeCombobox open={isOpen} onSelect={handleSelect} value={value}>
+				<div className="flex h-full w-full items-center gap-3 px-1.5">
+					{contact.type ? <div>{t(`contact.type.${contact.type}`)}</div> : <></>}
+				</div>
+			</ContactTypeCombobox>
+		</TableSelectableCell>
 	)
 }

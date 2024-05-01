@@ -1,7 +1,6 @@
 'use client'
 
 import type { PopoverContentProps, PopoverProps } from '@radix-ui/react-popover'
-import { useCallback, useEffect, useState } from 'react'
 import { IoIosCheckmarkCircle } from 'react-icons/io'
 
 import { cn } from '../../lib/utils'
@@ -48,22 +47,8 @@ export function Combobox<T>({
 	fullWidth,
 	...props
 }: ComboboxProps<T>) {
-	const [isOpen, setIsOpen] = useState(open)
-
-	useEffect(() => {
-		setIsOpen(open)
-	}, [open])
-
-	const handleOpenChange = useCallback(
-		(isOpen: boolean) => {
-			setIsOpen(isOpen)
-			onOpenChange?.(isOpen)
-		},
-		[onOpenChange]
-	)
-
 	return (
-		<Popover open={isOpen} onOpenChange={handleOpenChange} {...props}>
+		<Popover open={open} onOpenChange={onOpenChange} {...props}>
 			<PopoverTrigger type="button" asChild>
 				{children}
 			</PopoverTrigger>
@@ -93,11 +78,11 @@ export function Combobox<T>({
 								{options.map((option) => (
 									<CommandItem
 										className="cursor-pointer gap-4"
-										key={option.value as string}
+										key={option.label as string}
 										value={option.label}
 										onSelect={(currentValue) => {
 											currentValue !== value && onSelect(option.value as string)
-											handleOpenChange(false)
+											onOpenChange?.(false)
 										}}
 									>
 										<div className="flex w-full items-center gap-2">
@@ -107,7 +92,12 @@ export function Combobox<T>({
 										<IoIosCheckmarkCircle
 											className={cn(
 												'ml-auto h-4 w-4 overflow-hidden rounded-full text-blue-600',
-												value === option.value ? 'opacity-100' : 'opacity-0'
+												value === option.value ||
+													(Array.isArray(value) &&
+														option.value &&
+														value?.includes(option.value))
+													? 'opacity-100'
+													: 'opacity-0'
 											)}
 										/>
 									</CommandItem>
