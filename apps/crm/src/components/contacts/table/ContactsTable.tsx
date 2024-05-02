@@ -91,6 +91,13 @@ export default function ContactsTable({
 				tiktok: (
 					<ContactInputCell columnName="tiktok" cellId={`${contact.id}_tiktok`} contact={contact} />
 				),
+				spotify: (
+					<ContactInputCell
+						columnName="spotify"
+						cellId={`${contact.id}_spotify`}
+						contact={contact}
+					/>
+				),
 				snapchat: (
 					<ContactInputCell
 						columnName="snapchat"

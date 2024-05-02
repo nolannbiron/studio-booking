@@ -42,15 +42,15 @@ export default function TableSelectableCell({
 	return (
 		<div
 			ref={ref}
-			className={cn('relative h-full pr-px', {
-				'': isExpandable && isActivated
+			className={cn('relative h-full w-full pr-px', {
+				'absolute left-0 top-0': isExpandable && isActivated
 			})}
 			onDoubleClick={() => onActive?.(true)}
 		>
 			<div
 				onClick={handleClick}
-				className={cn('flex h-full w-full select-none flex-nowrap items-center gap-1', {
-					'bg-background absolute left-0 top-0 z-20 h-fit max-h-[200px] min-h-full min-w-full max-w-[300px] rounded [&>button]:flex-wrap':
+				className={cn('grid h-full select-none flex-nowrap items-center gap-1', {
+					'bg-background absolute left-0 top-0 z-20 h-max max-h-[200px] min-h-full w-max min-w-full max-w-[300px] rounded [&>button]:flex-wrap':
 						isExpandable && isActivated,
 					'before:border-primary before:bg-primary/10 before:pointer-events-none before:absolute before:-right-0 before:-top-px before:bottom-0 before:left-0 before:z-10 before:overflow-hidden before:rounded before:border before:transition-all':
 						isActivated

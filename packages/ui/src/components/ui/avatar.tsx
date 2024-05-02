@@ -12,7 +12,7 @@ const avatarVariants = cva(
 	{
 		variants: {
 			variant: {
-				default: 'border-input border'
+				default: 'border border-transparent'
 			},
 			size: {
 				'2xs': 'h-5 w-5 rounded-sm text-[10px]',
@@ -58,7 +58,7 @@ const AvatarImage = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<AvatarPrimitive.Image
 		ref={ref}
-		className={cn('z-20 aspect-square h-full w-full rounded-full', className)}
+		className={cn('z-20 aspect-square h-full w-full', className)}
 		{...props}
 	/>
 ))

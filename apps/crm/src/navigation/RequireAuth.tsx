@@ -16,10 +16,17 @@ export default function RequireAuth({ children }: { children?: React.ReactNode }
 	const location = useLocation()
 
 	useEffect(() => {
-		if (data?.user) {
+		if (!data) return
+		if (data.user) {
 			setCurrentUser(data.user)
+		} else if (!data.user) {
+			if (isLoggedIn) {
+				logout()
+			}
+
+			navigate('/login')
 		}
-	}, [data?.user, setCurrentUser, setCurrentTeam, setTeams])
+	}, [data, setCurrentUser, setCurrentTeam, setTeams, isLoggedIn, logout, navigate])
 
 	useEffect(() => {
 		if (data?.user && !Object.keys(currentTeam).length && data.user.teams.length > 0) {

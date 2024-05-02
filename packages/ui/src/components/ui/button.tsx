@@ -22,7 +22,7 @@ const buttonVariants = cva(
 				secondary:
 					'bg-secondary text-secondary-foreground border-input hover:bg-secondary/80 border shadow-sm',
 				ghost: 'hover:bg-secondary hover:text-secondary-foreground',
-				link: 'text-primary underline-offset-4 hover:underline',
+				link: 'text-foreground/80 px-0 py-0 underline-offset-2 hover:underline',
 				contrast: [
 					'bg-foreground relative isolate inline-flex items-center justify-center rounded-lg border border-transparent py-[calc(theme(spacing[3])-1px)] text-white  shadow focus:outline-none active:pt-1.5 disabled:opacity-50 sm:py-[calc(theme(spacing[1.5])-1px)] [&>svg]:text-blue-50',
 					'after:absolute after:inset-0 after:-z-10 after:rounded-[calc(theme(borderRadius.md)-1px)] after:shadow-[shadow:inset_0_1.5px_theme(colors.white/0%),inset_0_-2px_theme(colors.white/35%)] after:transition-all after:transition-all hover:after:bg-white/10 active:after:shadow-[shadow:inset_0_0,inset_0_0] after:disabled:shadow-[shadow:inset_0_0,inset_0_0]',

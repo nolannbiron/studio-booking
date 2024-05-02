@@ -190,6 +190,46 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dicebear/converter@npm:8.0.1":
+  version: 8.0.1
+  resolution: "@dicebear/converter@npm:8.0.1"
+  dependencies:
+    "@types/json-schema": "npm:^7.0.11"
+    tmp-promise: "npm:^3.0.3"
+  peerDependencies:
+    "@resvg/resvg-js": ^2.4.1
+    exiftool-vendored: ^23.0.0
+    sharp: ^0.32.6
+  peerDependenciesMeta:
+    "@resvg/resvg-js":
+      optional: true
+    exiftool-vendored:
+      optional: true
+    sharp:
+      optional: true
+  checksum: 10c0/c0ce0187a0c608d38075345ab0f17ade6c566106a8bb4dfaaafae5bedd4433f6ce41de18bd0cbadfc954ffd35c67c49825c8d550e0fb8f06b3b24136b7d029fe
+  languageName: node
+  linkType: hard
+
+"@dicebear/core@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@dicebear/core@npm:8.0.1"
+  dependencies:
+    "@dicebear/converter": "npm:8.0.1"
+    "@types/json-schema": "npm:^7.0.11"
+  checksum: 10c0/6411017a58153dec880f2518adab7f5e6e3b349aaa8c61a3d813c69585794648f88664d1eddc6ea1a6ddece295b62cc54b53396337ae99a51e95ece5c3f45eb3
+  languageName: node
+  linkType: hard
+
+"@dicebear/initials@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@dicebear/initials@npm:8.0.1"
+  peerDependencies:
+    "@dicebear/core": ^8.0.0
+  checksum: 10c0/403f23ed9d56c136236ff243d16cae624ce6882e57251373ec92da79362cad7a27da688df668aa3e138ecf1325763f4b5fc0168188c59507a71950759ecf39d5
+  languageName: node
+  linkType: hard
+
 "@emotion/is-prop-valid@npm:^0.8.2":
   version: 0.8.8
   resolution: "@emotion/is-prop-valid@npm:0.8.8"
@@ -4094,6 +4134,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@repo/lib@workspace:packages/lib"
   dependencies:
+    "@dicebear/core": "npm:^8.0.1"
+    "@dicebear/initials": "npm:^8.0.1"
     "@otplib/core": "npm:^12.0.1"
     "@otplib/plugin-crypto": "npm:^12.0.1"
     "@otplib/plugin-thirty-two": "npm:^12.0.1"
@@ -5022,7 +5064,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.12, @types/json-schema@npm:^7.0.15, @types/json-schema@npm:^7.0.8":
+"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.11, @types/json-schema@npm:^7.0.12, @types/json-schema@npm:^7.0.15, @types/json-schema@npm:^7.0.8":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 10c0/a996a745e6c5d60292f36731dd41341339d4eeed8180bb09226e5c8d23759067692b1d88e5d91d72ee83dfc00d3aca8e7bd43ea120516c17922cbcb7c3e252db
@@ -14627,12 +14669,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tmp-promise@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "tmp-promise@npm:3.0.3"
+  dependencies:
+    tmp: "npm:^0.2.0"
+  checksum: 10c0/23b47dcb2e82b14bbd8f61ed7a9d9353cdb6a6f09d7716616cfd27d0087040cd40152965a518e598d7aabe1489b9569bf1eebde0c5fadeaf3ec8098adcebea4e
+  languageName: node
+  linkType: hard
+
 "tmp@npm:^0.0.33":
   version: 0.0.33
   resolution: "tmp@npm:0.0.33"
   dependencies:
     os-tmpdir: "npm:~1.0.2"
   checksum: 10c0/69863947b8c29cabad43fe0ce65cec5bb4b481d15d4b4b21e036b060b3edbf3bc7a5541de1bacb437bb3f7c4538f669752627fdf9b4aaf034cebd172ba373408
+  languageName: node
+  linkType: hard
+
+"tmp@npm:^0.2.0":
+  version: 0.2.3
+  resolution: "tmp@npm:0.2.3"
+  checksum: 10c0/3e809d9c2f46817475b452725c2aaa5d11985cf18d32a7a970ff25b568438e2c076c2e8609224feef3b7923fa9749b74428e3e634f6b8e520c534eef2fd24125
   languageName: node
   linkType: hard
 

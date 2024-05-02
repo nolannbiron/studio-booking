@@ -1,8 +1,14 @@
 import { useUpdateContact } from '@/api/contact/hooks/useUpdateContact'
 import TableSelectableCell from '@/components/contacts/table/row/TableSelectableCell'
 import type { TContact } from '@repo/schemas/contact'
+import { Button } from '@repo/ui/button'
 import { Input } from '@repo/ui/input'
 import { useEffect, useRef, useState } from 'react'
+
+const isLink = (columnName: keyof TContact) =>
+	['instagram', 'facebook', 'twitter', 'youtube', 'spotify', 'tiktok', 'snapchat', 'website'].includes(
+		columnName
+	)
 
 export default function ContactInputCell({
 	contact,
@@ -44,18 +50,26 @@ export default function ContactInputCell({
 
 	return (
 		<TableSelectableCell onActive={setIsInputOpen} cellId={cellId}>
-			<div className="px-2.5">
+			<div className="w-full truncate px-1 lowercase">
 				{isInputOpen ? (
 					<Input
 						variant="ghost"
 						ref={inputRef}
-						className="px-0"
+						className="px-1.5"
 						onChange={(e) => setValue(e.currentTarget.value)}
 						onBlur={() => handleSubmit(value)}
 						value={value}
 					/>
+				) : isLink(columnName) ? (
+					<Button
+						onClick={(e) => e.stopPropagation()}
+						variant="link"
+						className="h-fit w-fit max-w-full justify-start truncate !px-1.5 !py-0.5 lowercase underline"
+					>
+						<span className="truncate">{contact?.[columnName]?.toString()}</span>
+					</Button>
 				) : (
-					<div>{contact?.[columnName]?.toString()}</div>
+					<span className="truncate px-1.5">{contact?.[columnName]?.toString()}</span>
 				)}
 			</div>
 		</TableSelectableCell>

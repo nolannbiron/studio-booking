@@ -1,29 +1,59 @@
 import { fakerFR } from '@faker-js/faker'
-import { getRandomAvatarColor } from '@repo/features/auth/lib/getRandomAvatarColor'
+import { getRandomAvatarColor } from '@repo/feature-auth/lib/getRandomAvatarColor'
 import { hashPassword } from '@repo/features/auth/lib/hashPassword'
-import { getRandomTagColor } from '@repo/lib/tag-colors'
+import { getDefaultAvatarImage } from '@repo/lib/defaultAvatarImage'
+import type { TTagColorsPreset } from '@repo/lib/tag-colors'
 
 import { prisma } from './'
 
-const defaultGenres = {
-	BLUES: 'Blues',
-	CLASSICAL: 'Classique',
-	COUNTRY: 'Country',
-	DANCE: 'Dance',
-	ELECTRONIC: 'Électro',
-	HIP_HOP: 'Hip-Hop',
-	JAZZ: 'Jazz',
-	POP: 'Pop',
-	RAP: 'Rap',
-	REGGAE: 'Reggae',
-	ROCK: 'Rock',
-	SOUL: 'Soul',
-	OTHERS: 'Autres'
+const defaultGenres: {
+	[key: string]: {
+		label: string
+		color: TTagColorsPreset
+	}
+} = {
+	BLUES: {
+		label: 'Blues',
+		color: 'pastel_blue'
+	},
+	CLASSICAL: {
+		label: 'Classique',
+		color: 'pastel_green'
+	},
+	COUNTRY: {
+		label: 'Country',
+		color: 'pastel_yellow'
+	},
+	DANCE: {
+		label: 'Dance',
+		color: 'pastel_violet'
+	},
+	ELECTRONIC: {
+		label: 'Électro',
+		color: 'pastel_orange'
+	},
+	HIP_HOP: {
+		label: 'Hip-hop',
+		color: 'pastel_red'
+	},
+	JAZZ: {
+		label: 'Jazz',
+		color: 'pastel_light-green'
+	},
+	POP: { label: 'Pop', color: 'pastel_magenta' },
+	RAP: { label: 'Rap', color: 'pastel_teal' },
+	REGGAE: { label: 'Reggae', color: 'pastel_blue' },
+	ROCK: { label: 'Rock', color: 'pastel_green' },
+	SOUL: { label: 'Soul', color: 'pastel_yellow' },
+	OTHERS: { label: 'Autres', color: 'pastel_grey' }
 }
 
 const seed = async () => {
 	const firstName = fakerFR.person.firstName()
 	const lastName = fakerFR.person.lastName()
+	const fullname = `${firstName} ${lastName}`
+
+	const avatarUrl = await getDefaultAvatarImage(fullname)
 
 	const user = await prisma.user.create({
 		data: {
@@ -31,9 +61,9 @@ const seed = async () => {
 			password: await hashPassword('test'),
 			firstName: firstName,
 			lastName: lastName,
-			fullName: `${firstName} ${lastName}`,
+			fullName: fullname,
 			locale: 'fr',
-			avatarColor: getRandomAvatarColor(),
+			avatarUrl: avatarUrl,
 			emailVerified: new Date()
 		}
 	})
@@ -60,8 +90,8 @@ const seed = async () => {
 							createMany: {
 								data: Object.entries(defaultGenres).map(([key, value]) => ({
 									value: key,
-									title: value,
-									color: getRandomTagColor()
+									title: value.label,
+									color: value.color
 								}))
 							}
 						}
@@ -77,14 +107,50 @@ const seed = async () => {
 }
 
 async function createRandomContacts(teamId: string) {
-	const contacts = Array.from({ length: 10 }, (_, i) => {
-		const color = getRandomAvatarColor()
+	const contacts = Array.from({ length: 10 }, async (_, i) => {
 		const contactName = fakerFR.person.fullName()
+		const avatarUrl = await getDefaultAvatarImage(contactName)
 
 		return prisma.contact.create({
 			data: {
-				email: fakerFR.internet.email(),
+				email: fakerFR.internet.email({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
 				name: contactName,
+				instagram: fakerFR.internet.userName({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
+				facebook: fakerFR.internet.userName({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
+				twitter: fakerFR.internet.userName({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
+				youtube: fakerFR.internet.userName({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
+				spotify: fakerFR.internet.userName({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
+				tiktok: fakerFR.internet.userName({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
+				snapchat: fakerFR.internet.userName({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
+				website: fakerFR.internet.userName({
+					firstName: contactName.split(' ')[0],
+					lastName: contactName.split(' ')[1]
+				}),
+				phone: fakerFR.phone.number(),
 				team: {
 					connect: {
 						id: teamId
@@ -98,7 +164,7 @@ async function createRandomContacts(teamId: string) {
 						create: {
 							email: `test_contact_${i}@test.fr`,
 							fullName: contactName,
-							avatarColor: color,
+							avatarUrl: avatarUrl,
 							firstName: contactName.split(' ')[0] || '',
 							lastName: contactName.split(' ')[1] || '',
 							locale: 'fr',
