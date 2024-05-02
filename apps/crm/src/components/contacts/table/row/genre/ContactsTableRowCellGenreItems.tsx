@@ -13,7 +13,7 @@ export default function ContactsTableRowCellGenreItems({ genres }: Props): JSX.E
 					<div
 						style={getTagColorValues(genre.color as any)}
 						key={genre.value}
-						className="whitespace-nowrap rounded-lg px-2 py-0.5"
+						className="whitespace-nowrap rounded-md px-2 py-0.5 text-sm"
 					>
 						{genre.title}
 					</div>

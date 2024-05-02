@@ -6,6 +6,10 @@ export type TContactsTableFooterType = 'sumFilled' | 'sumEmpty' | 'averageFilled
 type TContactsTableStore = {
 	selectedCell: string
 	setSelectedCell: (cell: string) => void
+
+	selectedRows: string[]
+	setSelectedRows: (rows: string[]) => void
+
 	footer: {
 		[key: string]: TContactsTableFooterType
 	}
@@ -18,7 +22,9 @@ export const useContactsTableStore = create<TContactsTableStore>()(
 			footer: {},
 			setFooter: (footer) => set({ footer }),
 			selectedCell: '',
-			setSelectedCell: (selectedCell) => set({ selectedCell })
+			setSelectedCell: (selectedCell) => set({ selectedCell }),
+			selectedRows: [],
+			setSelectedRows: (selectedRows) => set({ selectedRows })
 		}),
 		{
 			name: 'contacts-table-storage',

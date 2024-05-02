@@ -1,25 +1,42 @@
 'use client'
 
 import { EyeNoneIcon, EyeOpenIcon } from '@radix-ui/react-icons'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import * as React from 'react'
 
 import { cn } from '../../lib/utils'
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+const inputClasses = cva(
+	'placeholder:text-muted-foreground/50 flex h-9 w-full bg-transparent px-3 py-1 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+	{
+		variants: {
+			variant: {
+				default:
+					'border-input focus-visible:ring-ring rounded-md border shadow-sm transition-colors focus-visible:ring-1',
+				ghost: 'border-0 bg-transparent shadow-none focus-visible:ring-0 '
+			}
+		},
+		defaultVariants: {
+			variant: 'default'
+		}
+	}
+)
 
-const BaseInput = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
-	return (
-		<input
-			type={type}
-			className={cn(
-				'border-input placeholder:text-muted-foreground/50 focus-visible:ring-ring flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
-				className
-			)}
-			ref={ref}
-			{...props}
-		/>
-	)
-})
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & VariantProps<typeof inputClasses>
+
+const BaseInput = React.forwardRef<HTMLInputElement, InputProps>(
+	({ className, variant, type, ...props }, ref) => {
+		return (
+			<input
+				type={type}
+				className={cn(inputClasses({ variant, className }), className)}
+				ref={ref}
+				{...props}
+			/>
+		)
+	}
+)
 
 BaseInput.displayName = 'BaseInput'
 

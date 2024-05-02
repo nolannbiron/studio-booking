@@ -35,6 +35,9 @@ export default function ContactsTableFooterCalculation(
 	const [value, setValue] = useState<TContactsTableFooterType>(footer?.[info.column.id] || undefined)
 	const [open, setOpen] = useState(false)
 
+	const isCountingEmpty = value?.includes('Empty')
+	const isAverage = value?.includes('average')
+
 	useEffect(() => {
 		setValue(footer?.[info.column.id] || undefined)
 	}, [footer, info.column.id])
@@ -43,20 +46,22 @@ export default function ContactsTableFooterCalculation(
 		const contact = row.getValue(info.column.id) as { props?: { contact?: TContact } } | undefined
 		const columnName = info.column.id as keyof TContact
 
-		if (value?.includes('Filled')) {
+		// count empty and filled
+		if (!isCountingEmpty) {
 			if (!contact || !contact.props) return acc
 
 			const key = contact?.props?.contact?.[columnName]
-			const isValid = !key ? false : Array.isArray(key) && key?.length > 0 ? true : false
 
-			return isValid ? acc + 1 : acc
-		} else if (value?.includes('Empty')) {
+			const isFilled = !!key && (!Array.isArray(key) || key.length > 0)
+
+			return isFilled ? acc + 1 : acc
+		} else if (isCountingEmpty) {
 			if (!contact || !contact.props) return acc + 1
 
 			const key = contact?.props?.contact?.[columnName]
-			const isValid = !key ? false : Array.isArray(key) && key?.length > 0 ? true : false
+			const isEmpty = !key || (Array.isArray(key) && key.length === 0)
 
-			return !isValid ? acc + 1 : acc
+			return isEmpty ? acc + 1 : acc
 		}
 
 		return acc
@@ -73,9 +78,10 @@ export default function ContactsTableFooterCalculation(
 		[value]
 	)
 
-	const countValue = value?.includes('average')
-		? `${(count / info.table.getCenterRows().length) * 100}%`
-		: count
+	const percentage =
+		!!count && info.table.getCenterRows().length ? (count / info.table.getCenterRows().length) * 100 : '-'
+
+	const countValue = isAverage ? `${percentage}%` : count
 
 	return (
 		<Combobox

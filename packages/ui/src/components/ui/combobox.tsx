@@ -11,6 +11,7 @@ export type ComboboxOption<T> = {
 	icon?: React.ReactNode
 	label: string
 	value?: T
+	element?: (label: string) => React.ReactNode
 }
 
 const normalizeString = (value: string) =>
@@ -53,6 +54,8 @@ export function Combobox<T>({
 				{children}
 			</PopoverTrigger>
 			<PopoverContent
+				onClick={(e) => e.stopPropagation()}
+				withPortal={false}
 				align={align}
 				alignOffset={alignOffset}
 				side={side}
@@ -80,14 +83,20 @@ export function Combobox<T>({
 										className="cursor-pointer gap-4"
 										key={option.label as string}
 										value={option.label}
-										onSelect={(currentValue) => {
-											currentValue !== value && onSelect(option.value as string)
+										onSelect={() => {
+											onSelect(option.value as string)
 											onOpenChange?.(false)
 										}}
 									>
 										<div className="flex w-full items-center gap-2">
 											{option.icon}
-											<span className="shrink truncate text-sm">{option.label}</span>
+											{option.element ? (
+												option.element(option.label)
+											) : (
+												<span className="shrink truncate text-sm">
+													{option.label}
+												</span>
+											)}
 										</div>
 										<IoIosCheckmarkCircle
 											className={cn(

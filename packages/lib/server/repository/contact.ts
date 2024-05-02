@@ -8,6 +8,7 @@ import type {
 	TGetContactsRequest,
 	TUpdateContactRequest
 } from '@repo/schemas/contact'
+import type { TContactGenre } from '@repo/schemas/contact/contact-genre.schema'
 import type { TContactFilters } from '@repo/schemas/filters/contact-filters.schema'
 import type { FastifyRequest } from 'fastify'
 
@@ -42,18 +43,26 @@ export class ContactRepository {
 	}
 
 	static async update(req: FastifyRequest<TUpdateContactRequest>) {
+		const { genres, ...data } = req.body
+
 		const contact = await prisma.contact.update({
 			where: req.params,
 			data: {
-				...req.body,
-				genres: {
-					connect: (req.body.genres ?? []).map((genreId) => ({ id: genreId }))
-				}
+				...data
+				// genres: {
+				// 	connect: req.body.genres?.map((genreId) => ({ id: genreId }))
+				// }
 			},
 			include: {
 				genres: true
 			}
 		})
+
+		if (genres !== undefined) {
+			const updatedContact = this.updateGenres(contact.genres, req)
+
+			return updatedContact
+		}
 
 		return contact
 	}
@@ -127,5 +136,22 @@ export class ContactRepository {
 		filters?: TContactFilters
 	): Prisma.ContactOrderByWithRelationAndSearchRelevanceInput | undefined {
 		return !!filters?.sortBy ? { [filters.sortBy]: 'desc' } : { createdAt: 'desc' }
+	}
+
+	static async updateGenres(currentGenres: TContactGenre[], req: FastifyRequest<TUpdateContactRequest>) {
+		const contact = await prisma.contact.update({
+			where: req.params,
+			data: {
+				genres: {
+					disconnect: currentGenres?.map((g) => ({ id: g.id })),
+					connect: req.body.genres?.map((genreId) => ({ id: genreId })).filter((g) => !!g.id)
+				}
+			},
+			include: {
+				genres: true
+			}
+		})
+
+		return contact
 	}
 }

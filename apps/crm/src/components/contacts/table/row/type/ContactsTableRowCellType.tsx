@@ -43,11 +43,11 @@ export default function ContactsTableRowCellType({
 	return (
 		<TableSelectableCell
 			onDelete={() => console.log('delete', value)}
-			onOpenPopoverChange={setIsOpen}
+			onActive={setIsOpen}
 			cellId={cellId}
 		>
 			<ContactTypeCombobox open={isOpen} onSelect={handleSelect} value={value}>
-				<div className="flex h-full w-full items-center gap-3 px-1.5">
+				<div className="flex h-full w-full items-center gap-3 px-1.5 py-2">
 					{contact.type ? <div>{t(`contact.type.${contact.type}`)}</div> : <></>}
 				</div>
 			</ContactTypeCombobox>

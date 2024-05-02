@@ -24,7 +24,7 @@ export default function ContactsTableRowCellGenre({
 	}, [contact.genres])
 
 	const handleSelect = (genreId: string) => {
-		if (!currentTeam.id) return
+		if (!currentTeam.id) return console.error('No team id found')
 
 		const newGenres = contact.genres?.some((g) => g.id === genreId)
 			? contact.genres.filter((g) => g.id !== genreId).map((g) => g.id)
@@ -39,18 +39,18 @@ export default function ContactsTableRowCellGenre({
 			{
 				onSuccess(data) {
 					setGenreIds(data.contact.genres?.map((g) => g.id) ?? [])
-					setIsOpen(false)
+					// setIsOpen(false)
 				}
 			}
 		)
 	}
 
 	return (
-		<TableSelectableCell isExpandable onOpenPopoverChange={setIsOpen} cellId={cellId}>
+		<TableSelectableCell isExpandable onActive={setIsOpen} cellId={cellId}>
 			<ContactGenreCombobox open={isOpen} onSelect={handleSelect} value={genreIds}>
-				<div className="flex h-full w-full flex-nowrap items-center gap-1 overflow-hidden truncate px-1.5">
+				<button className="flex h-full w-full flex-nowrap items-center gap-1.5 overflow-hidden truncate px-1.5 py-2">
 					<ContactsTableRowCellGenreItems genres={contact.genres ?? []} />
-				</div>
+				</button>
 			</ContactGenreCombobox>
 		</TableSelectableCell>
 	)

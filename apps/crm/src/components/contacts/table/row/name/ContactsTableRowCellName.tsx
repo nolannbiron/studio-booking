@@ -6,16 +6,20 @@ import { Link } from 'react-router-dom'
 
 export default function ContactsTableRowCellName({
 	contact,
-	cellId
+	cellId,
+	checked,
+	onCheckedChange
 }: {
 	contact: TContact
 	cellId: string
+	checked?: boolean
+	onCheckedChange?: (checked: boolean) => void
 }): JSX.Element {
 	return (
 		<TableSelectableCell cellId={cellId}>
 			<div className="flex h-full max-w-full items-center gap-3 pl-5 pr-3">
 				<div className="flex">
-					<Checkbox />
+					<Checkbox checked={checked} onCheckedChange={onCheckedChange} />
 				</div>
 				<Link
 					to={`/contact/${contact.id}`}

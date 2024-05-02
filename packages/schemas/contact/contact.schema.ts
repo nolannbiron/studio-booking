@@ -20,10 +20,11 @@ export const ZContactSchema = z.object({
 	spotify: z.string().nullish(),
 	snapchat: z.string().nullish(),
 	website: z.string().nullish(),
-	user: z.lazy(() => ZPublicUserSchema)
+	user: z.lazy(() => ZPublicUserSchema),
+	teamId: z.string()
 })
 
-export const ZCreateContactSchema = ZContactSchema.omit({ user: true, genres: true })
+export const ZCreateContactSchema = ZContactSchema.omit({ user: true, genres: true, teamId: true })
 export const ZUpdateContactSchema = ZContactSchema.omit({ user: true, email: true, genres: true })
 	.extend({
 		genres: z.array(z.string()).nullish()
