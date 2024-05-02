@@ -13,7 +13,7 @@ export default function RequireRole({
 	const team = useTeamStore((state) => state.currentTeam)
 
 	if (!['root', role].includes(team?.role)) {
-		return <Navigate to="/dashboard" state={{ from: location.state }} />
+		return <Navigate to="/contacts" state={{ from: location.state }} />
 	}
 
 	return <>{children}</>

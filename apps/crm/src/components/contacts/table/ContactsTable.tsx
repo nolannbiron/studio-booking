@@ -23,43 +23,46 @@ export default function ContactsTable({
 	isLoading: boolean
 }): JSX.Element {
 	const ref = useRef<HTMLTableElement>(null)
-	const { setSelectedCell, setSelectedRows, selectedRows } = useContactsTableStore()
+	const { setSelectedCell, setRowSelection, rowSelection } = useContactsTableStore()
 	const [columnsState] = useState<typeof columns>(() => [...columns])
 
 	useIsOutsideClick(ref, () => setSelectedCell(''))
 
-	const handleSelectAll = () => {
-		if (selectedRows.length === contacts.length) {
-			setSelectedRows([])
-		} else {
-			setSelectedRows(contacts.map((contact) => contact.id as string))
-		}
-	}
-
 	const handleCheckedChange = useCallback(
-		(id: string) => {
-			if (selectedRows.includes(id)) {
-				setSelectedRows(selectedRows.filter((d) => d !== id))
+		(id: number) => {
+			if (rowSelection[id]) {
+				const { [id]: _, ...rest } = rowSelection
+				setRowSelection(rest)
+				setTimeout(() => setSelectedCell(''), 0)
 			} else {
-				setSelectedRows([...selectedRows, id])
+				setRowSelection({
+					...rowSelection,
+					[id]: true
+				})
 			}
 		},
-		[selectedRows, setSelectedRows]
+		[rowSelection, setRowSelection, setSelectedCell]
 	)
 
 	const data = useMemo<TContactsTableRow[]>(
 		() =>
-			contacts.map((contact) => ({
+			contacts.map((contact, i) => ({
 				name: (
 					<ContactsTableRowCellName
-						checked={selectedRows.includes(contact.id as string)}
-						onCheckedChange={() => handleCheckedChange(contact.id as string)}
+						checked={rowSelection[i] ?? false}
+						onCheckedChange={() => handleCheckedChange(i)}
 						cellId={`${contact.id}_name`}
 						contact={contact}
 					/>
 				),
 				type: <ContactsTableRowCellType cellId={`${contact.id}_type`} contact={contact} />,
 				genres: <ContactsTableRowCellGenre cellId={`${contact.id}_genre`} contact={contact} />,
+				email: (
+					<ContactInputCell columnName="email" cellId={`${contact.id}_email`} contact={contact} />
+				),
+				phone: (
+					<ContactInputCell columnName="phone" cellId={`${contact.id}_phone`} contact={contact} />
+				),
 				instagram: (
 					<ContactInputCell
 						columnName="instagram"
@@ -113,14 +116,18 @@ export default function ContactsTable({
 					/>
 				)
 			})),
-		[contacts, selectedRows, handleCheckedChange]
+		[contacts, rowSelection, handleCheckedChange]
 	)
 
 	const table = useReactTable({
 		data,
 		columns: columnsState,
 		columnResizeMode: 'onChange',
-		// columnResizeDirection: 'ltr',
+		enableRowSelection: true,
+		onRowSelectionChange: setRowSelection,
+		state: {
+			rowSelection
+		},
 		getCoreRowModel: getCoreRowModel()
 	})
 
@@ -153,14 +160,20 @@ export default function ContactsTable({
 									{header.id === 'name' ? (
 										<ContactsTableHeadCellName
 											header={header}
-											onCheckedChange={handleSelectAll}
+											onCheckedChange={table.getToggleAllRowsSelectedHandler()}
 											checked={
-												selectedRows.length === contacts.length
+												table.getIsAllRowsSelected()
 													? true
-													: selectedRows.length > 0
+													: table.getIsSomeRowsSelected()
 														? 'indeterminate'
 														: false
 											}
+											// selectedRows.length === contacts.length
+											// 	? true
+											// 	: selectedRows.length > 0
+											// 		? 'indeterminate'
+											// 		: false
+											// }
 										/>
 									) : (
 										<ContactsTableHeadCell header={header} table={table} />
@@ -172,7 +185,7 @@ export default function ContactsTable({
 				</thead>
 				<tbody>
 					{table.getRowModel().rows.map((row) => (
-						<tr key={row.id}>
+						<tr key={row.id} className="relative">
 							{row.getVisibleCells().map((cell) => (
 								<td
 									key={cell.id}
@@ -184,7 +197,9 @@ export default function ContactsTable({
 									className={cn(
 										'bg-background before:border-input before:border-t-tranparent relative h-10 w-auto p-0 text-sm font-medium before:absolute before:left-0 before:top-0 before:h-full before:w-full before:border-b before:border-r',
 										{
-											'sticky left-0 z-30': cell.column.id === 'name'
+											'sticky left-0 z-30': cell.column.id === 'name',
+											'before:bg-primary/10 before:absolute before:bottom-0 before:left-0 before:right-0 before:top-0':
+												rowSelection[row.id]
 										}
 									)}
 								>

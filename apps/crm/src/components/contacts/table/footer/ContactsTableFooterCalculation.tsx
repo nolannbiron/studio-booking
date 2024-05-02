@@ -79,7 +79,9 @@ export default function ContactsTableFooterCalculation(
 	)
 
 	const percentage =
-		!!count && info.table.getCenterRows().length ? (count / info.table.getCenterRows().length) * 100 : '-'
+		!isNaN(count) && info.table.getCenterRows().length
+			? (count / info.table.getCenterRows().length) * 100
+			: '-'
 
 	const countValue = isAverage ? `${percentage}%` : count
 

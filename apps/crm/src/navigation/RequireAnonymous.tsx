@@ -6,7 +6,7 @@ export default function RequireAnonymous({ children }: { children?: React.ReactN
 	const location = useLocation()
 
 	if (isLoggedIn) {
-		return <Navigate to={location?.state?.from ?? '/dashboard'} />
+		return <Navigate to={location?.state?.from ?? '/contacts'} />
 	}
 
 	return children

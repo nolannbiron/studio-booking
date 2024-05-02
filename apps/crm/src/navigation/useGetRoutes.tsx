@@ -1,17 +1,7 @@
 import { useTranslation } from '@repo/i18n/next/client'
 import { Loading } from '@repo/ui/loading'
 import { Suspense, lazy } from 'react'
-import {
-	FiBell,
-	FiDollarSign,
-	FiFile,
-	FiHome,
-	FiSettings,
-	FiShare,
-	FiUser,
-	FiUsers,
-	FiZap
-} from 'react-icons/fi'
+import { FiBell, FiDollarSign, FiFile, FiSettings, FiShare, FiUser, FiUsers, FiZap } from 'react-icons/fi'
 
 import type { TRoutesConfig } from './types'
 
@@ -115,18 +105,6 @@ export const useGetRoutes = (): TRoutesConfig => {
 						...baseRoutes.navbar.main.routes[0]
 					],
 					[
-						{
-							path: '/dashboard',
-							name: t('navbar.dashboard.home'),
-							icon: <FiHome />,
-							element: (
-								<Suspense fallback={<Loading withText fullScreen />}>
-									<RequireAuth>
-										<></>
-									</RequireAuth>
-								</Suspense>
-							)
-						},
 						{
 							path: '/contacts',
 							name: t('navbar.dashboard.contacts'),

@@ -4,10 +4,12 @@ import ContactsTableFooterTotalCell from '@/components/contacts/table/footer/Con
 import { createColumnHelper } from '@tanstack/react-table'
 import {
 	PiCaretDownFill,
+	PiEnvelope,
 	PiFacebookLogo,
 	PiGlobe,
 	PiGuitar,
 	PiInstagramLogo,
+	PiPhone,
 	PiSnapchatLogo,
 	PiSpotifyLogo,
 	PiTiktokLogo,
@@ -45,6 +47,32 @@ export const columns = [
 			<div className="flex items-center gap-2">
 				<PiGuitar className="text-muted-foreground" />
 				Genre
+			</div>
+		),
+		minSize: 100,
+		maxSize: 200,
+		cell: (info) => info.getValue(),
+		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
+	}),
+	columnHelper.accessor('email', {
+		id: 'email',
+		header: () => (
+			<div className="flex items-center gap-2">
+				<PiEnvelope className="text-muted-foreground" />
+				Email
+			</div>
+		),
+		minSize: 100,
+		maxSize: 200,
+		cell: (info) => info.getValue(),
+		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
+	}),
+	columnHelper.accessor('phone', {
+		id: 'phone',
+		header: () => (
+			<div className="flex items-center gap-2">
+				<PiPhone className="text-muted-foreground" />
+				Phone
 			</div>
 		),
 		minSize: 100,
@@ -157,3 +185,18 @@ export const columns = [
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	})
 ]
+
+export type TContactsRowId =
+	| 'name'
+	| 'type'
+	| 'genres'
+	| 'email'
+	| 'phone'
+	| 'instagram'
+	| 'facebook'
+	| 'twitter'
+	| 'youtube'
+	| 'tiktok'
+	| 'spotify'
+	| 'snapchat'
+	| 'website'

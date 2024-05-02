@@ -1,3 +1,4 @@
+import type { RowSelectionState, Updater } from '@tanstack/react-table'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -7,8 +8,8 @@ type TContactsTableStore = {
 	selectedCell: string
 	setSelectedCell: (cell: string) => void
 
-	selectedRows: string[]
-	setSelectedRows: (rows: string[]) => void
+	rowSelection: RowSelectionState
+	setRowSelection: (state: Updater<RowSelectionState>) => void
 
 	footer: {
 		[key: string]: TContactsTableFooterType
@@ -23,8 +24,18 @@ export const useContactsTableStore = create<TContactsTableStore>()(
 			setFooter: (footer) => set({ footer }),
 			selectedCell: '',
 			setSelectedCell: (selectedCell) => set({ selectedCell }),
-			selectedRows: [],
-			setSelectedRows: (selectedRows) => set({ selectedRows })
+			rowSelection: {},
+			setRowSelection: (rowSelection) => {
+				if (typeof rowSelection === 'function') {
+					set((state) => {
+						const updatedRowSelection = rowSelection(state.rowSelection)
+						return { rowSelection: updatedRowSelection }
+					})
+					return
+				}
+
+				set({ rowSelection: rowSelection })
+			}
 		}),
 		{
 			name: 'contacts-table-storage',

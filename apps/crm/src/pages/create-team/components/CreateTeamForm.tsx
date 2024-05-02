@@ -49,7 +49,7 @@ export default function CreateTeamForm(): JSX.Element {
 			{
 				onSuccess: (data) => {
 					setCurrentTeam({ ...data.team, role: 'OWNER' })
-					navigate('/dashboard')
+					navigate('/')
 				},
 				onError: (error) => {
 					if (error?.toString().includes('slug-not-available')) {

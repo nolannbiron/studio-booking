@@ -10,6 +10,10 @@ const isLink = (columnName: keyof TContact) =>
 		columnName
 	)
 
+const isEmail = (columnName: keyof TContact) => ['email'].includes(columnName)
+
+const isPhone = (columnName: keyof TContact) => ['phone'].includes(columnName)
+
 export default function ContactInputCell({
 	contact,
 	cellId,
@@ -61,6 +65,16 @@ export default function ContactInputCell({
 						value={value}
 					/>
 				) : isLink(columnName) ? (
+					<Button
+						onClick={(e) => e.stopPropagation()}
+						variant="link"
+						className="h-fit w-fit max-w-full justify-start truncate !px-1.5 !py-0.5 lowercase underline"
+					>
+						<span className="truncate">{contact?.[columnName]?.toString()}</span>
+					</Button>
+				) : isPhone(columnName) ? (
+					<span className="truncate px-1.5">{contact?.[columnName]?.toString()}</span>
+				) : isEmail(columnName) ? (
 					<Button
 						onClick={(e) => e.stopPropagation()}
 						variant="link"

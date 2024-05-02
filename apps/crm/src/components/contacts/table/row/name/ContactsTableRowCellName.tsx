@@ -19,7 +19,11 @@ export default function ContactsTableRowCellName({
 		<TableSelectableCell cellId={cellId}>
 			<div className="flex h-full max-w-full items-center gap-3 pl-5 pr-3">
 				<div className="flex">
-					<Checkbox checked={checked} onCheckedChange={onCheckedChange} />
+					<Checkbox
+						onClick={(e) => e.stopPropagation()}
+						checked={checked}
+						onCheckedChange={onCheckedChange}
+					/>
 				</div>
 				<Link
 					to={`/contact/${contact.id}`}
