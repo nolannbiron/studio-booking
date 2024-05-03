@@ -2,10 +2,12 @@ import MainLayout from '@/components/layouts/MainLayout'
 import { useTranslation } from '@repo/i18n/next/client'
 import { Loading } from '@repo/ui/loading'
 import { Suspense, lazy } from 'react'
-import { FiBell, FiDollarSign, FiFile, FiSettings, FiShare, FiUser, FiUsers, FiZap } from 'react-icons/fi'
+import { FiBell, FiDollarSign, FiSettings, FiShare, FiUser, FiUsers } from 'react-icons/fi'
+import { TbFile, TbSquareRoundedCheck, TbUsers } from 'react-icons/tb'
 
 import type { TRoutesConfig } from './types'
 
+const ContactActivityPage = lazy(() => import('@/pages/contact/activity/ContactActivityPage'))
 const ContactPage = lazy(() => import('@/pages/contact/ContactPage'))
 const RequireAnonymous = lazy(() => import('@/navigation/RequireAnonymous'))
 const RequireAuth = lazy(() => import('@/navigation/RequireAuth'))
@@ -83,7 +85,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						{
 							path: '/tasks',
 							name: t('navbar.dashboard.tasks'),
-							icon: <FiZap />,
+							icon: <TbSquareRoundedCheck />,
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
@@ -95,7 +97,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						{
 							path: '/notes',
 							name: t('navbar.dashboard.notes'),
-							icon: <FiFile />,
+							icon: <TbFile />,
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
@@ -110,7 +112,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						{
 							path: '/contacts',
 							name: t('navbar.dashboard.contacts'),
-							icon: <FiUsers />,
+							icon: <TbUsers />,
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
@@ -208,12 +210,42 @@ export const useGetRoutes = (): TRoutesConfig => {
 				),
 				children: [
 					{
-						path: '/contact/:id/edit',
+						path: '/contact/:id/activity',
 						element: (
 							<Suspense fallback={<Loading withText fullScreen />}>
-								<RequireAuth>
-									<>edit</>
-								</RequireAuth>
+								<ContactActivityPage />
+							</Suspense>
+						)
+					},
+					{
+						path: '/contact/:id/notes',
+						element: (
+							<Suspense fallback={<Loading withText fullScreen />}>
+								<></>
+							</Suspense>
+						)
+					},
+					{
+						path: '/contact/:id/tasks',
+						element: (
+							<Suspense fallback={<Loading withText fullScreen />}>
+								<></>
+							</Suspense>
+						)
+					},
+					{
+						path: '/contact/:id/files',
+						element: (
+							<Suspense fallback={<Loading withText fullScreen />}>
+								<></>
+							</Suspense>
+						)
+					},
+					{
+						path: '/contact/:id/projects',
+						element: (
+							<Suspense fallback={<Loading withText fullScreen />}>
+								<></>
 							</Suspense>
 						)
 					}

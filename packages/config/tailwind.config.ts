@@ -102,7 +102,7 @@ const config = {
 					border: ' 0 0% 89.8%',
 					input: ' 0 0% 89.8%',
 					ring: '231 90% 64%',
-					radius: '0.65rem'
+					radius: '0.75rem'
 				}
 			},
 			darkVariables: {

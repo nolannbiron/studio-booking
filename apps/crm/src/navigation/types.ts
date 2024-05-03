@@ -35,3 +35,13 @@ export interface TRoutesConfig {
 	settings: TSettingsRoutes
 	general: (RouteObject & { layout?: React.ReactNode })[]
 }
+
+export enum EContactRoutes {
+	ACTIVITY = 'activity',
+	NOTES = 'notes',
+	FILES = 'files',
+	TASKS = 'tasks',
+	PROJECTS = 'projects'
+}
+
+export type TContactRoutes = EContactRoutes

@@ -47,11 +47,12 @@ export default function Routing(): JSX.Element {
 				if (route.layout) {
 					return (
 						<Route key={route.path} element={route.layout}>
-							<Route path={route.path} element={route.element} />
-							{!!route.children?.length &&
-								route.children.map((child) => (
-									<Route key={child.path} path={child.path} element={child.element} />
-								))}
+							<Route path={route.path} element={route.element}>
+								{!!route.children?.length &&
+									route.children.map((child) => (
+										<Route key={child.path} path={child.path} element={child.element} />
+									))}
+							</Route>
 						</Route>
 					)
 				}

@@ -30,7 +30,7 @@ export default function SidebarContent({ onClick }: { onClick?: () => void }): J
 									<SidebarItem
 										{...route}
 										key={route.path}
-										isActive={pathname.includes(route.path)}
+										isActive={pathname === route.path}
 									/>
 								))}
 						</div>
