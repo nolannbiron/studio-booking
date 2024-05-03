@@ -48,11 +48,23 @@ export default function Routing(): JSX.Element {
 					return (
 						<Route key={route.path} element={route.layout}>
 							<Route path={route.path} element={route.element} />
+							{!!route.children?.length &&
+								route.children.map((child) => (
+									<Route key={child.path} path={child.path} element={child.element} />
+								))}
 						</Route>
 					)
 				}
 
-				return <Route key={route.path} path={route.path} element={route.element} />
+				return (
+					<>
+						<Route key={route.path} path={route.path} element={route.element} />
+						{route.children &&
+							route.children.map((child) => (
+								<Route key={child.path} path={child.path} element={child.element} />
+							))}
+					</>
+				)
 			})}
 		</Routes>
 	)

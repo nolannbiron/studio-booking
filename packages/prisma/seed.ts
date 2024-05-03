@@ -3,8 +3,15 @@ import { getRandomAvatarColor } from '@repo/feature-auth/lib/getRandomAvatarColo
 import { hashPassword } from '@repo/features/auth/lib/hashPassword'
 import { getDefaultAvatarImage } from '@repo/lib/defaultAvatarImage'
 import type { TTagColorsPreset } from '@repo/lib/tag-colors'
+import type { TTeam } from '@repo/schemas/team'
 
 import { prisma } from './'
+import type { ContactType } from './enums'
+
+const randomContactType = () => {
+	const types: ContactType[] = ['ARTIST', 'MANAGER', 'LABEL', 'BAND']
+	return types[Math.floor(Math.random() * types.length)]
+}
 
 const defaultGenres: {
 	[key: string]: {
@@ -97,26 +104,42 @@ const seed = async () => {
 						}
 					}
 				}
+			},
+			include: {
+				team: {
+					include: {
+						genres: true
+					}
+				}
 			}
 		})
 
-		createRandomContacts(membership.teamId)
+		createRandomContacts(membership.team)
 	}
 
 	console.log(`User created: ${user.email}`)
 }
 
-async function createRandomContacts(teamId: string) {
-	const contacts = Array.from({ length: 10 }, async (_, i) => {
+async function createRandomContacts(team: TTeam) {
+	const contacts = Array.from({ length: fakerFR.number.int({ min: 15, max: 50 }) }, async (_, i) => {
 		const contactName = fakerFR.person.fullName()
 		const avatarUrl = await getDefaultAvatarImage(contactName)
 
+		const shouldCreateContact = Math.random() > 0.5
+
+		const randomBetween0and4 = Math.floor(Math.random() * 5)
+
+		const randomGenres = team.genres.sort(() => 0.5 - Math.random()).slice(0, randomBetween0and4)
+
 		return prisma.contact.create({
 			data: {
-				email: fakerFR.internet.email({
-					firstName: contactName.split(' ')[0],
-					lastName: contactName.split(' ')[1]
-				}),
+				type: randomContactType(),
+				email: shouldCreateContact
+					? fakerFR.internet.email({
+							firstName: contactName.split(' ')[0],
+							lastName: contactName.split(' ')[1]
+						})
+					: undefined,
 				name: contactName,
 				instagram: fakerFR.internet.userName({
 					firstName: contactName.split(' ')[0],
@@ -153,25 +176,32 @@ async function createRandomContacts(teamId: string) {
 				phone: fakerFR.phone.number(),
 				team: {
 					connect: {
-						id: teamId
+						id: team.id
 					}
 				},
-				user: {
-					connectOrCreate: {
-						where: {
-							email: `test_contact_${i}@test.fr`
-						},
-						create: {
-							email: `test_contact_${i}@test.fr`,
-							fullName: contactName,
-							avatarUrl: avatarUrl,
-							firstName: contactName.split(' ')[0] || '',
-							lastName: contactName.split(' ')[1] || '',
-							locale: 'fr',
-							emailVerified: new Date()
+				genres: {
+					connect: randomGenres.map((genre) => ({ id: genre.id }))
+				},
+				...(shouldCreateContact
+					? {
+							user: {
+								connectOrCreate: {
+									where: {
+										email: `test_contact_${i}@test.fr`
+									},
+									create: {
+										email: `test_contact_${i}@test.fr`,
+										fullName: contactName,
+										avatarUrl: avatarUrl,
+										firstName: contactName.split(' ')[0] || '',
+										lastName: contactName.split(' ')[1] || '',
+										locale: 'fr',
+										emailVerified: new Date()
+									}
+								}
+							}
 						}
-					}
-				}
+					: {})
 			}
 		})
 	})

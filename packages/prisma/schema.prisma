@@ -210,23 +210,9 @@ enum ContactType {
     BAND
     LABEL
     MANAGER
+    CAMERAMAN
+    PHOTOGRAPHER
 }
-
-// enum ContactGenreEnum {
-//     BLUES
-//     CLASSICAL
-//     COUNTRY
-//     DANCE
-//     ELECTRONIC
-//     HIP_HOP
-//     JAZZ
-//     POP
-//     RAP
-//     REGGAE
-//     ROCK
-//     SOUL
-//     OTHERS
-// }
 
 model ContactGenre {
     id    String @id @default(uuid())
@@ -249,7 +235,7 @@ model ContactGenre {
 model Contact {
     id    String  @id @default(uuid())
     name  String
-    email String
+    email String?
     phone String?
 
     type   ContactType?
@@ -270,9 +256,48 @@ model Contact {
     team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
     teamId String
 
-    user   User   @relation(fields: [userId], references: [id])
-    userId String
+    user   User?   @relation(fields: [userId], references: [id])
+    userId String?
 
     @@unique([teamId, userId])
     @@map("contacts")
 }
+
+// model View {
+//     id      String   @id @default(uuid())
+//     name    String
+//     columns Column[]
+// }
+
+// enum ColumnType {
+//     TEXT
+//     NUMBER
+//     CHECKBOX
+//     DATE
+//     RATING
+//     TIME
+//     SELECT
+//     MULTI_SELECT
+//     CURRENCY
+//     USER
+//     LOCATION
+//     PHONE_NUMBER
+//     EMAIL
+//     URL
+// }
+
+// model Column {
+//     id          String     @id @default(uuid())
+//     name        String
+//     order       Int
+//     description String?
+//     type        ColumnType
+
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
+
+//     view   View   @relation(fields: [viewId], references: [id])
+//     viewId String
+
+//     @@map("columns")
+// }

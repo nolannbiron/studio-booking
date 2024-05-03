@@ -12,9 +12,7 @@ import { cn } from '@repo/ui/lib/utils'
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useCallback, useMemo, useRef, useState } from 'react'
 
-export type TContactsTableRow = {
-	[key in keyof TContact]?: JSX.Element
-}
+export type TContactsTableRow = Partial<Record<keyof TContact | 'new', JSX.Element>>
 
 export default function ContactsTable({
 	contacts
@@ -132,14 +130,14 @@ export default function ContactsTable({
 	})
 
 	return (
-		<div tabIndex={-1} className="h-full w-full max-w-full overflow-x-scroll focus-visible:outline-none">
+		<div tabIndex={-1} className="w-full max-w-full flex-1 overflow-scroll focus-visible:outline-none">
 			<table
 				ref={ref}
 				style={{
 					width: table.getCenterTotalSize()
 				}}
 			>
-				<thead>
+				<thead className="sticky top-0 z-50">
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr key={headerGroup.id}>
 							{headerGroup.headers.map((header) => (
@@ -183,8 +181,8 @@ export default function ContactsTable({
 						</tr>
 					))}
 				</thead>
-				<tbody>
-					{table.getRowModel().rows.map((row) => (
+				<tbody className="group">
+					{table.getRowModel().rows.map((row, index) => (
 						<tr key={row.id} className="relative">
 							{row.getVisibleCells().map((cell) => (
 								<td
@@ -199,7 +197,9 @@ export default function ContactsTable({
 										{
 											'sticky left-0 z-30': cell.column.id === 'name',
 											'before:bg-primary/10 before:absolute before:bottom-0 before:left-0 before:right-0 before:top-0':
-												rowSelection[row.id]
+												rowSelection[row.id],
+											'before:border-b-transparent':
+												index === table.getRowModel().rows.length - 1
 										}
 									)}
 								>
@@ -209,7 +209,7 @@ export default function ContactsTable({
 						</tr>
 					))}
 				</tbody>
-				<tfoot>
+				<tfoot className="sticky bottom-0 z-50">
 					{table.getFooterGroups().map((footerGroup) => (
 						<tr key={footerGroup.id}>
 							{footerGroup.headers.map((header) => (
@@ -221,7 +221,7 @@ export default function ContactsTable({
 										maxWidth: `${header.column.columnDef.maxSize}px`
 									}}
 									className={cn(
-										'bg-background before:border-input before:border-t-tranparent relative h-10 p-0 text-sm font-medium before:absolute before:left-0 before:top-0 before:h-full before:w-full before:border-b before:border-r',
+										'bg-background before:border-input relative h-10 p-0 text-sm font-medium before:absolute before:left-0 before:top-0 before:h-full before:w-full before:border-r before:border-t before:border-b-transparent',
 										{
 											'sticky left-0 z-30 block': header.id === 'name'
 										}

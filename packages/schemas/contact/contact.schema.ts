@@ -8,7 +8,7 @@ import { ZContactGenreSchema } from './contact-genre.schema'
 export const ZContactSchema = z.object({
 	id: z.string(),
 	name: z.string().min(3),
-	email: z.string().email(),
+	email: z.string().email().nullish(),
 	phone: z.string().nullish(),
 	type: z.nativeEnum(ContactType).nullish(),
 	genres: z.array(ZContactGenreSchema).nullish(),
@@ -20,12 +20,12 @@ export const ZContactSchema = z.object({
 	spotify: z.string().nullish(),
 	snapchat: z.string().nullish(),
 	website: z.string().nullish(),
-	user: z.lazy(() => ZPublicUserSchema),
+	user: z.lazy(() => ZPublicUserSchema).nullish(),
 	teamId: z.string()
 })
 
-export const ZCreateContactSchema = ZContactSchema.omit({ user: true, genres: true, teamId: true })
-export const ZUpdateContactSchema = ZContactSchema.omit({ user: true, email: true, genres: true })
+export const ZCreateContactSchema = ZContactSchema.omit({ user: true, genres: true, teamId: true, id: true })
+export const ZUpdateContactSchema = ZContactSchema.omit({ id: true, user: true, email: true, genres: true })
 	.extend({
 		genres: z.array(z.string()).nullish()
 	})

@@ -9,6 +9,14 @@ import type { HeaderContext } from '@tanstack/react-table'
 import { useEffect, useMemo, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 
+const formatNumberToPercentage = (number: number) => {
+	if (isNaN(number)) return '-'
+	// if has decimal
+	if (number % 1 !== 0) return number.toFixed(1)
+
+	return number
+}
+
 const options: ComboboxOption<TContactsTableFooterType>[] = [
 	{
 		label: 'Count empty',
@@ -80,7 +88,7 @@ export default function ContactsTableFooterCalculation(
 
 	const percentage =
 		!isNaN(count) && info.table.getCenterRows().length
-			? (count / info.table.getCenterRows().length) * 100
+			? formatNumberToPercentage((count / info.table.getCenterRows().length) * 100)
 			: '-'
 
 	const countValue = isAverage ? `${percentage}%` : count

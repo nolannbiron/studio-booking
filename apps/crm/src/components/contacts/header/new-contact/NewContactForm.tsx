@@ -23,7 +23,6 @@ export default function NewContactForm({ onClose }: { onClose: () => void }): JS
 	})
 
 	const handleSubmit = (values: TCreateContact) => {
-		console.log('values', values)
 		if (!currentTeam.id) return console.error('Team not found')
 
 		mutate(
@@ -49,7 +48,11 @@ export default function NewContactForm({ onClose }: { onClose: () => void }): JS
 								Email<sup className="text-red-600">*</sup>
 							</FormLabel>
 							<FormControl>
-								<Input placeholder="john.doe@acme.com" {...field} />
+								<Input
+									placeholder="john.doe@acme.com"
+									{...field}
+									value={field.value ?? undefined}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -92,7 +95,13 @@ export default function NewContactForm({ onClose }: { onClose: () => void }): JS
 					<Button type="button" onClick={onClose} size="md" variant="outline">
 						{t('button.cancel')}
 					</Button>
-					<Button size="md" disabled={!form.getValues().email} isLoading={isPending}>
+					<Button
+						size="md"
+						type="submit"
+						className="pointer-events-auto"
+						disabled={!form.getValues().email}
+						isLoading={isPending}
+					>
 						{t('button.save')}
 					</Button>
 				</div>

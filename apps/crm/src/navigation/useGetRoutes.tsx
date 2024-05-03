@@ -1,3 +1,4 @@
+import MainLayout from '@/components/layouts/MainLayout'
 import { useTranslation } from '@repo/i18n/next/client'
 import { Loading } from '@repo/ui/loading'
 import { Suspense, lazy } from 'react'
@@ -5,6 +6,7 @@ import { FiBell, FiDollarSign, FiFile, FiSettings, FiShare, FiUser, FiUsers, FiZ
 
 import type { TRoutesConfig } from './types'
 
+const ContactPage = lazy(() => import('@/pages/contact/ContactPage'))
 const RequireAnonymous = lazy(() => import('@/navigation/RequireAnonymous'))
 const RequireAuth = lazy(() => import('@/navigation/RequireAuth'))
 const LoginPage = lazy(() => import('@/pages/auth/login/LoginPage'))
@@ -194,6 +196,29 @@ export const useGetRoutes = (): TRoutesConfig => {
 		},
 		general: [
 			...baseRoutes.general,
+			{
+				path: '/contact/:id',
+				layout: <MainLayout />,
+				element: (
+					<Suspense fallback={<Loading withText fullScreen />}>
+						<RequireAuth>
+							<ContactPage />
+						</RequireAuth>
+					</Suspense>
+				),
+				children: [
+					{
+						path: '/contact/:id/edit',
+						element: (
+							<Suspense fallback={<Loading withText fullScreen />}>
+								<RequireAuth>
+									<>edit</>
+								</RequireAuth>
+							</Suspense>
+						)
+					}
+				]
+			},
 			{
 				path: '/create-team',
 				element: (

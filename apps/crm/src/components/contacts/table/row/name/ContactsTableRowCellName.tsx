@@ -15,6 +15,10 @@ export default function ContactsTableRowCellName({
 	checked?: boolean
 	onCheckedChange?: (checked: boolean) => void
 }): JSX.Element {
+	const avatarUser = contact.user
+		? contact.user
+		: { firstName: contact.name?.split(' ')[0], lastName: contact.name?.split(' ')[1] }
+
 	return (
 		<TableSelectableCell cellId={cellId}>
 			<div className="flex h-full max-w-full items-center gap-3 pl-5 pr-3">
@@ -29,7 +33,7 @@ export default function ContactsTableRowCellName({
 					to={`/contact/${contact.id}`}
 					className="hover:bg-muted flex cursor-pointer items-center gap-2 truncate rounded-lg py-0.5 pl-1 pr-1.5 transition-all"
 				>
-					<UserAvatar user={contact.user} size="2xs" />
+					<UserAvatar user={avatarUser} size="2xs" />
 					<span className="before:bg-muted relative truncate before:absolute before:bottom-0 before:h-px before:w-full">
 						{contact.name}
 					</span>

@@ -1,7 +1,9 @@
 import type { TContactsTableRow } from '@/components/contacts/table/ContactsTable'
 import ContactsTableFooterCalculation from '@/components/contacts/table/footer/ContactsTableFooterCalculation'
 import ContactsTableFooterTotalCell from '@/components/contacts/table/footer/ContactsTableFooterTotalCell'
+import { Button } from '@repo/ui/button'
 import { createColumnHelper } from '@tanstack/react-table'
+import { FiPlus } from 'react-icons/fi'
 import {
 	PiCaretDownFill,
 	PiEnvelope,
@@ -37,7 +39,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -50,7 +52,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -63,7 +65,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -76,7 +78,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -89,7 +91,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -102,7 +104,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -115,7 +117,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -128,7 +130,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -141,7 +143,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -154,7 +156,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -167,7 +169,7 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
 	}),
@@ -180,9 +182,23 @@ export const columns = [
 			</div>
 		),
 		minSize: 100,
-		maxSize: 200,
+		maxSize: 400,
 		cell: (info) => info.getValue(),
 		footer: (info) => <ContactsTableFooterCalculation key={info.header.id} {...info} />
+	}),
+	columnHelper.accessor('new', {
+		id: 'new',
+		header: () => (
+			<div className="flex items-center gap-2">
+				<Button variant="ghost" size="icon-xs">
+					<FiPlus className="text-muted-foreground" />
+				</Button>
+			</div>
+		),
+		minSize: 100,
+		maxSize: 400,
+		cell: (info) => info.getValue(),
+		footer: () => <></>
 	})
 ]
 

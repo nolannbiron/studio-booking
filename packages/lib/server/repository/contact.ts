@@ -22,20 +22,24 @@ export class ContactRepository {
 						id: req.params.teamId
 					}
 				},
-				user: {
-					connectOrCreate: {
-						where: {
-							email: req.body.email
-						},
-						create: {
-							email: req.body.email,
-							fullName: req.body.name,
-							firstName: req.body.name.split(' ')[0] || '',
-							lastName: req.body.name.split(' ')[1] || '',
-							avatarColor: getRandomAvatarColor()
+				...(req.body.email
+					? {
+							user: {
+								connectOrCreate: {
+									where: {
+										email: req.body.email.trim().toLowerCase()
+									},
+									create: {
+										email: req.body.email,
+										fullName: req.body.name,
+										firstName: req.body.name.split(' ')[0] || '',
+										lastName: req.body.name.split(' ')[1] || '',
+										avatarColor: getRandomAvatarColor()
+									}
+								}
+							}
 						}
-					}
-				}
+					: {})
 			}
 		})
 

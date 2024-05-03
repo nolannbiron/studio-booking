@@ -1,3 +1,4 @@
+import { getRandomAvatarColor } from '@repo/features/auth/lib/getRandomAvatarColor'
 import type { TPublicUser } from '@repo/schemas/user'
 
 import type { AvatarProps } from '../ui/avatar'
@@ -15,7 +16,9 @@ export function UserAvatar({
 			<AvatarFallback
 				className="text-background dark:text-foreground bg-foreground"
 				style={{
-					backgroundColor: user.avatarColor ? `hsl(${user.avatarColor})` : undefined
+					backgroundColor: user.avatarColor
+						? `hsl(${user.avatarColor})`
+						: `hsl(${getRandomAvatarColor()})`
 				}}
 			>
 				{user.firstName?.[0]}
