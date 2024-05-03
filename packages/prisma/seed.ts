@@ -121,7 +121,7 @@ const seed = async () => {
 }
 
 async function createRandomContacts(team: TTeam) {
-	const contacts = Array.from({ length: fakerFR.number.int({ min: 15, max: 50 }) }, async (_, i) => {
+	const contacts = Array.from({ length: fakerFR.number.int({ min: 15, max: 50 }) }, async (_) => {
 		const contactName = fakerFR.person.fullName()
 		const avatarUrl = await getDefaultAvatarImage(contactName)
 
@@ -141,6 +141,7 @@ async function createRandomContacts(team: TTeam) {
 						})
 					: undefined,
 				name: contactName,
+				avatarUrl: avatarUrl,
 				instagram: fakerFR.internet.userName({
 					firstName: contactName.split(' ')[0],
 					lastName: contactName.split(' ')[1]
@@ -181,27 +182,7 @@ async function createRandomContacts(team: TTeam) {
 				},
 				genres: {
 					connect: randomGenres.map((genre) => ({ id: genre.id }))
-				},
-				...(shouldCreateContact
-					? {
-							user: {
-								connectOrCreate: {
-									where: {
-										email: `test_contact_${i}@test.fr`
-									},
-									create: {
-										email: `test_contact_${i}@test.fr`,
-										fullName: contactName,
-										avatarUrl: avatarUrl,
-										firstName: contactName.split(' ')[0] || '',
-										lastName: contactName.split(' ')[1] || '',
-										locale: 'fr',
-										emailVerified: new Date()
-									}
-								}
-							}
-						}
-					: {})
+				}
 			}
 		})
 	})

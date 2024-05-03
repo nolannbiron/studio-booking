@@ -1,8 +1,8 @@
 import { useGetContact } from '@/api/contact/hooks/useGetContact'
 import { EContactRoutes } from '@/navigation/types'
-import ContactDetails from '@/pages/contact/activity/ContactDetails'
 import ContactHeader from '@/pages/contact/components/ContactHeader'
 import ContactTabsList from '@/pages/contact/components/ContactTabsList'
+import ContactDetailsWrapper from '@/pages/contact/details/ContactDetailsWrapper'
 import { Loading } from '@repo/ui/loading'
 import { Tabs } from '@repo/ui/tabs'
 import { useEffect } from 'react'
@@ -61,7 +61,7 @@ export default function ContactPage(): JSX.Element {
 				</div>
 
 				<div className="w-[38%] min-w-64">
-					<ContactDetails />
+					<ContactDetailsWrapper contact={data.contact} />
 				</div>
 			</div>
 		</>

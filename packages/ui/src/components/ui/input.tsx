@@ -8,29 +8,36 @@ import * as React from 'react'
 import { cn } from '../../lib/utils'
 
 const inputClasses = cva(
-	'placeholder:text-muted-foreground/50 flex h-9 w-full bg-transparent px-3 py-1 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+	'placeholder:text-muted-foreground/50 flex w-full bg-transparent px-3 py-1 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
 	{
 		variants: {
 			variant: {
 				default:
-					'border-input focus-visible:ring-ring rounded-md border shadow-sm transition-colors focus-visible:ring-1',
+					'border-input focus-visible:border-ring rounded-md border shadow-sm transition-colors focus-visible:ring-0',
 				ghost: 'border-0 bg-transparent shadow-none focus-visible:ring-0 '
+			},
+			size: {
+				default: 'h-9',
+				sm: 'h-8',
+				lg: 'h-10'
 			}
 		},
 		defaultVariants: {
-			variant: 'default'
+			variant: 'default',
+			size: 'default'
 		}
 	}
 )
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & VariantProps<typeof inputClasses>
+export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> &
+	VariantProps<typeof inputClasses>
 
 const BaseInput = React.forwardRef<HTMLInputElement, InputProps>(
-	({ className, variant, type, ...props }, ref) => {
+	({ className, variant, size, type, ...props }, ref) => {
 		return (
 			<input
 				type={type}
-				className={cn(inputClasses({ variant, className }), className)}
+				className={cn(inputClasses({ variant, size, className }), className)}
 				ref={ref}
 				{...props}
 			/>

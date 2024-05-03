@@ -37,6 +37,8 @@ export const ContactType = {
   BAND: "BAND",
   LABEL: "LABEL",
   MANAGER: "MANAGER",
+  CAMERAMAN: "CAMERAMAN",
+  PHOTOGRAPHER: "PHOTOGRAPHER",
 } as const;
 
 export type ContactType = (typeof ContactType)[keyof typeof ContactType];

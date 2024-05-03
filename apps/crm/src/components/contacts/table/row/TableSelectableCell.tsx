@@ -24,13 +24,6 @@ export default function TableSelectableCell({
 		}
 	}, [isActivated, isExpandable, onActive])
 
-	// useIsOutsideClick(ref, () => {
-	// 	if (!isActivated) return
-
-	// 	setSelectedCell('')
-	// 	onActive?.(false)
-	// })
-
 	const handleClick = () => {
 		if (!isActivated) {
 			setSelectedCell(cellId)

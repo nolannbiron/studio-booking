@@ -25,7 +25,7 @@ export default function SidebarItem({
 				onClick={onClick}
 				className={cn(
 					'flex w-full min-w-fit cursor-pointer select-none items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-sm transition-all md:min-w-0',
-					isActive ? 'bg-muted text-foreground border-border' : 'hover:bg-muted'
+					isActive ? 'bg-muted text-foreground' : 'hover:bg-muted'
 				)}
 			>
 				{childrens(icon, name)}
@@ -38,7 +38,7 @@ export default function SidebarItem({
 			onClick={onClick}
 			className={cn(
 				'flex w-full min-w-fit cursor-pointer select-none items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-sm transition-all md:min-w-0',
-				isActive ? 'bg-muted text-foreground border-border' : 'hover:bg-muted'
+				isActive ? 'bg-muted text-foreground' : 'hover:bg-muted'
 			)}
 		>
 			{childrens(icon, name)}

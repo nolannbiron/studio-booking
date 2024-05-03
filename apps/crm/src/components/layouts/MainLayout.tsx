@@ -12,7 +12,7 @@ export default function MainLayout(): JSX.Element {
 	const isContact = isContactPage(pathname)
 
 	return (
-		<main className="flex max-h-dvh flex-row overflow-hidden">
+		<main className="flex h-full max-h-dvh flex-row overflow-hidden">
 			<Sidebar />
 
 			<div className="flex flex-1 flex-col overflow-hidden">

@@ -1,6 +1,7 @@
 'use client'
 
 import type { PopoverContentProps, PopoverProps } from '@radix-ui/react-popover'
+import { useEffect, useState } from 'react'
 import { IoIosCheckmarkCircle } from 'react-icons/io'
 
 import { cn } from '../../lib/utils'
@@ -24,13 +25,17 @@ const normalizeString = (value: string) =>
 export interface ComboboxProps<T> extends PopoverProps {
 	options: ComboboxOption<T>[]
 	value: T | T[] | undefined
-	onSelect: (value: string) => void
+	onSelect: (value: T) => void
 	placeholder?: string
 	sideOffset?: PopoverContentProps['sideOffset']
 	alignOffset?: PopoverContentProps['alignOffset']
 	align?: PopoverContentProps['align']
 	side?: PopoverContentProps['side']
 	fullWidth?: boolean
+	asChild?: boolean
+	triggerClassName?: string
+	closeOnSelect?: boolean
+	withPortal?: boolean
 }
 
 export function Combobox<T>({
@@ -45,17 +50,36 @@ export function Combobox<T>({
 	alignOffset,
 	align = 'start',
 	side = 'bottom',
+	asChild = true,
+	triggerClassName,
 	fullWidth,
+	closeOnSelect,
+	withPortal = true,
 	...props
 }: ComboboxProps<T>) {
+	const [isOpen, setIsOpen] = useState(open)
+
+	useEffect(() => {
+		setIsOpen(open)
+	}, [open])
+
+	const handleOpenChange = (open: boolean) => {
+		setIsOpen(open)
+		onOpenChange?.(open)
+	}
+
 	return (
-		<Popover open={open} onOpenChange={onOpenChange} {...props}>
-			<PopoverTrigger type="button" asChild>
+		<Popover open={isOpen} onOpenChange={handleOpenChange} {...props}>
+			<PopoverTrigger
+				className={triggerClassName}
+				type={!asChild ? 'button' : undefined}
+				asChild={asChild}
+			>
 				{children}
 			</PopoverTrigger>
 			<PopoverContent
 				onClick={(e) => e.stopPropagation()}
-				withPortal={false}
+				withPortal={withPortal}
 				align={align}
 				alignOffset={alignOffset}
 				side={side}
@@ -84,8 +108,8 @@ export function Combobox<T>({
 										key={option.label as string}
 										value={option.label}
 										onSelect={() => {
-											onSelect(option.value as string)
-											onOpenChange?.(false)
+											onSelect(option.value as T)
+											closeOnSelect && handleOpenChange?.(false)
 										}}
 									>
 										<div className="flex w-full items-center gap-2">

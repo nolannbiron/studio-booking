@@ -125,7 +125,8 @@
 		"user-account-locked": "Compte utilisateur verrouillé.",
 		"missing-backup-codes": "Codes de secours manquants.",
 		"incorrect-backup-code": "Code de secours incorrect.",
-		"slug-not-available": "Slug non disponible."
+		"slug-not-available": "Slug non disponible.",
+		"required": "Ce champ est obligatoire"
 	},
 	"filters": {
 		"choose_filter": "Choisir un filtre",
@@ -148,6 +149,8 @@
 			"MANAGER": "Manager",
 			"BAND": "Groupe",
 			"LABEL": "Label",
+			"CAMERAMAN": "Caméraman",
+			"PHOTOGRAPHER": "Photographe",
 			"select_type": "Sélectionnez un type"
 		},
 		"genre": {

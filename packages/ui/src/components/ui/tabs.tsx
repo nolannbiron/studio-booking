@@ -42,7 +42,7 @@ const tabsTriggerClasses = cva(
 				primary:
 					'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-[13px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-blue-500 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-900 data-[state=active]:shadow-sm',
 				bordered:
-					'data-[state=inactive]:hover:border-input/80 text-secondary-foreground data-[state=active]:border-input after:bg-input data-[state=active]:before:bg-foreground w-fit rounded-md border border-transparent opacity-50 before:absolute before:-bottom-[11px] before:left-0 before:z-10 before:h-px before:w-full before:rounded-full before:opacity-0 after:absolute after:-bottom-[11px] after:left-0 after:right-0 after:z-0 after:h-px after:w-full hover:opacity-100 data-[state=active]:opacity-100 data-[state=active]:before:opacity-100 data-[state=inactive]:hover:border'
+					'data-[state=inactive]:hover:border-input/80 text-secondary-foreground data-[state=active]:border-input after:bg-input data-[state=active]:before:bg-foreground w-fit rounded-md border border-transparent opacity-70 before:absolute before:-bottom-[11px] before:left-0 before:z-10 before:h-px before:w-full before:rounded-full before:opacity-0 after:absolute after:-bottom-[11px] after:left-0 after:right-0 after:z-0 after:h-px after:w-full hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-transparent disabled:hover:opacity-70 data-[state=active]:opacity-100 data-[state=active]:before:opacity-100 data-[state=inactive]:hover:border'
 			}
 		},
 		defaultVariants: {

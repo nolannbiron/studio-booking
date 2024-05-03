@@ -2,12 +2,11 @@ import { ContactType } from '@repo/prisma/enums'
 import { z } from 'zod'
 
 import type { TContactFilters } from '../filters/contact-filters.schema'
-import { ZPublicUserSchema } from '../user'
 import { ZContactGenreSchema } from './contact-genre.schema'
 
 export const ZContactSchema = z.object({
 	id: z.string(),
-	name: z.string().min(3),
+	name: z.string().min(3, { message: 'required' }),
 	email: z.string().email().nullish(),
 	phone: z.string().nullish(),
 	type: z.nativeEnum(ContactType).nullish(),
@@ -20,12 +19,23 @@ export const ZContactSchema = z.object({
 	spotify: z.string().nullish(),
 	snapchat: z.string().nullish(),
 	website: z.string().nullish(),
-	user: z.lazy(() => ZPublicUserSchema).nullish(),
+	avatarUrl: z.string(),
 	teamId: z.string()
 })
 
-export const ZCreateContactSchema = ZContactSchema.omit({ user: true, genres: true, teamId: true, id: true })
-export const ZUpdateContactSchema = ZContactSchema.omit({ id: true, user: true, email: true, genres: true })
+export const ZCreateContactSchema = ZContactSchema.omit({
+	user: true,
+	genres: true,
+	teamId: true,
+	id: true,
+	avatarUrl: true
+})
+export const ZUpdateContactSchema = ZContactSchema.omit({
+	id: true,
+	user: true,
+	genres: true,
+	avatarUrl: true
+})
 	.extend({
 		genres: z.array(z.string()).nullish()
 	})

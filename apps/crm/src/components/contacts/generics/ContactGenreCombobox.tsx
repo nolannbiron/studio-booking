@@ -1,32 +1,18 @@
 import { useTeamStore } from '@/state/team.state'
 import { getTagColorValues } from '@repo/lib/tag-colors'
+import type { TContactGenre } from '@repo/schemas/contact/contact-genre.schema'
 import type { ComboboxOption, ComboboxProps } from '@repo/ui/combobox'
 import { Combobox } from '@repo/ui/combobox'
-import type { PropsWithChildren } from 'react'
+import { type Theme, useTheme } from '@repo/ui/theme'
+import { type PropsWithChildren, useMemo } from 'react'
 
-export default function ContactGenreCombobox({
-	value,
-	onSelect,
-	children,
-	fullWidth,
-	open,
-	...props
-}: PropsWithChildren<
-	{
-		value?: string | string[] | null
-		onSelect: (genreId: string) => void
-		fullWidth?: boolean
-		open: boolean
-	} & Omit<ComboboxProps<string | string[]>, 'options'>
->) {
-	const { currentTeam } = useTeamStore()
-
-	const options: ComboboxOption<string>[] = currentTeam.genres.map((genre) => ({
+export const getGenresComboboxOptions = (genres: TContactGenre[], theme?: Theme): ComboboxOption<string>[] =>
+	genres.map((genre) => ({
 		label: genre.title,
 		value: genre.id,
 		element: (label: string) => (
 			<div
-				style={getTagColorValues(genre.color as any)}
+				style={getTagColorValues(genre.color as any, theme)}
 				className="whitespace-nowrap rounded-md px-2 py-0.5 text-xs"
 			>
 				{label}
@@ -34,18 +20,32 @@ export default function ContactGenreCombobox({
 		)
 	}))
 
-	const handleSelect = (value: string) => {
-		onSelect(value)
-	}
+export default function ContactGenreCombobox({
+	value,
+	children,
+	fullWidth,
+	...props
+}: PropsWithChildren<
+	{
+		value?: string[] | null
+		fullWidth?: boolean
+	} & Omit<ComboboxProps<string>, 'options'>
+>) {
+	const { colorMode, resolvedTheme } = useTheme()
+	const theme = colorMode === 'system' ? resolvedTheme : colorMode
+	const { currentTeam } = useTeamStore()
+
+	const options: ComboboxOption<string>[] = useMemo(
+		() => getGenresComboboxOptions(currentTeam.genres, theme),
+		[currentTeam.genres, theme]
+	)
 
 	return (
 		<Combobox
 			{...props}
-			open={open}
 			placeholder="Rechercher un genre"
 			fullWidth={fullWidth}
 			options={options}
-			onSelect={handleSelect}
 			value={value ?? undefined}
 		>
 			{children}

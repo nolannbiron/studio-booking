@@ -1,5 +1,4 @@
-import { getRandomAvatarColor } from '@repo/features/auth/lib/getRandomAvatarColor'
-import { prisma, userPublicProfileSelect } from '@repo/prisma'
+import { prisma } from '@repo/prisma'
 import type { Prisma } from '@repo/prisma/client'
 import type {
 	TCreateContactRequest,
@@ -12,34 +11,21 @@ import type { TContactGenre } from '@repo/schemas/contact/contact-genre.schema'
 import type { TContactFilters } from '@repo/schemas/filters/contact-filters.schema'
 import type { FastifyRequest } from 'fastify'
 
+import { getDefaultAvatarImage } from '../../defaultAvatarImage'
+
 export class ContactRepository {
 	static async createContact(req: FastifyRequest<TCreateContactRequest>) {
+		const avatarUrl = await getDefaultAvatarImage(req.body.name)
+
 		const contact = await prisma.contact.create({
 			data: {
 				...req.body,
+				avatarUrl,
 				team: {
 					connect: {
 						id: req.params.teamId
 					}
-				},
-				...(req.body.email
-					? {
-							user: {
-								connectOrCreate: {
-									where: {
-										email: req.body.email.trim().toLowerCase()
-									},
-									create: {
-										email: req.body.email,
-										fullName: req.body.name,
-										firstName: req.body.name.split(' ')[0] || '',
-										lastName: req.body.name.split(' ')[1] || '',
-										avatarColor: getRandomAvatarColor()
-									}
-								}
-							}
-						}
-					: {})
+				}
 			}
 		})
 
@@ -49,13 +35,16 @@ export class ContactRepository {
 	static async update(req: FastifyRequest<TUpdateContactRequest>) {
 		const { genres, ...data } = req.body
 
+		let avatarUrl: string | undefined = undefined
+		if (data.name) {
+			avatarUrl = await getDefaultAvatarImage(data.name)
+		}
+
 		const contact = await prisma.contact.update({
 			where: req.params,
 			data: {
-				...data
-				// genres: {
-				// 	connect: req.body.genres?.map((genreId) => ({ id: genreId }))
-				// }
+				...data,
+				...(avatarUrl ? { avatarUrl } : {})
 			},
 			include: {
 				genres: true
@@ -90,10 +79,7 @@ export class ContactRepository {
 			// skip: req.body?.offset,
 			orderBy: sort,
 			include: {
-				genres: true,
-				user: {
-					select: userPublicProfileSelect
-				}
+				genres: true
 			}
 		})
 
@@ -104,10 +90,7 @@ export class ContactRepository {
 		const contact = await prisma.contact.findFirst({
 			where: req.params,
 			include: {
-				genres: true,
-				user: {
-					select: userPublicProfileSelect
-				}
+				genres: true
 			}
 		})
 
@@ -128,8 +111,7 @@ export class ContactRepository {
 						OR: [
 							{ name: { contains: filters.search, mode: 'insensitive' } },
 							{ email: { contains: filters.search, mode: 'insensitive' } },
-							{ phone: { contains: filters.search, mode: 'insensitive' } },
-							{ user: { email: { contains: filters.search, mode: 'insensitive' } } }
+							{ phone: { contains: filters.search, mode: 'insensitive' } }
 						]
 					}
 				: {})

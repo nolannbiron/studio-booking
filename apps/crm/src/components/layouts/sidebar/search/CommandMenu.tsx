@@ -1,4 +1,5 @@
 import { useGetRoutes } from '@/navigation/useGetRoutes'
+import { NavbarSize, useNavbarStore } from '@/state/navbar.state'
 import { useTranslation } from '@repo/i18n/next/client'
 import { Button } from '@repo/ui/button'
 import {
@@ -15,6 +16,7 @@ import { cn } from '@repo/ui/lib/utils'
 import { useTheme } from '@repo/ui/theme'
 import { useCallback, useEffect, useState } from 'react'
 import { FiCheck, FiMonitor, FiMoon, FiSun } from 'react-icons/fi'
+import { TbSearch } from 'react-icons/tb'
 import { useNavigate } from 'react-router-dom'
 
 export function CommandMenu({ ...props }: DialogProps) {
@@ -22,6 +24,7 @@ export function CommandMenu({ ...props }: DialogProps) {
 	const { t } = useTranslation()
 	const { navbar } = useGetRoutes()
 	const { setColorMode, colorMode } = useTheme()
+	const { width } = useNavbarStore()
 	const [open, setOpen] = useState(false)
 
 	useEffect(() => {
@@ -41,19 +44,33 @@ export function CommandMenu({ ...props }: DialogProps) {
 		command()
 	}, [])
 
+	const isNavbarSM = width === NavbarSize.SM
+
 	return (
 		<>
 			<Button
 				variant="outline"
-				className={cn('text-muted-foreground relative w-full justify-start text-sm sm:pr-12')}
+				className={cn('text-muted-foreground relative w-full justify-start text-sm sm:pr-12', {
+					'justify-center !px-0': isNavbarSM
+				})}
 				onClick={() => setOpen(true)}
 				{...props}
 			>
-				<span className="hidden lg:inline-flex">{t('general.search')}...</span>
-				<span className="inline-flex lg:hidden">{t('general.search')}...</span>
-				<kbd className="bg-muted pointer-events-none absolute right-1.5 top-1/2 hidden h-5 -translate-y-1/2 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-					<span className="text-xs">⌘</span>K
-				</kbd>
+				{isNavbarSM ? (
+					<span>
+						<TbSearch />
+					</span>
+				) : (
+					<>
+						<TbSearch />
+						<span>{t('general.search')}...</span>
+					</>
+				)}
+				{!isNavbarSM && (
+					<kbd className="bg-muted pointer-events-none absolute right-1.5 top-1/2 hidden h-5 -translate-y-1/2 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+						<span className="text-xs">⌘</span>K
+					</kbd>
+				)}
 			</Button>
 			<CommandDialog open={open} onOpenChange={setOpen}>
 				<CommandInput placeholder={t('general.command')} />

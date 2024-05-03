@@ -1,35 +1,31 @@
-import { useTranslation } from '@repo/i18n/next/client'
+import i18next from '@repo/i18n/next/client'
 import type { ContactType } from '@repo/prisma/enums'
+import type { ComboboxProps } from '@repo/ui/combobox'
 import { Combobox } from '@repo/ui/combobox'
 import type { PropsWithChildren } from 'react'
 
-const contactTypes: ContactType[] = ['ARTIST', 'BAND', 'LABEL', 'MANAGER']
+const contactTypes: ContactType[] = ['ARTIST', 'BAND', 'LABEL', 'MANAGER', 'CAMERAMAN', 'PHOTOGRAPHER']
 
-export default function ContactTypeCombobox({
-	value,
-	onSelect,
-	children,
-	fullWidth,
-	open
-}: PropsWithChildren<{
-	value?: ContactType | null
-	onSelect: (type: ContactType) => void
-	fullWidth?: boolean
-	open: boolean
-}>) {
-	const { t } = useTranslation()
+export const contactTypeComboboxOptions = contactTypes.map((type) => ({
+	label: i18next.t(`contact.type.${type}`),
+	value: type
+}))
 
-	const options = contactTypes.map((type) => ({
-		label: t(`contact.type.${type}`),
-		value: type
-	}))
+type Props = PropsWithChildren<
+	{
+		fullWidth?: boolean
+	} & Omit<ComboboxProps<ContactType>, 'options'>
+>
 
-	const handleSelect = (value: string) => {
-		onSelect(value as ContactType)
-	}
-
+export default function ContactTypeCombobox({ value, onSelect, children, fullWidth, ...props }: Props) {
 	return (
-		<Combobox open={open} options={options} fullWidth={fullWidth} onSelect={handleSelect} value={value}>
+		<Combobox
+			{...props}
+			options={contactTypeComboboxOptions}
+			fullWidth={fullWidth}
+			onSelect={onSelect}
+			value={value}
+		>
 			{children}
 		</Combobox>
 	)

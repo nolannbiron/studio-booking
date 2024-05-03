@@ -14,7 +14,8 @@ export default function ContactTabsList(): JSX.Element {
 				Projects
 				<Badge
 					variant="outline"
-					className="bg-muted-foreground/40 border-muted-foreground/80 flex aspect-square size-4 items-center justify-center rounded border p-0 opacity-100"
+					rounded="sm"
+					className="flex size-4 items-center justify-center p-0 opacity-100"
 				>
 					0
 				</Badge>
@@ -24,7 +25,8 @@ export default function ContactTabsList(): JSX.Element {
 				Notes
 				<Badge
 					variant="outline"
-					className="bg-muted-foreground/40 border-muted-foreground/80 flex aspect-square size-4 items-center justify-center rounded border p-0 opacity-100"
+					rounded="sm"
+					className="flex size-4 items-center justify-center p-0 opacity-100"
 				>
 					0
 				</Badge>
@@ -34,7 +36,8 @@ export default function ContactTabsList(): JSX.Element {
 				Tasks
 				<Badge
 					variant="outline"
-					className="bg-muted-foreground/40 border-muted-foreground/80 flex aspect-square size-4 items-center justify-center rounded border p-0 opacity-100"
+					rounded="sm"
+					className="flex size-4 items-center justify-center p-0 opacity-100"
 				>
 					0
 				</Badge>

@@ -1,7 +1,7 @@
 import MainLayout from '@/components/layouts/MainLayout'
 import { useAuthStore } from '@/state/auth.state'
 import { Loading } from '@repo/ui/loading'
-import { Suspense, lazy } from 'react'
+import { Fragment, Suspense, lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { useGetRoutes } from './useGetRoutes'
@@ -58,13 +58,13 @@ export default function Routing(): JSX.Element {
 				}
 
 				return (
-					<>
-						<Route key={route.path} path={route.path} element={route.element} />
+					<Fragment key={route.path}>
+						<Route path={route.path} element={route.element} />
 						{route.children &&
 							route.children.map((child) => (
 								<Route key={child.path} path={child.path} element={child.element} />
 							))}
-					</>
+					</Fragment>
 				)
 			})}
 		</Routes>
