@@ -261,41 +261,23 @@ model Contact {
     @@map("contacts")
 }
 
-// model View {
-//     id      String   @id @default(uuid())
-//     name    String
-//     columns Column[]
-// }
+enum EventType {
+    ENTITY_CREATED
+    VALUES_UPDATED
+    NOTE_ADDED
+}
 
-// enum ColumnType {
-//     TEXT
-//     NUMBER
-//     CHECKBOX
-//     DATE
-//     RATING
-//     TIME
-//     SELECT
-//     MULTI_SELECT
-//     CURRENCY
-//     USER
-//     LOCATION
-//     PHONE_NUMBER
-//     EMAIL
-//     URL
-// }
+model TimelineEvent {
+    id    String    @id @default(uuid())
+    type  EventType
+    event Json
 
-// model Column {
-//     id          String     @id @default(uuid())
-//     name        String
-//     order       Int
-//     description String?
-//     type        ColumnType
+    entityId   String
+    entityType String
 
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     view   View   @relation(fields: [viewId], references: [id])
-//     viewId String
-
-//     @@map("columns")
-// }
+    @@index([entityId])
+    @@map("activities")
+}

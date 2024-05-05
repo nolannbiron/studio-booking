@@ -5,7 +5,10 @@
 		"user",
 		"auth",
 		"team",
-		"release-note"
+		"release-note",
+		"common",
+		"filters",
+		"timeline"
 	],
 	"devDependencies": {
 		"@repo/prisma": "*",

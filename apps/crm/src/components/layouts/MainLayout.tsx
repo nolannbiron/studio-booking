@@ -16,7 +16,7 @@ export default function MainLayout(): JSX.Element {
 			<Sidebar />
 
 			<div className="flex flex-1 flex-col overflow-hidden">
-				<header className="sticky top-0 z-[1] flex h-16 w-full flex-shrink-0 items-center justify-between gap-5 border-b px-4 backdrop-blur">
+				<header className="flex h-16 w-full flex-shrink-0 items-center justify-between gap-5 border-b px-4 backdrop-blur">
 					{!isContact ? <Navbar /> : <ContactNavbar />}
 				</header>
 				<Outlet />

@@ -11,8 +11,7 @@ export const ZTeamMembershipSchema = z.object({
 	userId: z.string(),
 	teamId: z.string(),
 	createdAt: z.date(),
-	updatedAt: z.date(),
-	team: z.lazy(() => ZTeamSchema)
+	updatedAt: z.date()
 })
 
 export const ZTeamMembershipForPublicUserSchema = ZTeamMembershipSchema.extend({
@@ -60,6 +59,7 @@ export const ZTeamSchema = z.object({
 			return /^[a-z0-9-]+$/.test(slug)
 		}),
 	genres: z.array(ZContactGenreSchema),
+	// members: z.lazy(() => ZTeamMembershipSchema).array(),
 	createdAt: z.date(),
 	updatedAt: z.date()
 })

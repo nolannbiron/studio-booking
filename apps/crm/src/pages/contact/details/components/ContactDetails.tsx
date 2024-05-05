@@ -29,7 +29,17 @@ import { useDebounce } from 'react-use'
 
 const isFormDirty = (contact: TContact, formData: TUpdateContact) => {
 	return (
-		contact.name !== formData.name || contact.email !== formData.email || contact.type !== formData.type
+		contact.name !== formData.name ||
+		contact.email !== formData.email ||
+		contact.phone !== formData.phone ||
+		contact.instagram !== formData.instagram ||
+		contact.facebook !== formData.facebook ||
+		contact.twitter !== formData.twitter ||
+		contact.youtube !== formData.youtube ||
+		contact.tiktok !== formData.tiktok ||
+		contact.spotify !== formData.spotify ||
+		contact.snapchat !== formData.snapchat ||
+		contact.website !== formData.website
 	)
 }
 
@@ -65,7 +75,7 @@ export default function ContactDetails({
 		}
 
 		mutate({
-			...formData,
+			...validation.data,
 			teamId: contact.teamId,
 			contactId: contact.id,
 			email: !formData.email ? null : formData.email

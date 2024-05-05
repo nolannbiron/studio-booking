@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 export default function RequireAuth({ children }: { children?: React.ReactNode }) {
-	const { isError, data } = useGetAccount()
+	const { isError, data, error } = useGetAccount()
 	const { currentUser, setCurrentUser } = useUserStore()
 	const { isLoggedIn, jwt, logout } = useAuthStore()
 	const { setCurrentTeam, setTeams, currentTeam } = useTeamStore()
@@ -19,14 +19,14 @@ export default function RequireAuth({ children }: { children?: React.ReactNode }
 		if (!data) return
 		if (data.user) {
 			setCurrentUser(data.user)
-		} else if (!data.user) {
+		} else if (error?.code === '401') {
 			if (isLoggedIn) {
 				logout()
 			}
 
 			navigate('/login')
 		}
-	}, [data, setCurrentUser, setCurrentTeam, setTeams, isLoggedIn, logout, navigate])
+	}, [data, setCurrentUser, setCurrentTeam, setTeams, isLoggedIn, logout, navigate, error])
 
 	useEffect(() => {
 		if (data?.user && !Object.keys(currentTeam).length && data.user.teams.length > 0) {

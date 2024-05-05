@@ -26,7 +26,6 @@ export const ZContactSchema = z.object({
 export const ZCreateContactSchema = ZContactSchema.omit({
 	user: true,
 	genres: true,
-	teamId: true,
 	id: true,
 	avatarUrl: true
 })

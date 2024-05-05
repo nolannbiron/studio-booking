@@ -1,6 +1,7 @@
 import { prisma } from '@repo/prisma'
 import type { Prisma } from '@repo/prisma/client'
 import type {
+	TContact,
 	TCreateContactRequest,
 	TDeleteContactRequest,
 	TGetContactRequest,
@@ -12,6 +13,7 @@ import type { TContactFilters } from '@repo/schemas/filters/contact-filters.sche
 import type { FastifyRequest } from 'fastify'
 
 import { getDefaultAvatarImage } from '../../defaultAvatarImage'
+import { TimelineRepository } from './timeline'
 
 export class ContactRepository {
 	static async createContact(req: FastifyRequest<TCreateContactRequest>) {
@@ -20,12 +22,17 @@ export class ContactRepository {
 		const contact = await prisma.contact.create({
 			data: {
 				...req.body,
-				avatarUrl,
-				team: {
-					connect: {
-						id: req.params.teamId
-					}
-				}
+				avatarUrl
+			}
+		})
+
+		TimelineRepository.createEvent({
+			entityId: contact.id,
+			entityType: 'CONTACT',
+			type: 'ENTITY_CREATED',
+			event: {
+				creatorId: req.user?.id,
+				creatorModel: 'USER'
 			}
 		})
 
@@ -40,24 +47,30 @@ export class ContactRepository {
 			avatarUrl = await getDefaultAvatarImage(data.name)
 		}
 
-		const contact = await prisma.contact.update({
+		const currentContact = await prisma.contact.findFirst({
+			where: req.params,
+			include: { genres: true }
+		})
+
+		if (!currentContact) {
+			throw 'Contact not found'
+		}
+
+		let newContact = await prisma.contact.update({
 			where: req.params,
 			data: {
 				...data,
 				...(avatarUrl ? { avatarUrl } : {})
-			},
-			include: {
-				genres: true
 			}
 		})
 
 		if (genres !== undefined) {
-			const updatedContact = this.updateGenres(contact.genres, req)
-
-			return updatedContact
+			newContact = await this.updateGenres(currentContact.genres, req)
 		}
 
-		return contact
+		this.#createUpdateEvent(req, newContact, currentContact)
+
+		return newContact
 	}
 
 	static async remove(req: FastifyRequest<TDeleteContactRequest>) {
@@ -122,6 +135,47 @@ export class ContactRepository {
 		filters?: TContactFilters
 	): Prisma.ContactOrderByWithRelationAndSearchRelevanceInput | undefined {
 		return !!filters?.sortBy ? { [filters.sortBy]: 'desc' } : { createdAt: 'desc' }
+	}
+
+	static #createUpdateEvent(
+		req: FastifyRequest<TUpdateContactRequest>,
+		newContact: TContact,
+		oldContact: TContact
+	) {
+		try {
+			const keys = Object.keys(newContact) as (keyof TContact)[]
+			const body = newContact as TContact
+			const modifiedFields = keys.filter((field) => {
+				if (
+					(['updatedAt', 'createdAt', 'avatarUrl', 'id'] as (keyof TContact)[]).includes(field) ||
+					!(field in body)
+				)
+					return false
+
+				if (Array.isArray(oldContact[field]) && Array.isArray(body[field])) {
+					return (oldContact[field] as any[]).length !== (body[field] as any[]).length
+				}
+
+				return oldContact[field] !== body[field]
+			})
+
+			for (const field of modifiedFields) {
+				TimelineRepository.createEvent({
+					entityId: newContact.id,
+					entityType: 'CONTACT',
+					type: 'VALUES_UPDATED',
+					event: {
+						creatorId: req.user?.id,
+						creatorModel: 'USER',
+						attribute: field,
+						newValue: newContact[field] as any,
+						oldValue: oldContact[field] as any
+					}
+				})
+			}
+		} catch (e) {
+			console.log(e)
+		}
 	}
 
 	static async updateGenres(currentGenres: TContactGenre[], req: FastifyRequest<TUpdateContactRequest>) {

@@ -42,3 +42,11 @@ export const ContactType = {
 } as const;
 
 export type ContactType = (typeof ContactType)[keyof typeof ContactType];
+
+export const EventType = {
+  ENTITY_CREATED: "ENTITY_CREATED",
+  VALUES_UPDATED: "VALUES_UPDATED",
+  NOTE_ADDED: "NOTE_ADDED",
+} as const;
+
+export type EventType = (typeof EventType)[keyof typeof EventType];

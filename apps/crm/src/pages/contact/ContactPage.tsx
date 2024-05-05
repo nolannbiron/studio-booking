@@ -45,23 +45,24 @@ export default function ContactPage(): JSX.Element {
 	return (
 		<>
 			<ContactHeader contact={data.contact} />
+			<div className="flex-1">
+				<div className="flex h-full w-full flex-row flex-nowrap">
+					<div className="flex w-[62%]  min-w-80">
+						<Tabs
+							className="w-full flex-1"
+							defaultValue="activity"
+							value={activeTab}
+							onValueChange={(value) => navigate(`/contact/${id}/${value}`)}
+						>
+							<ContactTabsList />
 
-			<div className="flex h-full w-full grid-cols-12 flex-row flex-nowrap">
-				<div className="w-[62%] min-w-80">
-					<Tabs
-						className="flex-1"
-						defaultValue="activity"
-						value={activeTab}
-						onValueChange={(value) => navigate(`/contact/${id}/${value}`)}
-					>
-						<ContactTabsList />
+							<Outlet />
+						</Tabs>
+					</div>
 
-						<Outlet />
-					</Tabs>
-				</div>
-
-				<div className="w-[38%] min-w-64">
-					<ContactDetailsWrapper contact={data.contact} />
+					<div className="w-[38%] min-w-64">
+						<ContactDetailsWrapper contact={data.contact} />
+					</div>
 				</div>
 			</div>
 		</>

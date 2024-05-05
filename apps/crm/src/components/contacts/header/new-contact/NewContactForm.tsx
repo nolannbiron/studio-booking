@@ -18,7 +18,8 @@ export default function NewContactForm({ onClose }: { onClose: () => void }): JS
 		defaultValues: {
 			email: '',
 			name: '',
-			type: undefined
+			type: undefined,
+			teamId: currentTeam.id
 		}
 	})
 
@@ -26,7 +27,7 @@ export default function NewContactForm({ onClose }: { onClose: () => void }): JS
 		if (!currentTeam.id) return console.error('Team not found')
 
 		mutate(
-			{ teamId: currentTeam.id, ...values },
+			{ ...values, teamId: currentTeam.id },
 			{
 				onSuccess: () => {
 					onClose()
