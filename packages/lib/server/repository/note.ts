@@ -2,6 +2,7 @@ import { prisma, userPublicProfileSelect } from '@repo/prisma'
 import type { Note } from '@repo/prisma/client'
 import type {
 	TCreateNoteRequest,
+	TDeleteNoteRequest,
 	TGetNoteRequest,
 	TGetNotesCountRequest,
 	TGetNotesRequest,
@@ -168,5 +169,36 @@ export class NoteRepository {
 		})
 
 		return { ...updatedNote, entity: await updatedNote.getEntity() } as TNoteSchema
+	}
+
+	static async delete(req: FastifyRequest<TDeleteNoteRequest>): Promise<boolean> {
+		const note = await prisma.note.findFirst({
+			where: {
+				id: req.params.noteId
+			}
+		})
+
+		if (!note) {
+			throw 'Note not found'
+		}
+
+		if (!this.#canAccessNote(note, req.user!)) {
+			throw 'Unauthorized access to note'
+		}
+
+		if (
+			note.creatorId !== req.user!.id &&
+			req.user?.teams.find((team) => team.id === note.teamId)?.role !== 'OWNER'
+		) {
+			throw 'Only the creator can delete the note'
+		}
+
+		await prisma.note.delete({
+			where: {
+				id: req.params.noteId
+			}
+		})
+
+		return true
 	}
 }

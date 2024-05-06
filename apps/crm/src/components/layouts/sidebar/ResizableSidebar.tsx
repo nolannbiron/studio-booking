@@ -66,7 +66,7 @@ function ResizableSidebar({
 			handleComponent={{
 				right: <ResizeHandler isResizing={isResizing} />
 			}}
-			className="md:max-w-auto relative !z-10 max-md:!min-w-0 max-md:!max-w-0"
+			className="md:max-w-auto relative !z-10 flex h-screen overflow-hidden max-md:!min-w-0 max-md:!max-w-0"
 			style={{ transition: !isResizing ? 'width 0.2s' : '', zIndex: 1, position: 'relative' }}
 			handleStyles={{
 				right: {

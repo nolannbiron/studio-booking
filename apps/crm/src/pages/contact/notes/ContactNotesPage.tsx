@@ -21,8 +21,11 @@ export default function ContactNotesPage(): JSX.Element {
 	useEffect(() => {
 		if (searchParams.get('noteId') && !searchParams.get('modal')) {
 			setSearchParams()
+			setOpenNoteModal(false)
 		} else if (searchParams.get('noteId') && searchParams.get('modal') === 'note') {
 			setOpenNoteModal(true)
+		} else {
+			setOpenNoteModal(false)
 		}
 	}, [searchParams, setSearchParams])
 
@@ -57,7 +60,7 @@ export default function ContactNotesPage(): JSX.Element {
 
 	return (
 		<>
-			<ScrollArea className="h-full max-h-full flex-1 space-y-3 px-5">
+			<ScrollArea className="flex-1 px-5 pt-3">
 				<div className="my-3 flex w-full items-center justify-between">
 					<h2 className="text-base font-semibold">Notes</h2>
 
@@ -66,7 +69,7 @@ export default function ContactNotesPage(): JSX.Element {
 						Add Note
 					</Button>
 				</div>
-				<div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+				<div className="grid grid-cols-1 gap-5 pb-5 lg:grid-cols-2">
 					{data?.notes.map((note) => (
 						<NoteCard onClick={() => handleOnClickNote(note.id)} key={note.id} note={note} />
 					))}

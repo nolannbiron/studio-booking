@@ -14,8 +14,10 @@ export default function ContactActivityPage(): JSX.Element {
 	if (!data || !contactData) return <></>
 
 	return (
-		<ScrollArea className="h-full max-h-full flex-1 space-y-3 px-5">
-			<h2 className="my-3 text-base font-medium">Activity</h2>
+		<ScrollArea className="flex-1 px-5 pt-4">
+			<div className="my-3 flex w-full items-center justify-between">
+				<h2 className="text-base font-semibold">Activity</h2>
+			</div>
 			<div className="text-muted-foreground mb-5 text-sm font-medium">2024</div>
 			<div className="">
 				{data.events.map((event) => {

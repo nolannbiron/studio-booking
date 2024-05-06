@@ -1,6 +1,8 @@
+import { useDeleteNote } from '@/api/note/hooks/useDeleteNote'
 import { useUpdateNote } from '@/api/note/hooks/useUpdateNote'
 import Editor from '@/components/editor/editor'
 import NoteDialogContentHeader from '@/components/note/dialog/NoteDialogContentHeader'
+import NoteDialogDropdownMenu from '@/components/note/dialog/NoteDialogDropdownMenu'
 import type { TNoteSchema } from '@repo/schemas/note'
 import { Button } from '@repo/ui/button'
 import { UserAvatar } from '@repo/ui/user/UserAvatar'
@@ -9,10 +11,17 @@ import { useRef, useState } from 'react'
 import { PiDotsThreeVertical } from 'react-icons/pi'
 import { useDebounce } from 'react-use'
 
-export default function NoteDialogContent({ note }: { note: TNoteSchema }): JSX.Element {
+export default function NoteDialogContent({
+	note,
+	onClose
+}: {
+	note: TNoteSchema
+	onClose?: () => void
+}): JSX.Element {
 	const ref = useRef<HTMLDivElement>(null)
 	const [content, setContent] = useState<JSONContent | undefined>(note.content as JSONContent)
 	const { mutate } = useUpdateNote()
+	const { mutate: deleteNote } = useDeleteNote()
 
 	useDebounce(
 		() => {
@@ -29,15 +38,32 @@ export default function NoteDialogContent({ note }: { note: TNoteSchema }): JSX.
 		})
 	}
 
+	const handleDeleteNote = () => {
+		deleteNote(
+			{ noteId: note.id },
+			{
+				onSuccess: () => {
+					onClose?.()
+				}
+			}
+		)
+	}
+
 	return (
 		<div className="flex flex-1 flex-col px-4 py-3">
 			<div className="flex justify-end">
 				{note.creator && (
 					<div className="flex items-center justify-end gap-2">
 						<UserAvatar className="rounded-full" size="xs" user={note.creator} />
-						<Button size="icon-2xs" variant="ghost" className="aspect-square h-full rounded-sm">
-							<PiDotsThreeVertical />
-						</Button>
+						<NoteDialogDropdownMenu onDelete={handleDeleteNote}>
+							<Button
+								size="icon-2xs"
+								variant="ghost"
+								className="aspect-square h-full rounded-sm"
+							>
+								<PiDotsThreeVertical />
+							</Button>
+						</NoteDialogDropdownMenu>
 					</div>
 				)}
 			</div>

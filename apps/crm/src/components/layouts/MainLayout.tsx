@@ -12,10 +12,10 @@ export default function MainLayout(): JSX.Element {
 	const isContact = isContactPage(pathname)
 
 	return (
-		<main className="flex h-full max-h-dvh flex-row overflow-hidden">
+		<main className="flex h-dvh max-h-dvh flex-row overflow-hidden">
 			<Sidebar />
 
-			<div className="flex flex-1 flex-col overflow-hidden">
+			<div className="flex max-h-full flex-1 flex-col">
 				<header className="flex h-16 w-full flex-shrink-0 items-center justify-between gap-5 border-b px-4 backdrop-blur">
 					{!isContact ? <Navbar /> : <ContactNavbar />}
 				</header>

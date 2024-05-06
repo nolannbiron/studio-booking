@@ -92,3 +92,8 @@ export type TUpdateNoteRequest = {
 	Params: { noteId: string }
 	Reply: TNoteReply | { success: false; message: unknown }
 }
+
+export type TDeleteNoteRequest = {
+	Params: { noteId: string }
+	Reply: { success: true } | { success: false; message: unknown }
+}

@@ -46,11 +46,11 @@ export default function ContactPage(): JSX.Element {
 	return (
 		<>
 			<ContactHeader contact={data.contact} />
-			<div className="flex-1">
-				<div className="flex h-full w-full flex-row flex-nowrap">
+			<div className="flex flex-1 overflow-hidden">
+				<div className="flex w-full flex-row flex-nowrap">
 					<div className="flex w-[62%]  min-w-80">
 						<Tabs
-							className="w-full flex-1"
+							className="flex w-full flex-1 flex-col"
 							defaultValue="activity"
 							value={activeTab}
 							onValueChange={(value) => navigate(`/contact/${id}/${value}`)}

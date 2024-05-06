@@ -35,9 +35,9 @@ export default function NotesPage(): JSX.Element {
 
 	return (
 		<>
-			<ScrollArea className="h-full max-h-full flex-1 space-y-3 px-5">
-				<div className="my-3 flex w-full items-center justify-between" />
-				<div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+			{/* <div className="flex w-full items-center justify-between" /> */}
+			<ScrollArea className="h-full flex-1 px-5 pt-5">
+				<div className="grid h-full grid-cols-1 gap-5 pb-5 lg:grid-cols-2">
 					{data?.notes.map((note) => (
 						<NoteCard onClick={() => handleOnClickNote(note.id)} key={note.id} note={note} />
 					))}

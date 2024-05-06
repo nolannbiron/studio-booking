@@ -1,6 +1,7 @@
 import { NoteRepository } from '@repo/lib/server/repository/note'
 import type {
 	TCreateNoteRequest,
+	TDeleteNoteRequest,
 	TGetNoteRequest,
 	TGetNotesCountRequest,
 	TGetNotesRequest,
@@ -92,6 +93,24 @@ const noteRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done: (
 				const note = await NoteRepository.update(req)
 
 				return res.send({ success: true, note }).status(200)
+			} catch (e) {
+				console.log(e)
+				return res.code(400).send({ success: false, message: e })
+			}
+		}
+	})
+
+	app.route<TDeleteNoteRequest>({
+		method: 'DELETE',
+		url: '/note/:noteId',
+		preHandler: app.Auth.User,
+		handler: async (req, res) => {
+			try {
+				if (!req.user) throw 'User not found'
+
+				await NoteRepository.delete(req)
+
+				return res.send({ success: true }).status(200)
 			} catch (e) {
 				console.log(e)
 				return res.code(400).send({ success: false, message: e })

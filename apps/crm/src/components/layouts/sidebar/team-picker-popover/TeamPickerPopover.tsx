@@ -53,7 +53,12 @@ export default function TeamPicker() {
 					{width !== NavbarSize.SM && <HiSelector className="text-muted-foreground shrink-0" />}
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent alignOffset={6} sideOffset={6} className="min-w-72 max-w-72" align="start">
+			<DropdownMenuContent
+				alignOffset={6}
+				sideOffset={6}
+				className="z-[99999] min-w-72 max-w-72"
+				align="start"
+			>
 				<TeamPickerDropdownGroup />
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>

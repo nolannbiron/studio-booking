@@ -1,12 +1,8 @@
 @import '@repo/ui/index.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-html {
-	scroll-behavior: smooth;
-}
-
 body {
-	@apply text-sm antialiased;
+	@apply max-h-dvh min-h-dvh overflow-hidden text-sm antialiased;
 	font-family:
 		'Inter',
 		-apple-system,
@@ -17,10 +13,9 @@ body {
 		sans-serif,
 		'Apple Color Emoji',
 		'Segoe UI Emoji';
+	scroll-behavior: smooth;
 	font-display: swap;
 	font-weight: 500;
-	height: 100%;
-	min-height: 100vh;
 	width: 100%;
 	margin: 0;
 	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
@@ -28,18 +23,17 @@ body {
 }
 
 #root {
-	min-height: 100vh;
-	height: 100vh;
+	@apply h-dvh max-h-dvh min-h-dvh;
 }
 
-// body:has([data-tippy-root]) #root {
-// 	@apply pointer-events-none;
+body:has([data-tippy-root]) #root {
+	@apply pointer-events-none;
+}
+
+// [data-radix-focus-guard] {
+// 	height: 100vh;
+// 	width: 100vw;
 // }
-
-[data-radix-focus-guard] {
-	height: 100vh;
-	width: 100vw;
-}
 
 .resize-handler {
 	position: relative;
