@@ -54,6 +54,8 @@ model User {
     teams    Membership[]
     accounts Account[]
     notes    Note[]
+    Task     Task?        @relation(fields: [taskId], references: [id])
+    taskId   String?
 
     @@index([email, password])
     @@map("users")
@@ -122,6 +124,7 @@ model Team {
     contacts           Contact[]
     genres             ContactGenre[]
     notes              Note[]
+    Task               Task[]
 
     @@map("teams")
 }
@@ -306,4 +309,28 @@ model Note {
     @@index([creatorId])
     @@index([entityId, entityType])
     @@map("notes")
+}
+
+model Task {
+    id        String    @id @default(uuid())
+    title     String
+    dueDate   DateTime?
+    completed Boolean   @default(false)
+
+    entityId   String?
+    entityType String?
+
+    creatorId String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+    teamId String
+
+    assignees User[]
+
+    @@index([creatorId])
+    @@index([teamId])
+    @@map("tasks")
 }

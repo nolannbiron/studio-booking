@@ -4,6 +4,7 @@ import accountRoutes from './account'
 import authRoutes from './auth'
 import contactRoutes from './contact'
 import noteRoutes from './note'
+import taskRoutes from './task'
 import teamRoutes from './team'
 import timelineRoutes from './timeline'
 import userRoutes from './user'
@@ -16,6 +17,7 @@ const instance = (app: FastifyInstance): FastifyInstance => {
 	app.register(timelineRoutes, { prefix: '/v1' })
 	app.register(userRoutes, { prefix: '/v1' })
 	app.register(noteRoutes, { prefix: '/v1' })
+	app.register(taskRoutes, { prefix: '/v1' })
 
 	return app
 }

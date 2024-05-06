@@ -22,7 +22,7 @@ export default function NoteDialogDropdownMenu({
 	return (
 		<DropdownMenu open={open} onOpenChange={setOpen}>
 			<DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-			<DropdownMenuContent align="end">
+			<DropdownMenuContent withPortal={false} align="end">
 				<DropdownMenuItem onClick={handleDeleteNote}>
 					<div className="text-destructive flex cursor-pointer items-center gap-2">
 						<FiTrash />

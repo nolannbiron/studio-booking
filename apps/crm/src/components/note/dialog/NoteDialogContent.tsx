@@ -50,17 +50,13 @@ export default function NoteDialogContent({
 	}
 
 	return (
-		<div className="flex flex-1 flex-col px-4 py-3">
+		<div className="flex flex-1 flex-col px-5 py-3">
 			<div className="flex justify-end">
 				{note.creator && (
 					<div className="flex items-center justify-end gap-2">
 						<UserAvatar className="rounded-full" size="xs" user={note.creator} />
 						<NoteDialogDropdownMenu onDelete={handleDeleteNote}>
-							<Button
-								size="icon-2xs"
-								variant="ghost"
-								className="aspect-square h-full rounded-sm"
-							>
+							<Button size="icon-2xs" variant="ghost" className="rounded-sm">
 								<PiDotsThreeVertical />
 							</Button>
 						</NoteDialogDropdownMenu>

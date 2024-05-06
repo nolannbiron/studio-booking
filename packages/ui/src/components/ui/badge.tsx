@@ -11,7 +11,8 @@ const badgeVariants = cva(
 				true: 'cursor-pointer'
 			},
 			variant: {
-				default: 'border-blue-300 bg-blue-100 text-blue-900 shadow',
+				default:
+					'border-blue-300 bg-blue-100 text-blue-900 shadow dark:border-[#314872] dark:bg-[#293c60] dark:text-[#E5EEFF]',
 				secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent',
 				destructive:
 					'bg-destructive text-destructive-foreground hover:bg-destructive/80 border-transparent shadow',
@@ -26,7 +27,7 @@ const badgeVariants = cva(
 				lg: 'rounded-lg'
 			},
 			size: {
-				sm: 'px-1 py-0.5 text-xs',
+				sm: 'px-0.5 py-0.5 text-xs',
 				md: 'px-3 py-1 text-sm',
 				lg: 'px-4 py-2 text-base'
 			}

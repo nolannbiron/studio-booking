@@ -9,6 +9,7 @@ import { useContactsTableStore } from '@/components/contacts/table/store/contact
 import { useIsOutsideClick } from '@repo/hooks'
 import type { TContact } from '@repo/schemas/contact'
 import { cn } from '@repo/ui/lib/utils'
+import { ScrollArea } from '@repo/ui/scroll-area'
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useCallback, useMemo, useRef, useState } from 'react'
 
@@ -130,7 +131,7 @@ export default function ContactsTable({
 	})
 
 	return (
-		<div tabIndex={-1} className="w-full max-w-full flex-1 overflow-scroll focus-visible:outline-none">
+		<ScrollArea tabIndex={-1} className="flex-1 focus-visible:outline-none">
 			<table
 				ref={ref}
 				style={{
@@ -236,6 +237,6 @@ export default function ContactsTable({
 					))}
 				</tfoot>
 			</table>
-		</div>
+		</ScrollArea>
 	)
 }

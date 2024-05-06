@@ -1,17 +1,13 @@
 import { axios } from '@/api/axios'
 import { contactKeys } from '@/api/contact/contactKeys'
 import { useAuthStore } from '@/state/auth.state'
+import { useTeamStore } from '@/state/team.state'
 import type { TContactsReply } from '@repo/schemas/contact'
 import type { TContactFilters } from '@repo/schemas/filters/contact-filters.schema'
 import { useQuery } from '@tanstack/react-query'
 
-export const useGetTeamContacts = ({
-	teamId,
-	filters
-}: {
-	teamId?: string
-	filters: TContactFilters | null
-}) => {
+export const useGetTeamContacts = ({ filters }: { filters?: TContactFilters | null }) => {
+	const { currentTeam } = useTeamStore()
 	const { jwt } = useAuthStore()
 
 	const queryParams = new URLSearchParams()
@@ -24,9 +20,9 @@ export const useGetTeamContacts = ({
 	}
 
 	return useQuery<TContactsReply, Error, TContactsReply>({
-		queryKey: contactKeys.list({ teamId, filters }),
+		queryKey: contactKeys.list({ teamId: currentTeam.id, filters }),
 		queryFn: () =>
-			axios.get(`/team/${teamId}/contacts?${queryParams.toString()}`).then((res) => res.data),
-		enabled: !!teamId && !!jwt?.token
+			axios.get(`/team/${currentTeam.id}/contacts?${queryParams.toString()}`).then((res) => res.data),
+		enabled: !!currentTeam.id && !!jwt?.token
 	})
 }
