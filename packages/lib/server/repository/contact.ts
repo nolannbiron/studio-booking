@@ -42,11 +42,6 @@ export class ContactRepository {
 	static async update(req: FastifyRequest<TUpdateContactRequest>) {
 		const { genres, ...data } = req.body
 
-		let avatarUrl: string | undefined = undefined
-		if (data.name) {
-			avatarUrl = await getDefaultAvatarImage(data.name)
-		}
-
 		const currentContact = await prisma.contact.findFirst({
 			where: req.params,
 			include: { genres: true }
@@ -54,6 +49,20 @@ export class ContactRepository {
 
 		if (!currentContact) {
 			throw 'Contact not found'
+		}
+
+		let avatarUrl: string | undefined = undefined
+		if (data.name) {
+			const newNameArray = data.name.split(' ')
+			const oldNameArray = currentContact.name?.split(' ')
+
+			if (
+				newNameArray &&
+				oldNameArray &&
+				(newNameArray[0] !== oldNameArray[0] || newNameArray?.[1] !== oldNameArray?.[1])
+			) {
+				avatarUrl = await getDefaultAvatarImage(data.name)
+			}
 		}
 
 		let newContact = await prisma.contact.update({

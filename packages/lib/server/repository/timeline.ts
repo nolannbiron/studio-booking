@@ -11,7 +11,7 @@ export class TimelineRepository {
 	static async getTimelineEventsContact(req: FastifyRequest<TGetTimelineEventsContact>) {
 		const { contactId } = req.params
 
-		const contact = await prisma.contact.findUnique({
+		const contact = await prisma.contact.exists({
 			where: {
 				id: contactId,
 				team: {
@@ -22,9 +22,6 @@ export class TimelineRepository {
 						}
 					}
 				}
-			},
-			include: {
-				genres: true
 			}
 		})
 

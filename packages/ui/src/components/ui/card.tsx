@@ -11,7 +11,7 @@ const cardVariants = cva('rounded-xl border', {
 			outline: 'border-input bg-background hover:text-secondary-foreground border'
 		},
 		clickable: {
-			true: 'hover:bg-muted dark:hover:bg-muted/60 cursor-pointer transition-shadow hover:shadow-md'
+			true: 'hover:bg-muted dark:hover:bg-muted/60 cursor-pointer transition-all hover:shadow-md'
 		},
 		shadow: {
 			none: 'shadow-none',

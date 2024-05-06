@@ -33,7 +33,7 @@ export const useUpdateContact = () => {
 				}
 			)
 
-			queryClient.setQueryData<TContactReply>(contactKeys.detail(variables.contactId), (oldData) => {
+			queryClient.setQueryData<TContactReply>(contactKeys.detail(variables), (oldData) => {
 				if (!oldData) return oldData
 
 				return {

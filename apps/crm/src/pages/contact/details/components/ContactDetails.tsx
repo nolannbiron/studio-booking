@@ -59,9 +59,13 @@ export default function ContactDetails({
 
 	useDebounce(() => handleSubmit(), 500, [formData])
 
+	// useEffect(() => {
+	// 	setFormData(contact)
+	// }, [contact])
+
 	const handleChange = (key: keyof TUpdateContact, value: TUpdateContact[keyof TUpdateContact]) => {
-		setFormData((prev) => ({ ...prev, [key]: value }))
-		setErrors((prev) => ({ ...prev, [key]: undefined }))
+		setFormData({ ...formData, [key]: value })
+		setErrors({ ...errors, [key]: undefined })
 	}
 
 	const handleSubmit = () => {

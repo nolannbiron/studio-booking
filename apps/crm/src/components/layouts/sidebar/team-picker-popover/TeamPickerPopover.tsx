@@ -22,7 +22,7 @@ import ThemePickerSubMenu from './ThemePickerSubMenu'
 
 export default function TeamPicker() {
 	const { width } = useNavbarStore()
-	const { currentTeam, teams } = useTeamStore()
+	const { currentTeam } = useTeamStore()
 	const { t } = useTranslation()
 	const { logout } = useAuthStore()
 	const navigate = useNavigate()
@@ -54,7 +54,7 @@ export default function TeamPicker() {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent alignOffset={6} sideOffset={6} className="min-w-72 max-w-72" align="start">
-				{!!teams.length && <TeamPickerDropdownGroup teams={teams} />}
+				<TeamPickerDropdownGroup />
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<Link to="/settings/account">

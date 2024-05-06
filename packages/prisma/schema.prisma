@@ -53,6 +53,7 @@ model User {
 
     teams    Membership[]
     accounts Account[]
+    notes    Note[]
 
     @@index([email, password])
     @@map("users")
@@ -120,6 +121,7 @@ model Team {
     verificationTokens VerificationToken[]
     contacts           Contact[]
     genres             ContactGenre[]
+    notes              Note[]
 
     @@map("teams")
 }
@@ -280,4 +282,28 @@ model TimelineEvent {
 
     @@index([entityId])
     @@map("activities")
+}
+
+model Note {
+    id      String @id @default(uuid())
+    title   String
+    content Json?
+
+    entityId   String
+    entityType String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    creator   User   @relation(fields: [creatorId], references: [id])
+    creatorId String
+
+    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+    teamId String
+
+    @@index([entityId])
+    @@index([teamId])
+    @@index([creatorId])
+    @@index([entityId, entityType])
+    @@map("notes")
 }

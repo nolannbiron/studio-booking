@@ -7,7 +7,11 @@ import { TbFile, TbSquareRoundedCheck, TbUsers } from 'react-icons/tb'
 
 import type { TRoutesConfig } from './types'
 
+const ContactTasksPage = lazy(() => import('@/pages/contact/tasks/ContactTasksPage'))
+const ContactNotesPage = lazy(() => import('@/pages/contact/notes/ContactNotesPage'))
+const ContactProjectsPage = lazy(() => import('@/pages/contact/projects/ContactProjectsPage'))
 const ContactActivityPage = lazy(() => import('@/pages/contact/activity/ContactActivityPage'))
+const ContactFilesPage = lazy(() => import('@/pages/contact/files/ContactFilesPage'))
 const ContactPage = lazy(() => import('@/pages/contact/ContactPage'))
 const RequireAnonymous = lazy(() => import('@/navigation/RequireAnonymous'))
 const RequireAuth = lazy(() => import('@/navigation/RequireAuth'))
@@ -19,6 +23,7 @@ const AccountSettingsPage = lazy(() => import('@/pages/settings/account/AccountS
 const ContactsPage = lazy(() => import('@/pages/contacts/ContactsPage'))
 const CreateTeamPage = lazy(() => import('@/pages/create-team/CreateTeamPage'))
 const TeamSettingsPage = lazy(() => import('@/pages/settings/team/TeamSettingsPage'))
+const NotesPage = lazy(() => import('@/pages/notes/NotesPage'))
 
 export const useGetRoutes = (): TRoutesConfig => {
 	const { t } = useTranslation()
@@ -101,7 +106,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
-										<></>
+										<NotesPage />
 									</RequireAuth>
 								</Suspense>
 							)
@@ -221,7 +226,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						path: '/contact/:id/notes',
 						element: (
 							<Suspense fallback={<Loading withText fullScreen />}>
-								<></>
+								<ContactNotesPage />
 							</Suspense>
 						)
 					},
@@ -229,7 +234,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						path: '/contact/:id/tasks',
 						element: (
 							<Suspense fallback={<Loading withText fullScreen />}>
-								<></>
+								<ContactTasksPage />
 							</Suspense>
 						)
 					},
@@ -237,7 +242,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						path: '/contact/:id/files',
 						element: (
 							<Suspense fallback={<Loading withText fullScreen />}>
-								<></>
+								<ContactFilesPage />
 							</Suspense>
 						)
 					},
@@ -245,7 +250,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						path: '/contact/:id/projects',
 						element: (
 							<Suspense fallback={<Loading withText fullScreen />}>
-								<></>
+								<ContactProjectsPage />
 							</Suspense>
 						)
 					}

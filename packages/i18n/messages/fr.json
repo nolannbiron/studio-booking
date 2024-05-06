@@ -194,5 +194,68 @@
 		"link_expired": "Oups ! Ce lien n'est plus valide",
 		"link_expired_label": "Le lien de réinitialisation de mot de passe a expiré. Veuillez en demander un nouveau.",
 		"label": "Entrez votre nouveau mot de passe ci-dessous."
+	},
+	"time-ago": {
+		"today": "Aujourd'hui",
+		"yesterday": "Hier",
+		"seconds": "{{time, number}}s",
+		"minutes": "{{time, number}}m",
+		"hours": "{{time, number}}h",
+		"days": "{{time, number}}j",
+		"weeks": "{{time, number}}s",
+		"months": "{{time, number}}m",
+		"years": "{{time, number}}a"
+	},
+	"editor": {
+		"placeholder": {
+			"press": "Appuyer sur la touche '/' pour afficher les commandes…",
+			"startTyping": "Start typing…"
+		},
+		"link": {
+			"title": "Lien",
+			"tootltip": "Ajouter une lien",
+			"placeholder": "Coller le lien",
+			"copy": "Copier le lien",
+			"edit": "Editer le lien",
+			"openNewTab": "Ouvrir le lien dans un nouvel onglet",
+			"removeLink": "Supprimer le lien",
+			"error": {
+				"isValid": {
+					"true": "Lien vers une page Web",
+					"false": "Taper une URL complète pour créer un lien"
+				}
+			}
+		},
+		"commands": {
+			"noResult": "No results",
+			"action_menu": {
+				"bold": { "title": "B", "tooltip": "Mettre en gras", "command": "B" },
+				"italic": { "title": "I", "tooltip": "Mettre en italique", "command": "I" },
+				"underline": { "title": "U", "tooltip": "Souligner", "command": "U" },
+				"strike": { "title": "S", "tooltip": "Barrer", "command": "X" },
+				"turn_into": {
+					"title": "Transformer en",
+					"tooltip": "Transformer en"
+				}
+			},
+			"basic_blocks": {
+				"title": "Basic blocks",
+				"paragraph": "Texte",
+				"paragraph_description": "Ecrivez du texte. Tout simplement",
+				"heading": "Titre",
+				"heading1": "Titre 1",
+				"heading1_description": "Titre de grande taille",
+				"heading2": "Titre 2",
+				"heading2_description": "Titre de taille moyenne",
+				"heading3": "Titre",
+				"heading3_description": "Titre de petite taille",
+				"bullet_list": "Liste à puces",
+				"bullet_list_description": "Créer une liste à puces",
+				"ordered_list": "Liste numérotée",
+				"ordered_list_description": "Créer une liste à numérotée",
+				"to_do_list": "Liste de tâches",
+				"to_do_list_description": "Créer une case à cocher, idéal pour une liste de tâches."
+			}
+		}
 	}
 }

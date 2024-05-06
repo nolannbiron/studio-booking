@@ -154,7 +154,6 @@ export const getTagColorValues = (
 	preset: TTagColorsPreset,
 	colorMode: 'dark' | 'light' = 'dark'
 ): { boxShadow: string; backgroundColor: string; color: string } => {
-	console.log(colorMode)
 	if (colorMode === 'dark') return tagsDarkColors[preset]
 
 	return tagsLightColors[preset]

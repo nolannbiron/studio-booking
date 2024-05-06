@@ -90,3 +90,10 @@ body {
 div[cmdk-root] {
 	height: fit-content;
 }
+
+div[contenteditable]:empty:before {
+	content: attr(aria-placeholder);
+	pointer-events: none;
+	display: block; /* For Firefox */
+	@apply text-foreground/25;
+}

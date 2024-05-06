@@ -10,6 +10,7 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 export default function ContactPage(): JSX.Element {
 	const { id } = useParams()
+
 	const navigate = useNavigate()
 	const { pathname } = useLocation()
 	const { data, isLoading } = useGetContact({ contactId: id })

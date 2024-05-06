@@ -4,27 +4,46 @@ import * as React from 'react'
 import { cn } from '../../lib/utils'
 
 const badgeVariants = cva(
-	'focus:ring-ring inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
+	'focus:ring-ring inline-flex items-center border font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
 	{
 		variants: {
+			clickable: {
+				true: 'cursor-pointer'
+			},
 			variant: {
 				default: 'border-blue-300 bg-blue-100 text-blue-900 shadow',
 				secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent',
 				destructive:
 					'bg-destructive text-destructive-foreground hover:bg-destructive/80 border-transparent shadow',
-				outline: 'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground border'
+				outline: 'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground border',
+				'outline-dashed':
+					'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground border-dashed'
 			},
 			rounded: {
 				full: 'rounded-full',
 				md: 'rounded-md',
 				sm: 'rounded',
 				lg: 'rounded-lg'
+			},
+			size: {
+				sm: 'px-1 py-0.5 text-xs',
+				md: 'px-3 py-1 text-sm',
+				lg: 'px-4 py-2 text-base'
 			}
 		},
 		defaultVariants: {
 			variant: 'default',
-			rounded: 'md'
-		}
+			rounded: 'md',
+			size: 'sm',
+			clickable: false
+		},
+		compoundVariants: [
+			{
+				clickable: true,
+				variant: ['outline', 'outline-dashed'],
+				className: 'hover:bg-accent'
+			}
+		]
 	}
 )
 
@@ -32,8 +51,8 @@ export interface BadgeProps
 	extends React.HTMLAttributes<HTMLDivElement>,
 		VariantProps<typeof badgeVariants> {}
 
-function Badge({ className, variant, rounded, ...props }: BadgeProps) {
-	return <div className={cn(badgeVariants({ variant, rounded }), className)} {...props} />
+function Badge({ className, variant, clickable, size, rounded, ...props }: BadgeProps) {
+	return <div className={cn(badgeVariants({ variant, clickable, size, rounded }), className)} {...props} />
 }
 
 export { Badge, badgeVariants }

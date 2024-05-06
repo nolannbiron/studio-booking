@@ -10,7 +10,7 @@ export const useGetContact = ({ contactId }: { contactId?: string }) => {
 	const { jwt } = useAuthStore()
 
 	return useQuery<TContactReply, Error, TContactReply>({
-		queryKey: contactKeys.detail(contactId),
+		queryKey: contactKeys.detail({ contactId, teamId: currentTeam?.id }),
 		queryFn: () => axios.get(`/team/${currentTeam?.id}/contact/${contactId}`).then((res) => res.data),
 		enabled: !!currentTeam?.id && !!contactId && !!jwt?.token
 	})

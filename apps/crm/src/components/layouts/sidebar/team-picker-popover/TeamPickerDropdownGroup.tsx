@@ -1,44 +1,47 @@
 import { useGetTeams } from '@/api/team/hooks/useGetTeams'
 import { useTeamStore } from '@/state/team.state'
 import { useTranslation } from '@repo/i18n/next/client'
-import type { TTeam } from '@repo/schemas/team'
 import type { ComboboxOption } from '@repo/ui/combobox'
 import { DropdownMenuGroup, DropdownMenuItem } from '@repo/ui/dropdown-menu'
 import { TeamAvatar } from '@repo/ui/team/TeamAvatar'
 import { useMemo } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { IoIosCheckmarkCircle } from 'react-icons/io'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-export default function TeamPickerDropdownGroup({ teams }: { teams?: TTeam[] }): JSX.Element {
+export default function TeamPickerDropdownGroup(): JSX.Element {
 	const { t } = useTranslation()
 	const { setCurrentTeam, currentTeam } = useTeamStore()
-	const {} = useGetTeams()
+	const { data } = useGetTeams()
 	const navigate = useNavigate()
+	const { pathname } = useLocation()
 
-	const teamOptions: ComboboxOption[] = useMemo(() => {
+	const teamOptions: ComboboxOption<string>[] = useMemo(() => {
 		const options =
-			teams?.map((item) => ({
+			data?.teams.map((item) => ({
 				icon: <TeamAvatar size="2xs" team={item} />,
 				label: item.name,
 				value: item.id
 			})) ?? []
 
 		return options
-	}, [teams])
+	}, [data])
+
+	if (!data) return <></>
 
 	const handleChangeTeam = (value: string | 'new') => {
 		if (value === 'new') {
 			return
 		}
 
-		const selectedTeam = teams?.find((team) => team.id === value)
+		const selectedTeam = data.teams.find((team) => team.id === value)
 
 		if (!selectedTeam) {
 			return
 		}
 
 		setCurrentTeam(selectedTeam)
+		pathname.startsWith('/contact/') && navigate('/contacts')
 	}
 
 	const handleNewTeam = () => {
@@ -51,7 +54,7 @@ export default function TeamPickerDropdownGroup({ teams }: { teams?: TTeam[] }):
 				<DropdownMenuItem
 					key={option.value}
 					className="flex cursor-pointer items-center justify-between gap-4 truncate"
-					onClick={() => handleChangeTeam(option.value)}
+					onClick={() => handleChangeTeam(option.value ?? '')}
 				>
 					<div className="flex items-center gap-2">
 						{option.icon}

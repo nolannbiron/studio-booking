@@ -1,8 +1,13 @@
+import { useGetNotesCount } from '@/api/note/hooks/useGetNotesCount'
 import { Badge } from '@repo/ui/badge'
 import { TabsList, TabsTrigger } from '@repo/ui/tabs'
 import { TbActivity, TbFile, TbFiles, TbFolder, TbSquareRoundedCheck } from 'react-icons/tb'
+import { useParams } from 'react-router-dom'
 
 export default function ContactTabsList(): JSX.Element {
+	const { id } = useParams()
+	const { data: dataNotesCount } = useGetNotesCount({ entityId: id })
+
 	return (
 		<TabsList variant="bordered" className="w-full gap-1 px-5 pt-2.5">
 			<TabsTrigger variant="bordered" value="activity">
@@ -28,7 +33,7 @@ export default function ContactTabsList(): JSX.Element {
 					rounded="sm"
 					className="flex size-4 items-center justify-center p-0 opacity-100"
 				>
-					0
+					{dataNotesCount?.total || 0}
 				</Badge>
 			</TabsTrigger>
 			<TabsTrigger variant="bordered" value="tasks">
