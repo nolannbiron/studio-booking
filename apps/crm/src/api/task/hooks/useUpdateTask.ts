@@ -26,6 +26,10 @@ export const useUpdateTask = () => {
 			})
 
 			queryClient.invalidateQueries({
+				queryKey: taskKeys.detail(data.task.id)
+			})
+
+			queryClient.invalidateQueries({
 				queryKey: taskKeys.list({
 					creatorId: currentUser.id,
 					teamId: data.task.teamId

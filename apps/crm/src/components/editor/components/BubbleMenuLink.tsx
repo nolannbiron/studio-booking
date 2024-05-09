@@ -52,7 +52,7 @@ export default function BubbleMenuLink({ editor, open, onOpenChange }: Props): J
 
 	return (
 		<Popover open={open} onOpenChange={onOpenChange}>
-			<PopoverTrigger className="hover:bg-accent border-input focus:ring-ring flex w-fit items-center justify-start rounded-none border-r px-3 text-sm shadow-none focus:outline-none focus:ring-1">
+			<PopoverTrigger className="hover:bg-accent border-input focus:ring-ring flex w-fit items-center justify-start rounded-none border-r px-3 text-sm shadow-none focus:outline-0 focus:ring-1">
 				<div className="flex w-full items-center justify-start gap-2">
 					<Suspense fallback={<div />}>
 						<FiLink />

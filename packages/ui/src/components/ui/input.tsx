@@ -8,7 +8,7 @@ import * as React from 'react'
 import { cn } from '../../lib/utils'
 
 const inputClasses = cva(
-	'placeholder:text-muted-foreground/30 focus-visible:ring-ring/70 focus-visible:border-ring flex w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus:outline-0 focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
+	'placeholder:text-muted-foreground/30 focus-visible:ring-ring flex w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus:border-inherit focus:outline-0 focus-visible:outline-0 focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
 	{
 		variants: {
 			variant: {

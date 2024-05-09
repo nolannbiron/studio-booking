@@ -19,6 +19,7 @@ export const useGetAccount = () => {
 					return res.data
 				})
 				.catch((err: AxiosError) => {
+					console.log(err)
 					if (err.code === '401') {
 						logout()
 						return Promise.reject(err)

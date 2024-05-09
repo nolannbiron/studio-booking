@@ -11,9 +11,10 @@
 		"no_results": "Aucun résultat",
 		"command": "Taper une commande ou rechercher...",
 		"open_sidebar": "Ouvrir la barre latérale",
-		"search_record": "Rechercher un contact"
+		"search_record": "Rechercher un contact",
+		"coming_soon": "Arrive bientôt",
+		"you": "Vous"
 	},
-
 	"button": {
 		"cancel": "Annuler",
 		"ok": "OK",
@@ -27,7 +28,8 @@
 		"add_filter": "Ajouter un filtre",
 		"create_contact": "Créer un contact",
 		"login": "Connexion",
-		"register": "S'inscrire"
+		"register": "S'inscrire",
+		"delete": "Supprimer"
 	},
 	"team": {
 		"create": {
@@ -77,7 +79,10 @@
 			"referral": "Parrainage",
 			"team_general": "Général",
 			"team_members": "Membres",
-			"team_billing": "Facturation"
+			"team_billing": "Facturation",
+			"descriptions": {
+				"team_members": "Gérer les membres et les utilisateurs de votre espace de travail et définir leur niveau d'accès. Vous pouvez inviter de nouveaux utilisateurs si votre abonnement le permet."
+			}
 		},
 		"theme": {
 			"label": "Thème",
@@ -169,7 +174,44 @@
 			"ROCK": "Rock",
 			"SOUL": "Soul",
 			"OTHERS": "Autres"
+		},
+		"tabs": {
+			"activity": "Activité",
+			"details": "Détails",
+			"comments": "Commentaires",
+			"notes": "Notes",
+			"tasks": "Tâches",
+			"projects": "Projets",
+			"appointments": "Rendez-vous",
+			"files": "Fichiers"
 		}
+	},
+	"task": {
+		"assign_to": "Assigner à",
+		"due_date": "Date d'échéance",
+		"completed": "Terminé",
+		"completed_at": "Terminé le",
+		"completed_by": "Terminé par",
+		"create_task": "Créer une tâche",
+		"new_task": "Nouvelle tâche",
+		"update_task": "Modifier la tâche",
+		"link_contact": "Lier un contact",
+		"assigned_to_you": "Assigné à vous",
+		"group": {
+			"future": "À venir",
+			"today": "Aujourd'hui",
+			"past": "En retard",
+			"completed": "Terminé",
+			"noDueDate": "Aucune date d'échéance"
+		},
+		"no_date": "Aucune date"
+	},
+	"note": {
+		"create_note": "Créer une note",
+		"new_note": "Nouvelle note",
+		"delete_note": "Supprimer la note",
+		"placeholder": "Note sans titre",
+		"link_session": "Lier une session"
 	},
 	"auth": {
 		"login_with_facebook": "Se connecter avec Facebook",
@@ -199,6 +241,7 @@
 	"time-ago": {
 		"today": "Aujourd'hui",
 		"yesterday": "Hier",
+		"tomorrow": "Demain",
 		"seconds": "{{time, number}}s",
 		"minutes": "{{time, number}}m",
 		"hours": "{{time, number}}h",
@@ -209,8 +252,8 @@
 	},
 	"editor": {
 		"placeholder": {
-			"press": "Appuyer sur la touche '/' pour afficher les commandes…",
-			"startTyping": "Start typing…"
+			"press": "Appuyer sur '/' pour afficher les commandes…",
+			"startTyping": "Commencer à taper..."
 		},
 		"link": {
 			"title": "Lien",
@@ -257,6 +300,16 @@
 				"to_do_list": "Liste de tâches",
 				"to_do_list_description": "Créer une case à cocher, idéal pour une liste de tâches."
 			}
+		}
+	},
+	"date-picker": {
+		"search_date": "Taper 'Mardi prochain'",
+		"preset": {
+			"custom_date": "Date personnalisée",
+			"no_date": "Aucune date",
+			"today": "Aujourd'hui",
+			"tomorrow": "Demain",
+			"next_week": "Semaine prochaine"
 		}
 	}
 }

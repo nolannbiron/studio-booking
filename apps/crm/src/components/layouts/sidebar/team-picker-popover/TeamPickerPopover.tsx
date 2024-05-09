@@ -38,7 +38,7 @@ export default function TeamPicker() {
 				<Button
 					role="combobox"
 					className={cn(
-						'h-16 w-full justify-between truncate rounded-none border-b px-3 text-base',
+						'h-16 w-full justify-between truncate rounded-none border-b px-3 text-base focus:ring-inset',
 						{
 							'px-2': width === NavbarSize.SM
 						}

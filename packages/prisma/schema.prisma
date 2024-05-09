@@ -32,10 +32,10 @@ enum Locale {
 
 model User {
     id            String    @id @default(uuid())
-    firstName     String?
-    lastName      String?
-    fullName      String?
-    avatarUrl     String?
+    firstName     String
+    lastName      String
+    fullName      String
+    avatarUrl     String
     avatarColor   String?
     email         String    @unique
     password      String?
@@ -54,8 +54,7 @@ model User {
     teams    Membership[]
     accounts Account[]
     notes    Note[]
-    Task     Task?        @relation(fields: [taskId], references: [id])
-    taskId   String?
+    tasks    Task[]       @relation("AssignedTasks")
 
     @@index([email, password])
     @@map("users")
@@ -93,14 +92,16 @@ model Membership {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId String
+    user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+    userEmail String
 
     team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
     teamId String
 
+    @@unique([userEmail, teamId])
     @@unique([userId, teamId])
-    @@index([userId])
+    @@index([userEmail])
     @@index([teamId])
     @@map("memberships")
 }
@@ -298,7 +299,7 @@ model Note {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    creator   User   @relation(fields: [creatorId], references: [id])
+    creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
     creatorId String
 
     team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
@@ -328,9 +329,10 @@ model Task {
     team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
     teamId String
 
-    assignees User[]
+    assignees User[] @relation("AssignedTasks")
 
-    @@index([creatorId])
-    @@index([teamId])
+    @@index([entityId, teamId, dueDate, completed, creatorId])
+    @@index([entityId, teamId, dueDate, completed])
+    @@index([creatorId, teamId, dueDate, completed])
     @@map("tasks")
 }

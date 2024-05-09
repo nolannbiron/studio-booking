@@ -45,7 +45,7 @@ export default function TableSelectableCell({
 				className={cn('grid h-full select-none flex-nowrap items-center gap-1', {
 					'bg-background absolute left-0 top-0 z-20 h-max max-h-[200px] min-h-full w-max min-w-full max-w-[300px] rounded [&>button]:flex-wrap':
 						isExpandable && isActivated,
-					'before:border-primary before:bg-primary/10 before:pointer-events-none before:absolute before:bottom-px before:left-0 before:right-px before:top-0 before:z-10 before:overflow-hidden before:rounded before:border before:transition-all':
+					'before:border-ring before:bg-ring/10 before:pointer-events-none before:absolute before:bottom-px before:left-0 before:right-px before:top-0 before:z-10 before:overflow-hidden before:rounded before:border before:transition-all':
 						isActivated
 				})}
 			>

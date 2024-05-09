@@ -335,7 +335,6 @@ export const AUTH_OPTIONS: AuthOptions = {
 					firstName: token.firstName,
 					lastName: token.lastName,
 					fullName: token.fullName,
-
 					avatarUrl: token.avatarUrl,
 					avatarColor: token.avatarColor,
 					locale: token.locale,

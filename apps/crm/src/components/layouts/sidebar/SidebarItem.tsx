@@ -37,7 +37,7 @@ export default function SidebarItem({
 			to={path}
 			onClick={onClick}
 			className={cn(
-				'flex w-full min-w-fit cursor-pointer select-none items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-sm transition-all md:min-w-0',
+				'focus:ring-ring flex w-full min-w-fit cursor-pointer select-none items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-sm transition-all focus:outline-0 focus:ring-1 md:min-w-0',
 				isActive ? 'bg-muted text-foreground' : 'hover:bg-muted'
 			)}
 		>

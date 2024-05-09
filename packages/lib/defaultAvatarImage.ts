@@ -3,7 +3,7 @@ import * as initials from '@dicebear/initials'
 
 export const getDefaultAvatarImage = async (name: string) => {
 	const svg = createAvatar(initials, {
-		seed: name,
+		seed: name[0],
 		size: 100,
 		textColor: ['ffffff'],
 		backgroundColor: [

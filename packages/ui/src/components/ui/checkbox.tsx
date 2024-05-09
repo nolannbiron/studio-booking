@@ -13,7 +13,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
 		<CheckboxPrimitive.Root
 			ref={ref}
 			className={cn(
-				'border-border data-[state=unchecked]:hover:bg-muted/40 focus-visible:ring-ring data-[state=checked]:bg-primary  data-[state=indeterminate]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground peer h-4 w-4 shrink-0 rounded-sm border shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
+				'border-border data-[state=unchecked]:hover:bg-muted/40 focus-visible:ring-ring data-[state=checked]:bg-primary data-[state=indeterminate]:bg-primary  data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground peer h-4 w-4 shrink-0 rounded-sm border shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
 				className
 			)}
 			{...props}
@@ -21,6 +21,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
 			<CheckboxPrimitive.Indicator className={cn('flex items-center justify-center text-current')}>
 				{props.checked === 'indeterminate' && <MinusIcon className="size-3.5" />}
 				{props.checked === true && <CheckIcon className="size-3.5" />}
+				{typeof props.checked === 'undefined' && <CheckIcon className="size-3.5" />}
 			</CheckboxPrimitive.Indicator>
 		</CheckboxPrimitive.Root>
 	)

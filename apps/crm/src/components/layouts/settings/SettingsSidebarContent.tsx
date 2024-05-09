@@ -15,7 +15,7 @@ export default function SettingsSidebarContent({ onClick }: { onClick?: () => vo
 	return (
 		<div className="flex flex-col overflow-hidden">
 			<div className="flex h-16 items-center gap-3 border-b px-2">
-				<Link to="/">
+				<Link to="/" tabIndex={-1}>
 					<Button variant="ghost" size="icon-sm">
 						<FiChevronLeft className="text-muted-foreground h-5 w-5" />
 					</Button>

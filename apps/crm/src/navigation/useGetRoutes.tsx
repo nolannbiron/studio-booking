@@ -7,6 +7,7 @@ import { TbFile, TbSquareRoundedCheck, TbUsers } from 'react-icons/tb'
 
 import type { TRoutesConfig } from './types'
 
+const TeamSettingsMembersPage = lazy(() => import('@/pages/settings/team/members/TeamSettingsMembersPage'))
 const ContactTasksPage = lazy(() => import('@/pages/contact/tasks/ContactTasksPage'))
 const ContactNotesPage = lazy(() => import('@/pages/contact/notes/ContactNotesPage'))
 const ContactProjectsPage = lazy(() => import('@/pages/contact/projects/ContactProjectsPage'))
@@ -22,7 +23,7 @@ const ResetPasswordPage = lazy(() => import('@/pages/auth/reset-password/ResetPa
 const AccountSettingsPage = lazy(() => import('@/pages/settings/account/AccountSettingsPage'))
 const ContactsPage = lazy(() => import('@/pages/contacts/ContactsPage'))
 const CreateTeamPage = lazy(() => import('@/pages/create-team/CreateTeamPage'))
-const TeamSettingsPage = lazy(() => import('@/pages/settings/team/TeamSettingsPage'))
+const TeamSettingsPage = lazy(() => import('@/pages/settings/team/general/TeamSettingsPage'))
 const NotesPage = lazy(() => import('@/pages/notes/NotesPage'))
 
 export const useGetRoutes = (): TRoutesConfig => {
@@ -185,7 +186,9 @@ export const useGetRoutes = (): TRoutesConfig => {
 					icon: <FiUsers />,
 					element: (
 						<Suspense fallback={<Loading withText fullScreen />}>
-							<RequireAuth>{/* <TeamMembersSettingsPage /> */}</RequireAuth>
+							<RequireAuth>
+								<TeamSettingsMembersPage />
+							</RequireAuth>
 						</Suspense>
 					)
 				},

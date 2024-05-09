@@ -3,6 +3,7 @@ import { useCreateNote } from '@/api/note/hooks/useCreateNote'
 import { useGetNotes } from '@/api/note/hooks/useGetNotes'
 import NoteCard from '@/components/note/NoteCard'
 import NoteDialog from '@/components/note/dialog/NoteDialog'
+import { useTranslation } from '@repo/i18n/next/client'
 import { Button } from '@repo/ui/button'
 import { Loading } from '@repo/ui/loading'
 import { ScrollArea } from '@repo/ui/scroll-area'
@@ -11,6 +12,7 @@ import { PiFilePlus } from 'react-icons/pi'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 export default function ContactNotesPage(): JSX.Element {
+	const { t } = useTranslation()
 	const { id } = useParams<{ id: string }>()
 	const { data: dataContact } = useGetContact({ contactId: id })
 	const { data, isLoading } = useGetNotes({ entityId: id })
@@ -62,11 +64,11 @@ export default function ContactNotesPage(): JSX.Element {
 		<>
 			<ScrollArea className="flex-1 px-5 pt-3">
 				<div className="my-3 flex w-full items-center justify-between">
-					<h2 className="text-base font-semibold">Notes</h2>
+					<h2 className="text-base font-semibold">{t('contact.tabs.notes')}</h2>
 
 					<Button onClick={handleCreateNote} variant="outline">
 						<PiFilePlus />
-						Add Note
+						{t('note.new_note')}
 					</Button>
 				</div>
 				<div className="grid grid-cols-1 gap-5 pb-5 lg:grid-cols-2">

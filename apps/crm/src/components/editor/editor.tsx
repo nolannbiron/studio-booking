@@ -1,4 +1,5 @@
 // import Emoji, { emojis } from '@tiptap-pro/extension-emoji'
+import { useTranslation } from '@repo/i18n/next/client'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import Underline from '@tiptap/extension-underline'
@@ -26,6 +27,7 @@ export default function Editor({
 	onBlur?: () => void
 	placeholder?: string
 }) {
+	const { t } = useTranslation()
 	const editor = useEditor({
 		content: content,
 		onBlur: ({ editor }) => {
@@ -91,17 +93,17 @@ export default function Editor({
 				includeChildren: true,
 				placeholder: ({ node, hasAnchor, editor }) => {
 					if (node.type.name === 'heading') {
-						return `Heading ${node.attrs.level}`
+						return `${t('editor.commands.basic_blocks.heading')} ${node.attrs.level}`
 					}
 
 					//if document is empty
 					if (editor.state.doc.content.size === 2) {
-						return placeholder ?? 'Commencer à taper...'
+						return placeholder ?? t('editor.placeholder.startTyping')
 					}
 
 					if (node.type.name === 'paragraph' && hasAnchor) {
-						if (withCommands) return 'Taper / pour afficher les commandes'
-						return 'Commencer à taper...'
+						if (withCommands) return t('editor.placeholder.press')
+						return t('editor.placeholder.startTyping')
 					}
 
 					return ''

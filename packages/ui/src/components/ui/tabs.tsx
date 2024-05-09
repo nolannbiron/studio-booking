@@ -33,14 +33,14 @@ const TabsList = React.forwardRef<
 TabsList.displayName = TabsPrimitive.List.displayName
 
 const tabsTriggerClasses = cva(
-	'relative flex items-center gap-2 px-2 py-1 text-sm data-[state=active]:font-medium',
+	'focus:ring-ring relative flex items-center gap-2 px-2 py-1 text-sm focus:outline-0 focus:ring-1 data-[state=active]:font-medium',
 	{
 		variants: {
 			variant: {
 				default:
 					'ring-offset-background focus-visible:ring-ring data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex w-full items-center justify-center whitespace-nowrap rounded border border-transparent  text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow',
 				primary:
-					'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-[13px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-blue-500 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-900 data-[state=active]:shadow-sm',
+					'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-[13px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-blue-500 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-900 data-[state=active]:shadow-sm',
 				bordered:
 					'data-[state=inactive]:hover:border-input/80 text-secondary-foreground data-[state=active]:border-input after:bg-input data-[state=active]:before:bg-foreground w-fit rounded-md border border-transparent opacity-70 before:absolute before:-bottom-[11px] before:left-0 before:z-10 before:h-px before:w-full before:rounded-full before:opacity-0 after:absolute after:-bottom-[11px] after:left-0 after:right-0 after:z-0 after:h-px after:w-full hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-transparent disabled:hover:opacity-70 data-[state=active]:opacity-100 data-[state=active]:before:opacity-100 data-[state=inactive]:hover:border'
 			}
@@ -63,7 +63,7 @@ const tabsContentClasses = cva('', {
 	variants: {
 		variant: {
 			default:
-				'ring-offset-background focus-visible:ring-ring mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+				'ring-offset-background focus-visible:ring-ring mt-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2'
 		}
 	},
 	defaultVariants: {

@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { ZContactSchema } from '../contact'
 import { ZPublicUserSchema } from '../user'
 
 // id        String    @id @default(uuid())
@@ -24,12 +25,13 @@ export const ZTaskSchema = z.object({
 	id: z.string(),
 	title: z.string(),
 	dueDate: z.date().nullish(),
-	completed: z.boolean().default(false),
+	completed: z.boolean().nullish(),
 	entityId: z.string().nullish(),
 	entityType: z.string().nullish(),
 	creatorId: z.string().nullish(),
 	teamId: z.string(),
 	assignees: z.lazy(() => z.array(ZPublicUserSchema)),
+	entity: z.lazy(() => ZContactSchema).nullish(),
 	createdAt: z.date(),
 	updatedAt: z.date()
 })
@@ -39,8 +41,12 @@ export const ZTaskCreateSchema = ZTaskSchema.omit({
 	createdAt: true,
 	updatedAt: true,
 	creator: true,
-	assignees: true
+	assignees: true,
+	completed: true
+}).extend({
+	assignees: z.array(z.string()).nullish()
 })
+
 export const ZTaskUpdateSchema = ZTaskSchema.omit({
 	id: true,
 	createdAt: true,
@@ -49,7 +55,11 @@ export const ZTaskUpdateSchema = ZTaskSchema.omit({
 	creatorId: true,
 	teamId: true,
 	assignees: true
-}).partial()
+})
+	.partial()
+	.extend({
+		assignees: z.array(z.string()).nullish()
+	})
 
 export type TTaskSchema = z.infer<typeof ZTaskSchema>
 export type TTaskCreateSchema = z.infer<typeof ZTaskCreateSchema>
@@ -57,7 +67,7 @@ export type TTaskUpdateSchema = z.infer<typeof ZTaskUpdateSchema>
 
 export type TTasksReply = {
 	success: true
-	tasks: TTaskSchema[]
+	tasks: TGroupedTasks
 }
 
 export type TTaskReply = {
@@ -112,4 +122,10 @@ export type TUpdateTaskRequest = {
 export type TDeleteTaskRequest = {
 	Params: { taskId: string }
 	Reply: { success: true } | { success: false; message: unknown }
+}
+
+export type TTaskGroupName = 'today' | 'future' | 'completed' | 'noDueDate'
+
+export type TGroupedTasks = {
+	[key in TTaskGroupName]: TTaskSchema[]
 }

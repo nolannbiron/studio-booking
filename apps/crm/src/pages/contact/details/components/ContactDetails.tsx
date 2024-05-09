@@ -139,7 +139,7 @@ export default function ContactDetails({
 				type="combobox"
 				options={contactTypeComboboxOptions}
 				onSelect={(value) => handleChangeType(value as ContactType)}
-				triggerClassName="flex gap-1 min-h-8 max-w-full text-sm truncate flex-1 data-[state=open]:absolute data-[state=open]:z-50 bg-background data-[state=open]:top-0 w-full hover:bg-accent data-[state=open]:hover:bg-background border p-1 rounded-md overflow-hidden border-transparent data-[state=open]:flex-wrap data-[state=open]:border-primary flex-nowrap"
+				triggerClassName="flex gap-1 min-h-8 max-w-full text-sm truncate flex-1 data-[state=open]:absolute data-[state=open]:z-50 bg-background data-[state=open]:top-0 w-full hover:bg-accent data-[state=open]:hover:bg-background border p-1 rounded-md overflow-hidden border-transparent data-[state=open]:flex-wrap data-[state=open]:border-ring flex-nowrap"
 			>
 				{formData.type ? (
 					t(`contact.type.${formData.type}`)
@@ -154,7 +154,7 @@ export default function ContactDetails({
 				type="combobox"
 				options={getGenresComboboxOptions(currentTeam.genres, theme)}
 				onSelect={handleChangeGenres}
-				triggerClassName="flex gap-1 items-stretch min-h-8 max-w-full truncate flex-1 data-[state=open]:h-fit data-[state=open]:absolute data-[state=open]:z-50 bg-background data-[state=open]:top-0 w-full hover:bg-accent data-[state=open]:hover:bg-background border p-1 rounded-md overflow-hidden border-transparent data-[state=open]:flex-wrap data-[state=open]:border-primary flex-nowrap"
+				triggerClassName="flex gap-1 items-stretch min-h-8 max-w-full truncate flex-1 data-[state=open]:h-fit data-[state=open]:absolute data-[state=open]:z-50 bg-background data-[state=open]:top-0 w-full hover:bg-accent data-[state=open]:hover:bg-background border p-1 rounded-md overflow-hidden border-transparent data-[state=open]:flex-wrap data-[state=open]:border-ring flex-nowrap"
 			>
 				<ContactsTableRowCellGenreItems placeholder="Set genres" genres={genres ?? []} />
 			</EditableLine>

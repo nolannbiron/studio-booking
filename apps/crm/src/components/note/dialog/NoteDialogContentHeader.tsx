@@ -1,4 +1,5 @@
 import { useUpdateNote } from '@/api/note/hooks/useUpdateNote'
+import { useTranslation } from '@repo/i18n/next/client'
 import type { TNoteSchema } from '@repo/schemas/note'
 import { Badge } from '@repo/ui/badge'
 import { UserAvatar } from '@repo/ui/user/UserAvatar'
@@ -7,6 +8,7 @@ import { PiCalendarPlus } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 
 export default function NoteDialogContentHeader({ note }: { note: TNoteSchema }): JSX.Element {
+	const { t } = useTranslation()
 	const { mutate } = useUpdateNote()
 	const [title, setTitle] = useState(note.title)
 
@@ -35,11 +37,11 @@ export default function NoteDialogContentHeader({ note }: { note: TNoteSchema })
 		<div className="space-y-4">
 			<div
 				contentEditable
-				aria-placeholder="Untitled note"
+				aria-placeholder={t('note.placeholder')}
 				suppressContentEditableWarning
 				role="textbox"
 				onBlur={handleUpdateNote}
-				className="w-full text-3xl font-semibold focus:outline-none"
+				className="w-full text-3xl font-semibold focus:outline-0"
 			>
 				{title}
 			</div>
@@ -55,7 +57,7 @@ export default function NoteDialogContentHeader({ note }: { note: TNoteSchema })
 
 				<Badge variant="outline-dashed" clickable className="flex items-center gap-1 px-1">
 					<PiCalendarPlus />
-					Link a session
+					{t('note.link_session')}
 				</Badge>
 			</div>
 		</div>

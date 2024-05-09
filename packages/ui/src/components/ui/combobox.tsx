@@ -36,6 +36,7 @@ export interface ComboboxProps<T> extends PopoverProps {
 	triggerClassName?: string
 	closeOnSelect?: boolean
 	withPortal?: boolean
+	shouldShowInput?: boolean
 }
 
 export function Combobox<T>({
@@ -55,6 +56,7 @@ export function Combobox<T>({
 	fullWidth,
 	closeOnSelect,
 	withPortal = true,
+	shouldShowInput = false,
 	...props
 }: ComboboxProps<T>) {
 	const [isOpen, setIsOpen] = useState(open)
@@ -97,7 +99,9 @@ export function Combobox<T>({
 						return 0
 					}}
 				>
-					{options.length > 10 && <CommandInput placeholder={placeholder} className="h-9" />}
+					{(options.length > 10 || shouldShowInput) && (
+						<CommandInput placeholder={placeholder} className="h-9" />
+					)}
 					<CommandEmpty>No results found.</CommandEmpty>
 					{!!options.length && (
 						<CommandList>

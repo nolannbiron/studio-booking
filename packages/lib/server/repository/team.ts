@@ -1,8 +1,16 @@
-import { prisma, teamPrivateInclude } from '@repo/prisma'
+import { prisma, teamPrivateInclude, userPublicProfileSelect } from '@repo/prisma'
 import type { Prisma } from '@repo/prisma/client'
 import { MembershipRole } from '@repo/prisma/client'
 import { teamMetadataSchema } from '@repo/prisma/zod-utils'
-import type { TCreateTeam, TTeam, TTeamWithMembers } from '@repo/schemas/team'
+import type {
+	TGetTeamMembersRequest,
+	TPostTeamRequest,
+	TTeam,
+	TTeamAddMemberRequest,
+	TTeamWithMembers
+} from '@repo/schemas/team'
+import type { TTeamMembership } from '@repo/schemas/team'
+import type { FastifyRequest } from 'fastify'
 
 import { errorHandler } from '../errorHandler'
 
@@ -66,6 +74,7 @@ export class TeamRepository {
 						accepted: true,
 						role: true,
 						userId: true,
+						userEmail: true,
 						teamId: true,
 						createdAt: true,
 						updatedAt: true
@@ -96,22 +105,23 @@ export class TeamRepository {
 		return team
 	}
 
-	static async create({ data, userId }: { data: TCreateTeam; userId: string }): Promise<TTeam> {
+	static async create(req: FastifyRequest<TPostTeamRequest>): Promise<TTeam> {
 		try {
-			const capitalized = data.name.charAt(0).toUpperCase() + data.name.slice(1)
+			const capitalized = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1)
 
 			const team = await prisma.team.create({
 				data: {
-					...data,
+					...req.body,
 					name: capitalized,
-					slug: data.slug ?? data.name?.toLowerCase().replace(/\s/g, '-'),
+					slug: req.body.slug ?? req.body.name?.toLowerCase().replace(/\s/g, '-'),
 					members: {
 						create: {
 							user: {
 								connect: {
-									id: userId
+									id: req.user!.id
 								}
 							},
+							userEmail: req.user!.email,
 							role: 'OWNER',
 							accepted: true
 						}
@@ -159,44 +169,83 @@ export class TeamRepository {
 		}
 	}
 
-	static async addMember({
-		teamId,
-		userId,
-		currentUserId,
-		role
-	}: {
-		teamId: string
-		userId: string
-		currentUserId: string
-		role: MembershipRole
-	}): Promise<TTeam> {
+	static async getTeamMembers(
+		req: FastifyRequest<TGetTeamMembersRequest>
+	): Promise<Omit<TTeamMembership, 'team'>[]> {
+		const members = await prisma.membership.findMany({
+			where: {
+				teamId: req.params.teamId,
+				accepted: true
+			},
+			select: {
+				id: true,
+				accepted: true,
+				role: true,
+				userId: true,
+				userEmail: true,
+				teamId: true,
+				user: {
+					select: userPublicProfileSelect
+				},
+				createdAt: true,
+				updatedAt: true
+			}
+		})
+
+		if (!members) {
+			return []
+		}
+
+		return members
+	}
+
+	static async addMember(req: FastifyRequest<TTeamAddMemberRequest>): Promise<TTeam> {
 		try {
-			const currentUser = await prisma.membership.findUnique({
+			const currentUser = await prisma.membership.findFirst({
 				where: {
-					userId_teamId: {
-						userId: currentUserId,
-						teamId
-					}
+					user: {
+						email: req.body.email
+					},
+					teamId: req.params.teamId
 				}
 			})
 
-			if (currentUser?.role !== MembershipRole.OWNER && role !== MembershipRole.MEMBER) {
+			if (currentUser?.role !== MembershipRole.OWNER && req.body.role !== MembershipRole.MEMBER) {
 				throw 'Only team owner can add user with role other than MEMBER'
 			}
 
 			const team = await prisma.team.update({
 				where: {
-					id: teamId
+					id: req.params.teamId
 				},
 				data: {
 					members: {
-						create: {
-							user: {
-								connect: {
-									id: userId
+						connectOrCreate: {
+							where: {
+								userEmail_teamId: {
+									userEmail: req.body.email,
+									teamId: req.params.teamId
 								}
 							},
-							role: role
+							create: {
+								accepted: false,
+								role: req.body.role,
+								userEmail: req.body.email,
+								user: {
+									connectOrCreate: {
+										where: {
+											email: req.body.email
+										},
+										create: {
+											email: req.body.email,
+											firstName: '',
+											lastName: '',
+											avatarUrl: '',
+											fullName: ''
+										}
+									}
+								}
+							}
 						}
 					}
 				},

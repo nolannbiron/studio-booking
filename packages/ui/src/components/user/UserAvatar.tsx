@@ -8,7 +8,7 @@ export function UserAvatar({
 	user,
 	...props
 }: {
-	user: Pick<TPublicUser, 'firstName' | 'lastName' | 'avatarUrl' | 'avatarColor'>
+	user: Partial<Pick<TPublicUser, 'firstName' | 'lastName' | 'avatarUrl' | 'avatarColor'>>
 } & AvatarProps): JSX.Element {
 	return (
 		<Avatar {...props}>
@@ -22,7 +22,6 @@ export function UserAvatar({
 				}}
 			>
 				{user.firstName?.[0]}
-				{user.lastName?.[0]}
 			</AvatarFallback>
 		</Avatar>
 	)

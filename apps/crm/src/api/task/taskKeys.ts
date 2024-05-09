@@ -13,7 +13,7 @@ type ITaskKeysMapper = {
 	count: (_: TGetTasksCountRequest['Querystring']) => ReadonlyArray<ITaskKeys>
 	counts: () => ReadonlyArray<ITaskKeys>
 	contact: (contactId?: string) => ReadonlyArray<ITaskKeys>
-	detail: ({ taskId, teamId }: { taskId?: string; teamId?: string }) => ReadonlyArray<ITaskKeys>
+	detail: (taskId?: string) => ReadonlyArray<ITaskKeys>
 }
 
 export const taskKeys: ITaskKeysMapper = {
@@ -25,5 +25,5 @@ export const taskKeys: ITaskKeysMapper = {
 	count: ({ teamId, creatorId, entityId }) =>
 		[{ ...taskKeys.counts()[0], teamId, creatorId, entityId }] as const,
 	contact: (contactId) => [{ ...taskKeys.all[0], entity: 'contact', contactId }] as const,
-	detail: ({ taskId, teamId }) => [{ ...taskKeys.all[0], entity: 'detail', taskId, teamId }] as const
+	detail: (taskId) => [{ ...taskKeys.all[0], entity: 'detail', taskId }] as const
 }

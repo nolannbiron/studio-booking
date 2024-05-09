@@ -22,11 +22,15 @@ const pathnames = {
 	billing: 'team_billing'
 } as const
 
-export default function SettingsHeader({ children }: { children?: React.ReactNode }): JSX.Element {
-	const { t } = useTranslation()
+export default function SettingsHeader(): JSX.Element {
+	const { t, i18n } = useTranslation()
 	const page = useActivePath(pathnames)
 
 	const title = page ? (isTeamPage(page) ? t('navbar.settings.team') : t('navbar.settings.account')) : ''
+
+	const description = i18n.exists(`navbar.settings.descriptions.${page}`)
+		? t(`navbar.settings.descriptions.${page}` as any)
+		: ''
 
 	return (
 		<div className="space-y-6">
@@ -44,8 +48,7 @@ export default function SettingsHeader({ children }: { children?: React.ReactNod
 
 			<div className="space-y-3">
 				{page && <h1 className="text-2xl font-semibold">{t(`navbar.settings.${page}`)}</h1>}
-
-				{children}
+				{description && <p className="text-pretty text-gray-500">{description}</p>}
 			</div>
 
 			<Separator />

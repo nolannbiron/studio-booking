@@ -1,13 +1,14 @@
 import type { Prisma, User } from '@prisma/client'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { sendAccountVerifyEmail } from '@repo/emails'
-import type { Account, PrismaClient, VerificationToken } from '@repo/prisma/client'
+import type { ExtendedPrisma } from '@repo/prisma'
+import type { Account, VerificationToken } from '@repo/prisma/client'
 
 import { AuthRepository } from '../server/repository/auth'
 import { getRandomAvatarColor } from './getRandomAvatarColor'
 
 /** @return { import("next-auth/adapters").Adapter } */
-export default function RepoAdapter(prismaClient: PrismaClient) {
+export default function RepoAdapter(prismaClient: ExtendedPrisma) {
 	return {
 		createUser: async (data: Prisma.UserCreateInput) => {
 			const user = await prismaClient.user.create({

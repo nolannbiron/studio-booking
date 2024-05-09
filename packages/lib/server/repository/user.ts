@@ -5,6 +5,8 @@ import { Prisma } from '@repo/prisma/client'
 import type { TResetPassword, TVerifyEmail } from '@repo/schemas/auth'
 import type { TPrivateUser, TUpdateUser } from '@repo/schemas/user'
 
+import { getDefaultAvatarImage } from '../../defaultAvatarImage'
+
 const teamSelect = Prisma.validator<Prisma.TeamSelect>()({
 	id: true,
 	name: true,
@@ -40,6 +42,7 @@ export class UserRepository {
 		if (!user) {
 			return null
 		}
+
 		return user
 	}
 
@@ -63,16 +66,33 @@ export class UserRepository {
 			fullName = `${data.firstName} ${data.lastName}`
 		}
 
+		let avatarUrl = undefined
+		if (data.firstName) {
+			avatarUrl = await getDefaultAvatarImage(data.firstName)
+		}
+
 		const user = await prisma.user.update({
 			where: {
 				id: userId
 			},
 			data: {
 				...data,
-				fullName
+				fullName,
+				avatarUrl
 			},
 			select: userSelect
 		})
+
+		// if (data.email && data.email !== user.email) {
+		// 	await prisma.membership.updateMany({
+		// 		where: {
+		// 			userId
+		// 		},
+		// 		data: {
+		// 			userEmail: data.email
+		// 		}
+		// 	})
+		// }
 
 		return user
 	}

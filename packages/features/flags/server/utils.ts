@@ -1,8 +1,8 @@
-import type { PrismaClient } from '@repo/prisma/client'
+import type { ExtendedPrisma } from '@repo/prisma'
 
 import type { AppFlags } from '../config'
 
-export async function getFeatureFlagMap(prisma: PrismaClient) {
+export async function getFeatureFlagMap(prisma: ExtendedPrisma) {
 	const flags = await prisma.feature.findMany({
 		orderBy: { slug: 'asc' }
 		// cacheStrategy: { swr: 300, ttl: 300 }
@@ -29,7 +29,7 @@ const isExpired = (entry: CacheEntry): boolean => {
 }
 
 export const getFeatureFlag = async (
-	prisma: PrismaClient,
+	prisma: ExtendedPrisma,
 	slug: keyof AppFlags,
 	options: CacheOptions = { ttl: 5 * 60 * 1000 }
 ): Promise<boolean> => {

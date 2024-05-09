@@ -1,5 +1,5 @@
 import { useGetTeam } from '@/api/team/hooks/useGetTeam'
-import TeamSettingsForm from '@/pages/settings/team/components/TeamSettingsForm'
+import TeamSettingsForm from '@/pages/settings/team/general/components/TeamSettingsForm'
 import { useTeamStore } from '@/state/team.state'
 import { Loading } from '@repo/ui/loading'
 

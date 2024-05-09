@@ -72,7 +72,11 @@ export default function AccountSettingsForm({ user }: { user: TPrivateUser }) {
 					<UserAvatar
 						size="xl"
 						className="rounded-full"
-						user={{ ...form.getValues(), avatarColor: user.avatarColor }}
+						user={{
+							...form.getValues(),
+							avatarUrl: user.avatarUrl,
+							avatarColor: user.avatarColor
+						}}
 					/>
 					<div className="space-y-2">
 						<h1 className="text-lg">{t('account.form.picture')}</h1>

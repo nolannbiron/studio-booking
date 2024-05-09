@@ -1,7 +1,7 @@
 import dayjs from '@repo/dayjs'
 import { getFeatureFlag } from '@repo/features/flags/server/utils'
 import i18n from '@repo/i18n/emails'
-import type { TFunction } from '@repo/i18n/emails/types'
+import type { TFunction } from '@repo/i18n/types'
 import { getErrorFromUnknown } from '@repo/lib/errors'
 import { serverConfig } from '@repo/lib/serverConfig'
 import { setTestEmail } from '@repo/lib/testEmails'

@@ -20,7 +20,8 @@ export default function RequireAuth({ children }: { children?: React.ReactNode }
 		if (data.user) {
 			setCurrentUser(data.user)
 		} else if (error?.code === '401') {
-			if (isLoggedIn) {
+			console.log(error)
+			if (isLoggedIn && process.env.NODE_ENV === 'production') {
 				logout()
 			}
 
@@ -52,7 +53,8 @@ export default function RequireAuth({ children }: { children?: React.ReactNode }
 	}, [dataTeams?.teams, setTeams])
 
 	useEffect(() => {
-		if (isError) {
+		console.log(isError, error)
+		if (isError && error.code === '401' && process.env.NODE_ENV === 'production') {
 			logout()
 			navigate('/login')
 		}

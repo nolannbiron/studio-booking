@@ -11,7 +11,7 @@ export const useDeleteNote = () => {
 			queryClient.invalidateQueries({
 				queryKey: noteKeys.lists()
 			})
-			queryClient.invalidateQueries({
+			queryClient.resetQueries({
 				queryKey: noteKeys.counts()
 			})
 		}

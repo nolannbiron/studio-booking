@@ -1,3 +1,4 @@
+import { useTranslation } from '@repo/i18n/next/client'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,6 +13,7 @@ export default function NoteDialogDropdownMenu({
 	onDelete,
 	children
 }: PropsWithChildren<{ onDelete: () => void }>): JSX.Element {
+	const { t } = useTranslation()
 	const [open, setOpen] = useState(false)
 
 	const handleDeleteNote = () => {
@@ -26,7 +28,7 @@ export default function NoteDialogDropdownMenu({
 				<DropdownMenuItem onClick={handleDeleteNote}>
 					<div className="text-destructive flex cursor-pointer items-center gap-2">
 						<FiTrash />
-						<span className="text-destructive">Delete this note</span>
+						<span className="text-destructive">{t('button.delete')}</span>
 					</div>
 				</DropdownMenuItem>
 			</DropdownMenuContent>

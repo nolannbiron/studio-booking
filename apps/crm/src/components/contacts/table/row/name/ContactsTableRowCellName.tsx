@@ -27,6 +27,7 @@ export default function ContactsTableRowCellName({
 				</div>
 				<Link
 					to={`/contact/${contact.id}`}
+					tabIndex={-1}
 					className="hover:bg-muted flex cursor-pointer items-center gap-2 truncate rounded-lg py-0.5 pl-1 pr-1.5 transition-all"
 				>
 					<UserAvatar user={contact} size="2xs" />

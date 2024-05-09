@@ -1,15 +1,15 @@
 import { AuthProvider, Locale } from '@repo/prisma/enums'
 import * as z from 'zod'
 
-import { ZTeamMembershipSchema } from '../team'
+import { ZTeamMembershipSchemaWithTeam } from '../team'
 
 export const ZUserSchema = z.object({
 	id: z.string(),
-	firstName: z.string().nullish(),
-	lastName: z.string().nullish(),
-	fullName: z.string().nullish(),
-	email: z.string(),
-	avatarUrl: z.string().nullish(),
+	firstName: z.string(),
+	lastName: z.string(),
+	fullName: z.string(),
+	email: z.string().email(),
+	avatarUrl: z.string(),
 	avatarColor: z.string().nullish(),
 	password: z.string().nullish(),
 	isRoot: z.boolean(),
@@ -20,7 +20,7 @@ export const ZUserSchema = z.object({
 	locale: z.nativeEnum(Locale).nullish(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
-	teams: z.lazy(() => ZTeamMembershipSchema).array()
+	teams: z.lazy(() => ZTeamMembershipSchemaWithTeam.array())
 })
 
 export const ZCreateUserSchema = ZUserSchema.pick({

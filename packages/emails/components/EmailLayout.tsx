@@ -8,7 +8,7 @@ import { Preview } from '@react-email/preview'
 import { Tailwind } from '@react-email/tailwind'
 import { Text } from '@react-email/text'
 import sharedTailwindConfig from '@repo/config/tailwind.config'
-import type { TFunction } from '@repo/i18n/emails/types'
+import type { TFunction } from '@repo/i18n/types'
 import { APP_NAME, WEBAPP_URL } from '@repo/lib/constants'
 import * as React from 'react'
 

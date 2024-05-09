@@ -87,6 +87,7 @@ const seed = async () => {
 						id: user.id
 					}
 				},
+				userEmail: user.email,
 				team: {
 					create: {
 						name: fakerFR.company.name(),
@@ -115,13 +116,14 @@ const seed = async () => {
 		})
 
 		createRandomContacts(membership.team)
+		addRandomMemberships(membership.team)
 	}
 
 	console.log(`User created: ${user.email}`)
 }
 
 async function createRandomContacts(team: TTeam) {
-	const contacts = Array.from({ length: fakerFR.number.int({ min: 15, max: 50 }) }, async (_) => {
+	const contacts = Array.from({ length: fakerFR.number.int({ min: 5, max: 30 }) }, async (_) => {
 		const contactName = fakerFR.person.fullName()
 		const avatarUrl = await getDefaultAvatarImage(contactName)
 
@@ -188,6 +190,46 @@ async function createRandomContacts(team: TTeam) {
 	})
 
 	await Promise.all(contacts)
+}
+
+async function addRandomMemberships(team: TTeam) {
+	const memberships = Array.from({ length: fakerFR.number.int({ min: 5, max: 30 }) }, async (_) => {
+		const firstName = fakerFR.person.firstName()
+		const lastName = fakerFR.person.lastName()
+		const fullname = `${firstName} ${lastName}`
+		const email = fakerFR.internet.email({
+			firstName: firstName,
+			lastName: lastName
+		})
+		const avatarUrl = await getDefaultAvatarImage(fullname)
+
+		return prisma.membership.create({
+			data: {
+				accepted: true,
+				role: 'MEMBER',
+				user: {
+					create: {
+						email: email,
+						password: await hashPassword('test'),
+						firstName: firstName,
+						lastName: lastName,
+						fullName: fullname,
+						locale: 'fr',
+						avatarUrl: avatarUrl,
+						emailVerified: new Date()
+					}
+				},
+				userEmail: email,
+				team: {
+					connect: {
+						id: team.id
+					}
+				}
+			}
+		})
+	})
+
+	await Promise.all(memberships)
 }
 
 seed()

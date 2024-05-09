@@ -63,7 +63,7 @@ export default forwardRef(function EmojiList(props: SuggestionProps, ref) {
 				{!!props.items.length ? (
 					props.items.map((item, index) => (
 						<button
-							className="hover:bg-accent focus:border-accent col-span-1 flex aspect-square h-7 w-7 items-center justify-center rounded-md border border-transparent focus:outline-none"
+							className="hover:bg-accent focus:border-accent col-span-1 flex aspect-square h-7 w-7 items-center justify-center rounded-md border border-transparent focus:outline-0"
 							key={index}
 							onClick={() => selectItem(index)}
 						>

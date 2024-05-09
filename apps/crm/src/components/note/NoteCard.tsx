@@ -50,7 +50,7 @@ export default function NoteCard({ note, onClick }: { note: TNoteSchema; onClick
 			</div>
 			<Card onClick={onClick} clickable className="flex min-h-52 flex-col pt-11">
 				<CardContent className="flex-1 space-y-1.5 px-3 pb-0 pt-1">
-					<p>{note.title || 'Untitled note'}</p>
+					<p>{note.title || t('note.placeholder')}</p>
 
 					{!!note.content && (
 						<div

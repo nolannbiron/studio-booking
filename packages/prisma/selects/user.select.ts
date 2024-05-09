@@ -34,6 +34,7 @@ export const userPrivateProfileSelect = Prisma.validator<Prisma.UserSelect>()({
 			teamId: true,
 			createdAt: true,
 			updatedAt: true,
+			userEmail: true,
 			team: {
 				select: {
 					id: true,

@@ -8,9 +8,11 @@ prismaOptions.log = ['error', 'warn']
 // prismaOptions.log.push('query')
 // }
 
+export type ExtendedPrisma = typeof extendedPrisma
+
 declare global {
 	// eslint-disable-next-line no-var
-	var prisma: typeof extendedPrisma | undefined
+	var prisma: ExtendedPrisma | undefined
 }
 
 const prismaClient = new PrismaClient(prismaOptions)
@@ -38,6 +40,30 @@ const extendedPrisma = prismaClient.$extends({
 						if (note.entityType === 'CONTACT') {
 							return prismaClient.contact.findFirst({
 								where: { id: note.entityId },
+								select: {
+									id: true,
+									name: true,
+									teamId: true,
+									avatarUrl: true
+								}
+							})
+						}
+
+						return null
+					}
+				}
+			}
+		},
+		task: {
+			getEntity: {
+				needs: { entityId: true, entityType: true },
+				compute(task) {
+					return async () => {
+						if (!task.entityId) return null
+
+						if (task.entityType === 'CONTACT') {
+							return prismaClient.contact.findFirst({
+								where: { id: task.entityId },
 								select: {
 									id: true,
 									name: true,

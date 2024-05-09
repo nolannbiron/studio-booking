@@ -6,14 +6,15 @@ import type {
 	TGetTaskRequest,
 	TGetTasksCountRequest,
 	TGetTasksRequest,
+	TGroupedTasks,
 	TTaskSchema,
 	TUpdateTaskRequest
 } from '@repo/schemas/task'
-import type { TPrivateUser, TPublicUser } from '@repo/schemas/user'
+import type { TPrivateUser } from '@repo/schemas/user'
 import type { FastifyRequest } from 'fastify'
 
 export class TaskRepository {
-	static #canAccessTask(task: Task & { assignees: TPublicUser[] }, currentUser: TPrivateUser): boolean {
+	static #canAccessTask(task: Task & { assignees: { id: string }[] }, currentUser: TPrivateUser): boolean {
 		return (
 			task.creatorId === currentUser.id ||
 			currentUser.teams.some((team) => team.id === task.teamId) ||
@@ -41,27 +42,104 @@ export class TaskRepository {
 			throw 'Unauthorized access to task'
 		}
 
-		return task
+		const entity = await task.getEntity()
+
+		return { ...task, entity } as TTaskSchema
 	}
 
-	static async getTasks(req: FastifyRequest<TGetTasksRequest>): Promise<TTaskSchema[]> {
-		const tasks = await prisma.task.findMany({
-			where: {
-				creatorId: req.query.creatorId ? req.query.creatorId : undefined,
-				teamId: req.query.teamId,
-				entityId: req.query.entityId ? req.query.entityId : undefined
-			},
-			include: {
-				assignees: {
-					select: userPublicProfileSelect
+	static async getTasks(req: FastifyRequest<TGetTasksRequest>): Promise<TGroupedTasks> {
+		// get Task with no due date, due date in the future, due date in the past, and completed tasks
+		const [todayTasks, futureDueDateTasks, completedTasks, noDueDateTasks] = await prisma.$transaction([
+			prisma.task.findMany({
+				where: {
+					creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+					teamId: req.query.teamId,
+					entityId: req.query.entityId ? req.query.entityId : undefined,
+					completed: { not: true },
+					dueDate: {
+						lte: new Date(new Date().setHours(23, 59, 59, 999))
+					}
+				},
+				include: {
+					assignees: {
+						select: userPublicProfileSelect
+					}
+				},
+				orderBy: {
+					dueDate: 'asc'
 				}
-			},
-			orderBy: {
-				createdAt: 'desc'
-			}
-		})
+			}),
+			prisma.task.findMany({
+				where: {
+					creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+					teamId: req.query.teamId,
+					entityId: req.query.entityId ? req.query.entityId : undefined,
+					completed: { not: true },
+					dueDate: {
+						gt: new Date(new Date().setHours(23, 59, 59, 999))
+					}
+				},
+				include: {
+					assignees: {
+						select: userPublicProfileSelect
+					}
+				},
+				orderBy: {
+					dueDate: 'asc'
+				}
+			}),
+			prisma.task.findMany({
+				where: {
+					creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+					teamId: req.query.teamId,
+					entityId: req.query.entityId ? req.query.entityId : undefined,
+					completed: { equals: true }
+				},
+				include: {
+					assignees: {
+						select: userPublicProfileSelect
+					}
+				},
+				orderBy: {
+					dueDate: 'asc'
+				}
+			}),
+			prisma.task.findMany({
+				where: {
+					creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+					teamId: req.query.teamId,
+					entityId: req.query.entityId ? req.query.entityId : undefined,
+					dueDate: null,
+					completed: { not: true }
+				},
+				include: {
+					assignees: {
+						select: userPublicProfileSelect
+					}
+				},
+				orderBy: {
+					dueDate: 'asc'
+				}
+			})
+		])
 
-		return tasks
+		const tasksWithEntity = await Promise.all(
+			[todayTasks, futureDueDateTasks, completedTasks, noDueDateTasks].map(async (tasks) => {
+				return Promise.all(
+					tasks.map(async (task) => {
+						const entity = await task.getEntity()
+						return { ...task, entity } as TTaskSchema
+					})
+				)
+			})
+		)
+
+		return {
+			today: tasksWithEntity[0],
+			future: tasksWithEntity[1],
+			completed: tasksWithEntity[2],
+			noDueDate: tasksWithEntity[3]
+		}
 	}
 
 	static async getTasksCount(req: FastifyRequest<TGetTasksCountRequest>) {
@@ -77,15 +155,20 @@ export class TaskRepository {
 	}
 
 	static async create(req: FastifyRequest<TCreateTaskRequest>): Promise<TTaskSchema> {
+		const { assignees, ...body } = req.body
+
 		const newTask = await prisma.task.create({
 			data: {
-				...req.body,
-				assignees: {
-					connect: {
-						id: req.user!.id
-					}
-				},
-				creatorId: req.user!.id
+				...body,
+				creatorId: req.user!.id,
+				dueDate: new Date(),
+				...(assignees?.length
+					? {
+							assignees: {
+								connect: assignees.map((assignee) => ({ id: assignee })) || []
+							}
+						}
+					: {})
 			},
 			include: {
 				assignees: {
@@ -94,7 +177,7 @@ export class TaskRepository {
 			}
 		})
 
-		return newTask
+		return { ...newTask, entity: await newTask.getEntity() } as TTaskSchema
 	}
 
 	static async update(req: FastifyRequest<TUpdateTaskRequest>): Promise<TTaskSchema> {
@@ -117,12 +200,24 @@ export class TaskRepository {
 			throw 'Unauthorized access to task'
 		}
 
+		const { assignees, ...body } = req.body
+
+
 		const updatedTask = await prisma.task.update({
 			where: {
 				id: req.params.taskId
 			},
 			data: {
-				...req.body
+				...body,
+				completed: typeof req.body.completed === 'boolean' ? req.body.completed : undefined,
+				...(typeof assignees !== 'undefined' && assignees
+					? {
+							assignees: {
+								disconnect: task.assignees.map((assignee) => ({ id: assignee.id })),
+								connect: assignees.map((assignee) => ({ id: assignee })) || []
+							}
+						}
+					: {})
 			},
 			include: {
 				assignees: {
@@ -131,7 +226,7 @@ export class TaskRepository {
 			}
 		})
 
-		return updatedTask
+		return { ...updatedTask, entity: await updatedTask.getEntity() } as TTaskSchema
 	}
 
 	static async delete(req: FastifyRequest<TDeleteTaskRequest>): Promise<boolean> {

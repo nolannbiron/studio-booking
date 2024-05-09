@@ -2210,7 +2210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-collapsible@npm:1.0.3":
+"@radix-ui/react-collapsible@npm:1.0.3, @radix-ui/react-collapsible@npm:^1.0.3":
   version: 1.0.3
   resolution: "@radix-ui/react-collapsible@npm:1.0.3"
   dependencies:
@@ -4013,6 +4013,7 @@ __metadata:
   dependencies:
     "@repo/config": "npm:*"
     "@repo/feature-auth": "npm:*"
+    "@repo/hooks": "npm:*"
     "@repo/i18n": "npm:*"
     "@repo/lib": "npm:*"
     "@repo/schemas": "npm:*"
@@ -4043,6 +4044,8 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.5.0"
     autoprefixer: "npm:^10.0.1"
     axios: "npm:^1.6.8"
+    chrono-node: "npm:^2.7.5"
+    date-fns: "npm:^3.6.0"
     eslint: "npm:^8.57.0"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.6"
@@ -4284,6 +4287,7 @@ __metadata:
     "@radix-ui/react-aspect-ratio": "npm:^1.0.3"
     "@radix-ui/react-avatar": "npm:^1.0.4"
     "@radix-ui/react-checkbox": "npm:^1.0.4"
+    "@radix-ui/react-collapsible": "npm:^1.0.3"
     "@radix-ui/react-dialog": "npm:^1.0.5"
     "@radix-ui/react-dropdown-menu": "npm:^2.0.6"
     "@radix-ui/react-hover-card": "npm:^1.0.7"
@@ -7278,6 +7282,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chrono-node@npm:^2.7.5":
+  version: 2.7.5
+  resolution: "chrono-node@npm:2.7.5"
+  dependencies:
+    dayjs: "npm:^1.10.0"
+  checksum: 10c0/325fc93b25082c9250cb4abe28ddd4b0f4905079060d59acde2a471660e0d178e98b5d7c6fe717fe0e494e78584f5f166f68f1cddf0d0559a646238786a5361a
+  languageName: node
+  linkType: hard
+
 "class-variance-authority@npm:^0.7.0":
   version: 0.7.0
   resolution: "class-variance-authority@npm:0.7.0"
@@ -7730,6 +7743,13 @@ __metadata:
   version: 1.11.2
   resolution: "dayjs@npm:1.11.2"
   checksum: 10c0/90bc4605d1733ac0f90faa11255ef862322ce94795ee256aa56007df000f6225e4031afdb6c764c791ed303c433f88832a7572c461fd53fb0ad5cd334a46c866
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.10.0":
+  version: 1.11.11
+  resolution: "dayjs@npm:1.11.11"
+  checksum: 10c0/0131d10516b9945f05a57e13f4af49a6814de5573a494824e103131a3bbe4cc470b1aefe8e17e51f9a478a22cd116084be1ee5725cedb66ec4c3f9091202dc4b
   languageName: node
   linkType: hard
 
