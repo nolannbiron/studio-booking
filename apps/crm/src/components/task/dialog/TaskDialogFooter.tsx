@@ -30,7 +30,7 @@ export default function TaskDialogFooter({
 			<div className="text-muted-foreground flex w-full items-center gap-4">
 				<TaskDatePicker onChange={onDateChange} value={task?.dueDate} />
 
-				<Button disabled variant="ghost" size="sm" className="px-1">
+				<Button disabled={!!task?.entity} variant="ghost" size="sm" className="px-1">
 					{task?.entity ? (
 						<>
 							<FiArrowUpRight />

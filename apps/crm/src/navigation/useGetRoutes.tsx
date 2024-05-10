@@ -7,6 +7,7 @@ import { TbFile, TbSquareRoundedCheck, TbUsers } from 'react-icons/tb'
 
 import type { TRoutesConfig } from './types'
 
+const TasksPage = lazy(() => import('@/pages/tasks/TasksPage'))
 const TeamSettingsMembersPage = lazy(() => import('@/pages/settings/team/members/TeamSettingsMembersPage'))
 const ContactTasksPage = lazy(() => import('@/pages/contact/tasks/ContactTasksPage'))
 const ContactNotesPage = lazy(() => import('@/pages/contact/notes/ContactNotesPage'))
@@ -95,7 +96,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
-										<></>
+										<TasksPage />
 									</RequireAuth>
 								</Suspense>
 							)
