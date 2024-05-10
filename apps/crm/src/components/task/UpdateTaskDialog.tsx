@@ -26,6 +26,8 @@ export default function UpdateTaskDialog({
 	const [isOpen, setIsOpen] = useState(open)
 	const [formData, setFormData] = useState<TTaskUpdateSchema>({
 		title: data?.task.title,
+		entityId: data?.task.entityId,
+		entityType: data?.task.entityType || 'CONTACT',
 		dueDate: data?.task.dueDate ? new Date(data?.task.dueDate) : undefined,
 		assignees: data?.task.assignees.map((a) => (typeof a === 'string' ? a : a.id)),
 		completed: data?.task.completed
@@ -35,6 +37,8 @@ export default function UpdateTaskDialog({
 		if (!data?.task) return
 		setFormData({
 			title: data?.task.title,
+			entityId: data?.task.entityId,
+			entityType: data?.task.entityType || 'CONTACT',
 			dueDate: data?.task.dueDate ? new Date(data?.task.dueDate) : undefined,
 			assignees: data?.task.assignees.map((a) => (typeof a === 'string' ? a : a.id)),
 			completed: data?.task.completed
@@ -103,6 +107,7 @@ export default function UpdateTaskDialog({
 					onSave={handleSave}
 					onClose={() => onOpenChange?.(false)}
 					onAssigneesChange={(value) => setFormData({ ...formData, assignees: value })}
+					onContactChange={(value) => setFormData({ ...formData, entityId: value })}
 				/>
 			</DialogContent>
 		</Dialog>

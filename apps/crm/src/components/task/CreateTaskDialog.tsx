@@ -31,7 +31,7 @@ export default function CreateTaskDialog({
 		title: title.current,
 		entityId: entity?.id,
 		teamId: currentTeam.id,
-		entityType: !!entity?.id ? 'CONTACT' : undefined,
+		entityType: 'CONTACT',
 		assignees: [currentUser.id],
 		dueDate: new Date()
 	})
@@ -45,7 +45,7 @@ export default function CreateTaskDialog({
 			title: '',
 			entityId: entity?.id,
 			teamId: currentTeam.id,
-			entityType: !!entity?.id ? 'CONTACT' : undefined,
+			entityType: 'CONTACT',
 			assignees: [currentUser.id],
 			dueDate: new Date()
 		})
@@ -96,6 +96,7 @@ export default function CreateTaskDialog({
 					onSave={handleCreateTask}
 					onClose={() => onOpenChange?.(false)}
 					onAssigneesChange={(value) => setFormData({ ...formData, assignees: value })}
+					onContactChange={(value) => setFormData({ ...formData, entityId: value })}
 				/>
 			</DialogContent>
 		</Dialog>

@@ -37,6 +37,7 @@ export interface ComboboxProps<T> extends PopoverProps {
 	closeOnSelect?: boolean
 	withPortal?: boolean
 	shouldShowInput?: boolean
+	disabled?: boolean
 }
 
 export function Combobox<T>({
@@ -57,6 +58,7 @@ export function Combobox<T>({
 	closeOnSelect,
 	withPortal = true,
 	shouldShowInput = false,
+	disabled,
 	...props
 }: ComboboxProps<T>) {
 	const [isOpen, setIsOpen] = useState(open)
@@ -73,6 +75,7 @@ export function Combobox<T>({
 	return (
 		<Popover open={isOpen} onOpenChange={handleOpenChange} {...props}>
 			<PopoverTrigger
+				disabled={disabled}
 				className={triggerClassName}
 				type={!asChild ? 'button' : undefined}
 				asChild={asChild}

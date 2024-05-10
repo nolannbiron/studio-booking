@@ -202,7 +202,6 @@ export class TaskRepository {
 
 		const { assignees, ...body } = req.body
 
-
 		const updatedTask = await prisma.task.update({
 			where: {
 				id: req.params.taskId
