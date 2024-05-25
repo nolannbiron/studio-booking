@@ -10,7 +10,7 @@ export default function TimelineEventValuesUpdated({
 	event: TTimelineValuesUpdated
 }): JSX.Element {
 	const { t } = useTranslation()
-	const { data, isLoading } = useGetUser({ userId: event.creatorId ?? undefined })
+	const { data, isLoading } = useGetUser({ userId: event.ownerId ?? undefined })
 
 	if (isLoading) return <></>
 

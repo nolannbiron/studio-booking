@@ -31,7 +31,7 @@ export class ContactRepository {
 			entityType: 'CONTACT',
 			type: 'ENTITY_CREATED',
 			event: {
-				creatorId: req.user?.id,
+				ownerId: req.user?.id,
 				creatorModel: 'USER'
 			}
 		})
@@ -177,7 +177,7 @@ export class ContactRepository {
 					entityType: 'CONTACT',
 					type: 'VALUES_UPDATED',
 					event: {
-						creatorId: req.user?.id,
+						ownerId: req.user?.id,
 						creatorModel: 'USER',
 						attribute: field,
 						newValue: newContact[field] as any,

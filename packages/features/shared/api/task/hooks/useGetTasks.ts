@@ -5,16 +5,16 @@ import { useQuery } from '@tanstack/react-query'
 import { axios } from '../../axios'
 import { taskKeys } from '../../task/taskKeys'
 
-export const useGetTasks = ({ creatorId, entityId }: Omit<TGetTasksRequest['Querystring'], 'teamId'>) => {
+export const useGetTasks = ({ ownerId, entityId }: Omit<TGetTasksRequest['Querystring'], 'teamId'>) => {
 	const { currentTeam } = useTeamStore()
 
 	return useQuery<TTasksReply, Error, TTasksReply>({
-		queryKey: taskKeys.list({ creatorId, teamId: currentTeam.id, entityId }),
+		queryKey: taskKeys.list({ ownerId, teamId: currentTeam.id, entityId }),
 		queryFn: () =>
 			axios
 				.get(`/tasks`, {
 					params: {
-						creatorId,
+						ownerId,
 						entityId,
 						teamId: currentTeam.id
 					} as TGetTasksRequest['Querystring']

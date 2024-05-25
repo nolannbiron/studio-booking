@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 
 import accountRoutes from './account'
 import authRoutes from './auth'
+import bookingRoutes from './booking'
 import contactRoutes from './contact'
 import noteRoutes from './note'
 import taskRoutes from './task'
@@ -18,6 +19,7 @@ const instance = (app: FastifyInstance): FastifyInstance => {
 	app.register(userRoutes, { prefix: '/v1' })
 	app.register(noteRoutes, { prefix: '/v1' })
 	app.register(taskRoutes, { prefix: '/v1' })
+	app.register(bookingRoutes, { prefix: '/v1' })
 
 	return app
 }

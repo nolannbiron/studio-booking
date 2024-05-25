@@ -19,7 +19,7 @@ export default function TasksPage(): JSX.Element {
 	const [openCreateTaskModal, setOpenCreateTaskModal] = useState(false)
 	const [openTaskModal, setOpenTaskModal] = useState(false)
 	const { data } = useGetTasks({
-		creatorId: currentUser.id
+		ownerId: currentUser.id
 	})
 
 	const taskId = useMemo(() => searchParams.get('taskId'), [searchParams])

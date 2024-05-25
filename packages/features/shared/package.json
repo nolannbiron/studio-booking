@@ -4,6 +4,12 @@
 	"version": "0.0.0",
 	"type": "module",
 	"dependencies": {
+		"@fullcalendar/core": "^6.1.13",
+		"@fullcalendar/daygrid": "^6.1.13",
+		"@fullcalendar/interaction": "^6.1.13",
+		"@fullcalendar/list": "^6.1.13",
+		"@fullcalendar/react": "^6.1.13",
+		"@fullcalendar/timegrid": "^6.1.13",
 		"@repo/feature-auth": "*",
 		"@repo/hooks": "*",
 		"@repo/i18n": "*",

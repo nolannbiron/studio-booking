@@ -1,0 +1,63 @@
+.fc.fc-media-screen {
+	/* .fc-view-harness.fc-view-harness-active,
+.fc-scrollgrid-sync-table { */
+	height: 100% !important;
+}
+
+:root {
+	--fc-border-color: hsl(var(--border));
+}
+
+.fc .fc-scrollgrid-liquid {
+	border-top: hidden;
+	border-left: hidden;
+	border-right: hidden;
+}
+
+.fc-col-header-cell.fc-day {
+	border-left: hidden;
+	border-top: hidden;
+}
+
+.fc .fc-scrollgrid-section-footer > *,
+.fc .fc-scrollgrid-section-header > * {
+	border-right: hidden;
+}
+
+/* .fc .fc-scrollgrid-section-liquid > td  */
+
+.fc .fc-day-today,
+.fc .fc-timegrid-col.fc-day-today {
+	background-color: hsl(var(--background));
+	color: hsl(var(--on-primary));
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+	background-color: hsl(var(--background));
+	color: hsl(var(--on-primary));
+	@apply p-1;
+
+	.fc-daygrid-day-number {
+		@apply bg-destructive aspect-square rounded px-1 py-0.5 text-sm;
+	}
+}
+
+.fc-event {
+	@apply bg-primary hover:bg-primary/70 cursor-pointer gap-1 px-2;
+}
+
+.fc .fc-daygrid-day-events {
+	@apply mt-2;
+}
+
+.fc .fc-timegrid-slot-minor {
+	border-top: hidden;
+}
+
+.fc .fc-timegrid-slot-label {
+	border-top: hidden;
+}
+
+.fc-timegrid-slot-label-cushion {
+	@apply text-muted-foreground relative -top-2.5 font-mono text-xs;
+}

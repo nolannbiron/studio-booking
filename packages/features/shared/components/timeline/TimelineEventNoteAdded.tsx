@@ -6,7 +6,7 @@ import { UserAvatar } from '@repo/ui/user/UserAvatar'
 
 export default function TimelineEventNoteAdded({ event }: { event: TTimelineEventNoteAdded }): JSX.Element {
 	const { t } = useTranslation()
-	const { data, isLoading } = useGetUser({ userId: event.creatorId ?? undefined })
+	const { data, isLoading } = useGetUser({ userId: event.ownerId ?? undefined })
 	const { data: dataNote } = useGetNote({ noteId: event.noteId })
 
 	if (isLoading) return <></>

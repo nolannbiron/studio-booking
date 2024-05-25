@@ -7,13 +7,14 @@ import { TbCalendarEvent, TbFile, TbSquareRoundedCheck, TbUsers } from 'react-ic
 
 import type { TRoutesConfig } from './types'
 
+const BookingsPage = lazy(() => import('@/pages/bookings/BookingsPage'))
 const TasksPage = lazy(() => import('@/pages/tasks/TasksPage'))
 const TeamSettingsMembersPage = lazy(() => import('@/pages/settings/team/members/TeamSettingsMembersPage'))
 const ContactTasksPage = lazy(() => import('@/pages/contact/tasks/ContactTasksPage'))
 const ContactNotesPage = lazy(() => import('@/pages/contact/notes/ContactNotesPage'))
 const ContactActivityPage = lazy(() => import('@/pages/contact/activity/ContactActivityPage'))
 const ContactFilesPage = lazy(() => import('@/pages/contact/library/ContactLibraryPage'))
-const ContactSessionsPage = lazy(() => import('@/pages/contact/sessions/ContactSessionsPage'))
+const ContactBookingsPage = lazy(() => import('@/pages/contact/bookings/ContactBookingsPage'))
 const ContactPage = lazy(() => import('@/pages/contact/ContactPage'))
 const RequireAnonymous = lazy(() => import('@/navigation/RequireAnonymous'))
 const RequireAuth = lazy(() => import('@/navigation/RequireAuth'))
@@ -135,7 +136,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
-										<></>
+										<BookingsPage />
 									</RequireAuth>
 								</Suspense>
 							)
@@ -266,7 +267,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						path: '/contact/:id/sessions',
 						element: (
 							<Suspense fallback={<Loading withText fullScreen />}>
-								<ContactSessionsPage />
+								<ContactBookingsPage />
 							</Suspense>
 						)
 					}

@@ -14,7 +14,7 @@ export const ZTimelineEventSchema = z.object({
 })
 
 export const ZTimelineEventNoteAddedSchema = z.object({
-	creatorId: z.string().nullish(),
+	ownerId: z.string().nullish(),
 	creatorModel: z.string(),
 	noteId: z.string(),
 	teamId: z.string()
@@ -24,12 +24,12 @@ export const ZTimelineValuesUpdatedSchema = z.object({
 	newValue: jsonSchema,
 	oldValue: jsonSchema.nullish(),
 	attribute: z.string(),
-	creatorId: z.string().nullish(),
+	ownerId: z.string().nullish(),
 	creatorModel: z.enum(['USER', 'SYSTEM'])
 })
 
 export const ZTimelineEntityCreatedSchema = z.object({
-	creatorId: z.string().nullish(),
+	ownerId: z.string().nullish(),
 	creatorModel: z.string()
 })
 

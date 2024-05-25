@@ -12,7 +12,7 @@ import { useSearchParams } from 'react-router-dom'
 
 export default function NotesPage(): JSX.Element {
 	const { currentUser } = useUserStore()
-	const { data, isLoading } = useGetNotes({ creatorId: currentUser.id })
+	const { data, isLoading } = useGetNotes({ ownerId: currentUser.id })
 	const [openCreateNoteModal, setOpenCreateNoteModal] = useState(false)
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [openNoteModal, setOpenNoteModal] = useState(false)

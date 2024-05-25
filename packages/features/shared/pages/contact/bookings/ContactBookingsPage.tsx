@@ -3,7 +3,7 @@ import { Button } from '@repo/ui/button'
 import { ScrollArea } from '@repo/ui/scroll-area'
 import { PiCalendarPlus } from 'react-icons/pi'
 
-export default function ContactSessionsPage(): JSX.Element {
+export default function ContactBookingsPage(): JSX.Element {
 	const { t } = useTranslation()
 
 	return (

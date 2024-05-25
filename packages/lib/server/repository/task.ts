@@ -16,7 +16,7 @@ import type { FastifyRequest } from 'fastify'
 export class TaskRepository {
 	static #canAccessTask(task: Task & { assignees: { id: string }[] }, currentUser: TPrivateUser): boolean {
 		return (
-			task.creatorId === currentUser.id ||
+			task.ownerId === currentUser.id ||
 			currentUser.teams.some((team) => team.id === task.teamId) ||
 			task.assignees.some((assignee) => assignee.id === currentUser.id)
 		)
@@ -52,7 +52,7 @@ export class TaskRepository {
 		const [todayTasks, futureDueDateTasks, completedTasks, noDueDateTasks] = await prisma.$transaction([
 			prisma.task.findMany({
 				where: {
-					creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+					ownerId: req.query.ownerId ? req.query.ownerId : undefined,
 					teamId: req.query.teamId,
 					entityId: req.query.entityId ? req.query.entityId : undefined,
 					completed: { not: true },
@@ -71,7 +71,7 @@ export class TaskRepository {
 			}),
 			prisma.task.findMany({
 				where: {
-					creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+					ownerId: req.query.ownerId ? req.query.ownerId : undefined,
 					teamId: req.query.teamId,
 					entityId: req.query.entityId ? req.query.entityId : undefined,
 					completed: { not: true },
@@ -90,7 +90,7 @@ export class TaskRepository {
 			}),
 			prisma.task.findMany({
 				where: {
-					creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+					ownerId: req.query.ownerId ? req.query.ownerId : undefined,
 					teamId: req.query.teamId,
 					entityId: req.query.entityId ? req.query.entityId : undefined,
 					completed: { equals: true }
@@ -106,7 +106,7 @@ export class TaskRepository {
 			}),
 			prisma.task.findMany({
 				where: {
-					creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+					ownerId: req.query.ownerId ? req.query.ownerId : undefined,
 					teamId: req.query.teamId,
 					entityId: req.query.entityId ? req.query.entityId : undefined,
 					dueDate: null,
@@ -145,7 +145,7 @@ export class TaskRepository {
 	static async getTasksCount(req: FastifyRequest<TGetTasksCountRequest>) {
 		const total = await prisma.task.count({
 			where: {
-				creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+				ownerId: req.query.ownerId ? req.query.ownerId : undefined,
 				teamId: req.query.teamId,
 				entityId: req.query.entityId ? req.query.entityId : undefined
 			}
@@ -160,7 +160,7 @@ export class TaskRepository {
 		const newTask = await prisma.task.create({
 			data: {
 				...body,
-				creatorId: req.user!.id,
+				ownerId: req.user!.id,
 				dueDate: new Date(),
 				...(assignees?.length
 					? {
@@ -249,7 +249,7 @@ export class TaskRepository {
 		}
 
 		if (
-			task.creatorId !== req.user!.id &&
+			task.ownerId !== req.user!.id &&
 			req.user?.teams.find((team) => team.id === task.teamId)?.role !== 'OWNER'
 		) {
 			throw 'Only the creator can delete the task'

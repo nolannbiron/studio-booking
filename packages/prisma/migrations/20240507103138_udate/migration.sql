@@ -23,7 +23,7 @@ CREATE UNIQUE INDEX "_TaskToUser_AB_unique" ON "_TaskToUser"("A", "B");
 CREATE INDEX "_TaskToUser_B_index" ON "_TaskToUser"("B");
 
 -- CreateIndex
-CREATE INDEX "tasks_entityId_teamId_dueDate_completed_creatorId_idx" ON "tasks"("entityId", "teamId", "dueDate", "completed", "creatorId");
+CREATE INDEX "tasks_entityId_teamId_dueDate_completed_ownerId_idx" ON "tasks"("entityId", "teamId", "dueDate", "completed", "ownerId");
 
 -- AddForeignKey
 ALTER TABLE "_TaskToUser" ADD CONSTRAINT "_TaskToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;

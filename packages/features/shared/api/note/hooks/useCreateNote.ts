@@ -28,7 +28,7 @@ export const useCreateNote = () => {
 
 			queryClient.invalidateQueries({
 				queryKey: noteKeys.list({
-					creatorId: currentUser.id,
+					ownerId: currentUser.id,
 					teamId: data.note.teamId
 				})
 			})

@@ -6,18 +6,18 @@ import { axios } from '../../axios'
 import { noteKeys } from '../../note/noteKeys'
 
 export const useGetNotesCount = ({
-	creatorId,
+	ownerId,
 	entityId
 }: Omit<TGetNotesCountRequest['Querystring'], 'teamId'>) => {
 	const { currentTeam } = useTeamStore()
 
 	return useQuery<TNotesCountReply, Error, TNotesCountReply>({
-		queryKey: noteKeys.count({ creatorId, teamId: currentTeam.id, entityId }),
+		queryKey: noteKeys.count({ ownerId, teamId: currentTeam.id, entityId }),
 		queryFn: () =>
 			axios
 				.get(`/notes-count`, {
 					params: {
-						creatorId,
+						ownerId,
 						entityId,
 						teamId: currentTeam.id
 					} as TGetNotesCountRequest['Querystring']
