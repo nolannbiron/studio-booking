@@ -70,10 +70,13 @@ export class ContactRepository {
 			data: {
 				...data,
 				...(avatarUrl ? { avatarUrl } : {})
+			},
+			include: {
+				genres: true
 			}
 		})
 
-		if (genres !== undefined) {
+		if (typeof genres !== 'undefined') {
 			newContact = await this.updateGenres(currentContact.genres, req)
 		}
 

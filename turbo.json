@@ -5,7 +5,7 @@
 	"pipeline": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": [".next/**", "!.next/cache/**"]
+			"outputs": [".next/**", "!.next/cache/**", "dist", ".react-email"]
 		},
 		"lint": {
 			"dependsOn": ["^lint"],
@@ -78,29 +78,37 @@
 			"env": ["DATABASE_URL"],
 			"dotEnv": [".env.test"]
 		},
-		"@repo/web#test": {
-			"env": ["NEXT_PUBLIC_IS_E2E"],
-			"dotEnv": [".env"]
-		},
 		"@repo/emails": {
 			"env": ["RESEND_API_KEY"],
 			"dotEnv": [".env"]
 		},
-		"@repo/crm": {
+		"@repo/web": {
 			"dotEnv": [".env"]
 		},
-		"@repo/crm#dev": {
+		"@repo/web#dev": {
 			"cache": false,
 			"dotEnv": [".env"]
 		},
-		"@repo/crm#preview": {
+		"@repo/web#preview": {
+			"cache": false,
+			"dotEnv": [".env"]
+		},
+		"@repo/desktop": {
+			"dotEnv": [".env"],
+			"env": ["APP_ROOT", "VITE_PUBLIC", "VITE_DEV_SERVER_URL", "VITE_PUBLIC_DESKTOP_APP"]
+		},
+		"@repo/desktop#dev": {
+			"cache": false,
+			"dotEnv": [".env"]
+		},
+		"@repo/desktop#preview": {
 			"cache": false,
 			"dotEnv": [".env"]
 		}
 	},
 	"globalEnv": [
 		"WEBAPP_URL",
-		"NEXT_PUBLIC_WEBSITE_URL",
+		"VITE_PUBLIC_WEBSITE_URL",
 		"NODE_ENV",
 		"ALLOWED_HOSTNAMES",
 		"ANALYZE",
@@ -133,18 +141,18 @@
 		"GOOGLE_API_CREDENTIALS",
 		"GOOGLE_LOGIN_ENABLED",
 		"IP_BANLIST",
-		"NEXT_PUBLIC_DISABLE_SIGNUP",
-		"NEXT_PUBLIC_EMBED_LIB_URL",
-		"NEXT_PUBLIC_HOSTED_CAL_FEATURES",
-		"NEXT_PUBLIC_SENDER_ID",
-		"NEXT_PUBLIC_SENDGRID_SENDER_NAME",
-		"NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID",
-		"NEXT_PUBLIC_STRIPE_PRICING_TABLE_PUBLISHABLE_KEY",
-		"NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS",
-		"NEXT_PUBLIC_VERCEL_URL",
-		"NEXT_PUBLIC_GTM_ID",
-		"NEXT_PUBLIC_DEBUG",
-		"NEXT_PUBLIC_COOKIE_DOMAIN",
+		"VITE_PUBLIC_DISABLE_SIGNUP",
+		"VITE_PUBLIC_EMBED_LIB_URL",
+		"VITE_PUBLIC_HOSTED_CAL_FEATURES",
+		"VITE_PUBLIC_SENDER_ID",
+		"VITE_PUBLIC_SENDGRID_SENDER_NAME",
+		"VITE_PUBLIC_STRIPE_PRICING_TABLE_ID",
+		"VITE_PUBLIC_STRIPE_PRICING_TABLE_PUBLISHABLE_KEY",
+		"VITE_PUBLIC_SUPPORT_MAIL_ADDRESS",
+		"VITE_PUBLIC_VERCEL_URL",
+		"VITE_PUBLIC_GTM_ID",
+		"VITE_PUBLIC_DEBUG",
+		"VITE_PUBLIC_COOKIE_DOMAIN",
 		"NEXTAUTH_SECRET",
 		"NEXTAUTH_URL",
 		"NODE_ENV",
@@ -177,11 +185,11 @@
 		"VERCEL_URL",
 		"RESEND_API_KEY",
 		"LOCAL_TESTING_DOMAIN_VERCEL",
-		"NEXT_PUBLIC_ROOT_DOMAIN",
-		"NEXT_PUBLIC_WEBAPP_URL",
-		"NEXT_PUBLIC_API_URL",
+		"VITE_PUBLIC_ROOT_DOMAIN",
+		"VITE_PUBLIC_WEBAPP_URL",
+		"VITE_PUBLIC_API_URL",
 		"INTEGRATION_TEST_MODE",
-		"NEXT_PUBLIC_IS_E2E",
+		"VITE_PUBLIC_IS_E2E",
 		"FACEBOOK_CLIENT_ID",
 		"FACEBOOK_CLIENT_SECRET"
 	]

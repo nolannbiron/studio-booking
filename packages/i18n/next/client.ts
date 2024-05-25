@@ -13,7 +13,7 @@ import { LANGUAGE_COOKIE, getOptions, supportedLocales } from '../settings'
 
 const runsOnServerSide = typeof window === 'undefined'
 
-export const COOKIE_DOMAIN = process.env.NEXT_PUBLIC_COOKIE_DOMAIN
+export const COOKIE_DOMAIN = process.env.VITE_PUBLIC_COOKIE_DOMAIN
 
 // Initialize i18next for the client side
 i18next

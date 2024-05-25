@@ -21,7 +21,7 @@ const buttonVariants = cva(
 					'bg-muted dark:bg-muted/20 border-input hover:bg-input text-foreground/70 dark:text-muted-foreground hover:bg-input border border-dashed shadow-sm',
 				secondary:
 					'bg-secondary text-secondary-foreground border-input hover:bg-secondary/80 border shadow-sm',
-				ghost: 'hover:bg-secondary/70',
+				ghost: 'hover:bg-secondary dark:hover:bg-secondary/70',
 				link: 'text-foreground/80 !rounded-none px-0 py-0 underline-offset-2 hover:underline',
 				contrast: [
 					'bg-foreground relative isolate inline-flex items-center justify-center rounded-lg border border-transparent py-[calc(theme(spacing[3])-1px)] text-white  shadow active:pt-1.5 disabled:opacity-50 sm:py-[calc(theme(spacing[1.5])-1px)] [&>svg]:text-blue-50',

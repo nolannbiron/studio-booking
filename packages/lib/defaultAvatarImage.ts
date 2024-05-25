@@ -6,6 +6,7 @@ export const getDefaultAvatarImage = async (name: string) => {
 		seed: name[0],
 		size: 100,
 		textColor: ['ffffff'],
+		randomizeIds: true,
 		backgroundColor: [
 			'e53935',
 			'd81b60',

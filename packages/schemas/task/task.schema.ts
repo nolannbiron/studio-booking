@@ -26,7 +26,7 @@ export const ZTaskSchema = z.object({
 	title: z.string(),
 	dueDate: z.date().nullish(),
 	completed: z.boolean().nullish(),
-	entityId: z.string().nullish(),
+	entityId: z.string().uuid().nullish(),
 	entityType: z.string().nullish(),
 	creatorId: z.string().nullish(),
 	teamId: z.string(),
@@ -43,9 +43,13 @@ export const ZTaskCreateSchema = ZTaskSchema.omit({
 	creator: true,
 	assignees: true,
 	completed: true
-}).extend({
-	assignees: z.array(z.string()).nullish()
 })
+	.extend({
+		assignees: z.array(z.string()).nullish()
+	})
+	.required({
+		entityId: true
+	})
 
 export const ZTaskUpdateSchema = ZTaskSchema.omit({
 	id: true,

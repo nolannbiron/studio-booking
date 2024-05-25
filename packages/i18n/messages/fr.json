@@ -11,6 +11,7 @@
 		"no_results": "Aucun résultat",
 		"command": "Taper une commande ou rechercher...",
 		"open_sidebar": "Ouvrir la barre latérale",
+		"close_sidebar": "Fermer la barre latérale",
 		"search_record": "Rechercher un contact",
 		"coming_soon": "Arrive bientôt",
 		"you": "Vous"
@@ -68,7 +69,8 @@
 			"appointments": "Rendez-vous",
 			"home": "Dashboard",
 			"tasks": "Tâches",
-			"notes": "Notes"
+			"notes": "Notes",
+			"sessions": "Sessions"
 		},
 		"settings": {
 			"title": "Paramètres",
@@ -181,9 +183,9 @@
 			"comments": "Commentaires",
 			"notes": "Notes",
 			"tasks": "Tâches",
-			"projects": "Projets",
 			"appointments": "Rendez-vous",
-			"files": "Fichiers"
+			"library": "Bibliothèque",
+			"sessions": "Sessions"
 		}
 	},
 	"task": {
@@ -309,7 +311,31 @@
 			"no_date": "Aucune date",
 			"today": "Aujourd'hui",
 			"tomorrow": "Demain",
-			"next_week": "Semaine prochaine"
+			"VITE_week": "Semaine prochaine"
+		}
+	},
+	"projects": {
+		"create_project": "Créer un projet",
+		"new_project": "Nouveau projet",
+		"update_project": "Modifier le projet",
+		"delete_project": "Supprimer le projet",
+		"link_contact": "Lier un contact"
+	},
+	"timeline": {
+		"attributes": {
+			"contact": {
+				"name": "Nom",
+				"type": "Type",
+				"email": "E-mail",
+				"genres": "Genres",
+				"phone": "Téléphone",
+				"website": "Site web",
+				"instagram": "Instagram",
+				"facebook": "Facebook",
+				"twitter": "Twitter",
+				"linkedin": "LinkedIn",
+				"youtube": "YouTube"
+			}
 		}
 	}
 }

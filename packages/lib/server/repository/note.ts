@@ -12,6 +12,8 @@ import type {
 import type { TPrivateUser } from '@repo/schemas/user'
 import type { FastifyRequest } from 'fastify'
 
+import { TimelineRepository } from './timeline'
+
 export class NoteRepository {
 	static #canAccessNote(note: Note, currentUser: TPrivateUser): boolean {
 		return note.creatorId === currentUser.id || currentUser.teams.some((team) => team.id === note.teamId)
@@ -125,6 +127,18 @@ export class NoteRepository {
 			}
 		})
 
+		TimelineRepository.createEvent({
+			entityId: newNote.entityId,
+			type: 'NOTE_ADDED',
+			entityType: newNote.entityType as any,
+			event: {
+				noteId: newNote.id,
+				creatorModel: 'USER',
+				teamId: newNote.teamId,
+				creatorId: newNote.creatorId
+			}
+		})
+
 		return { ...newNote, entity: await newNote.getEntity() } as TNoteSchema
 	}
 
@@ -149,7 +163,8 @@ export class NoteRepository {
 			},
 			data: {
 				...req.body,
-				content: req.body.content || undefined
+				content: req.body.content || undefined,
+				creatorId: req.user!.id
 			},
 			select: {
 				content: true,

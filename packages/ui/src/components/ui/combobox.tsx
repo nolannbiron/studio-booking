@@ -68,7 +68,6 @@ export function Combobox<T>({
 	}, [open])
 
 	const handleOpenChange = (open: boolean) => {
-		setIsOpen(open)
 		onOpenChange?.(open)
 	}
 

@@ -1,0 +1,33 @@
+{
+	"name": "@repo/desktop",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build && electron-builder",
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@repo/feature-shared": "*",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@repo/config": "*",
+		"@repo/tsconfig": "*",
+		"@svgr/rollup": "^8.1.0",
+		"@types/react": "^18.2.64",
+		"@types/react-dom": "^18.2.21",
+		"@vitejs/plugin-react": "^4.2.1",
+		"electron": "^30.0.1",
+		"electron-builder": "^24.13.3",
+		"typescript": "^5.2.2",
+		"vite": "^5.1.6",
+		"vite-plugin-electron": "^0.28.6",
+		"vite-plugin-electron-renderer": "^0.14.5",
+		"vite-tsconfig-paths": "^4.3.2"
+	},
+	"main": "dist-electron/main.js"
+}

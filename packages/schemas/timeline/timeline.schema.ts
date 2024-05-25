@@ -14,7 +14,7 @@ export const ZTimelineEventSchema = z.object({
 })
 
 export const ZTimelineEventNoteAddedSchema = z.object({
-	cretorId: z.string().nullish(),
+	creatorId: z.string().nullish(),
 	creatorModel: z.string(),
 	noteId: z.string(),
 	teamId: z.string()

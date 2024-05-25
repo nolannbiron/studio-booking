@@ -1,7 +1,8 @@
 'use client'
 
 import type { Locale } from '@repo/prisma/enums'
-import { createContext, useContext, useEffect } from 'react'
+import type { TPublicUser } from '@repo/schemas/user'
+import { createContext, useContext } from 'react'
 
 import { FALLBACK_LOCALE } from '../settings'
 
@@ -9,22 +10,12 @@ const Context = createContext<Locale>(FALLBACK_LOCALE)
 
 export function LocaleProvider({
 	children,
-	value,
-	isCookieDefined,
-	action
+	value
 }: {
 	children: React.ReactNode
-	value: Locale
-	isCookieDefined: boolean
-	action: (locale: Locale) => void
+	value?: TPublicUser['locale']
 }) {
-	useEffect(() => {
-		if (!isCookieDefined && value) {
-			action(value)
-		}
-	}, [isCookieDefined, value, action])
-
-	return <Context.Provider value={value}>{children}</Context.Provider>
+	return <Context.Provider value={value || FALLBACK_LOCALE}>{children}</Context.Provider>
 }
 
 export function useLocale() {

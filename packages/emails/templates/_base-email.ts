@@ -48,7 +48,7 @@ export default class BaseEmail {
 			//@ts-expect-error
 			setTestEmail(await this.getNodeMailerPayload())
 			console.log(
-				'Skipped Sending Email as process.env.NEXT_PUBLIC_UNIT_TESTS is set. Emails are available in globalThis.testEmails'
+				'Skipped Sending Email as process.env.VITE_PUBLIC_UNIT_TESTS is set. Emails are available in globalThis.testEmails'
 			)
 			return new Promise((r) => r('Skipped sendEmail for Unit Tests'))
 		}
@@ -103,7 +103,7 @@ export default class BaseEmail {
 	}
 	protected printNodeMailerError(error: Error): void {
 		/** Don't clog the logs with unsent emails in E2E */
-		if (process.env.NEXT_PUBLIC_IS_E2E) return
+		if (process.env.VITE_PUBLIC_IS_E2E) return
 		console.error(`${this.name}_ERROR`, error)
 	}
 }

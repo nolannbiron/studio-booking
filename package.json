@@ -2,6 +2,7 @@
 	"name": "repo",
 	"private": true,
 	"scripts": {
+		"dev": "dotenv -- turbo run dev --scope=\"@repo/api\" --scope=\"@repo/web\" --scope=\"@repo/desktop\"",
 		"postinstall": "yarn prisma generate",
 		"dev:api": "dotenv -- turbo run dev --scope=\"@repo/api\"",
 		"build:api": "dotenv -- turbo run build --scope=\"@repo/api\"",
@@ -9,16 +10,17 @@
 		"dev:payments": "dotenv -- turbo run dev --scope=\"@repo/payments\"",
 		"build:payments": "dotenv -- turbo run build --scope=\"@repo/payments\"",
 		"start:payments": "dotenv -- turbo run start --scope=\"@repo/payments\"",
+		"dev:desktop": "dotenv -- turbo run dev --scope=\"@repo/desktop\" --scope=\"@repo/api\"",
+		"build:desktop": "dotenv -- turbo run build --scope=\"@repo/desktop\"",
+		"start:desktop": "dotenv -- turbo run start --scope=\"@repo/desktop\"",
 		"dev:web": "dotenv -- turbo run dev --scope=\"@repo/web\" --scope=\"@repo/api\"",
 		"build:web": "dotenv -- turbo run build --scope=\"@repo/web\"",
 		"start:web": "dotenv -- turbo run start --scope=\"@repo/web\"",
-		"dev:crm": "dotenv -- turbo run dev --scope=\"@repo/crm\" --scope=\"@repo/api\"",
-		"build:crm": "dotenv -- turbo run build --scope=\"@repo/crm\"",
-		"start:crm": "dotenv -- turbo run start --scope=\"@repo/crm\"",
 		"lint": "turbo lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
 		"predev": "dotenv-checker --schema .env.schema --env .env.local",
 		"docker:dev": "docker compose -f ./docker/dev/docker-compose.yml up -d --build",
+		"prisma:db-setup": "dotenv -- turbo run db-setup --scope=\"@repo/prisma\"",
 		"db-setup-test": "dotenv -e .env.test turbo run db-setup-test --scope=\"@repo/prisma\"",
 		"test:setup": "yarn db-setup-test",
 		"prisma": "dotenv -- yarn workspace @repo/prisma prisma",
@@ -34,7 +36,7 @@
 		"autoprefixer": "^10.4.16",
 		"dotenv-checker": "^1.1.5",
 		"dotenv-cli": "latest",
-		"eslint": "^8.48.0",
+		"eslint": "8.48.0",
 		"knip": "^3.8.2",
 		"lint-staged": "^14.0.1",
 		"postcss": "^8.4.30",
@@ -54,8 +56,7 @@
 	"workspaces": [
 		"apps/*",
 		"packages/*",
-		"packages/features/*",
-		"packages/emails/.react-email"
+		"packages/features/*"
 	],
 	"prisma": {
 		"schema": "packages/prisma/schema.prisma",

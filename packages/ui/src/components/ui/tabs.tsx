@@ -33,7 +33,7 @@ const TabsList = React.forwardRef<
 TabsList.displayName = TabsPrimitive.List.displayName
 
 const tabsTriggerClasses = cva(
-	'focus:ring-ring relative flex items-center gap-2 px-2 py-1 text-sm focus:outline-0 focus:ring-1 data-[state=active]:font-medium',
+	'focus-visible:ring-ring relative flex items-center gap-2 px-2 py-1 text-sm focus:outline-0 focus-visible:ring-1 data-[state=active]:font-medium',
 	{
 		variants: {
 			variant: {

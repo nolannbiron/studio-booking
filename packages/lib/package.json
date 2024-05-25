@@ -30,6 +30,7 @@
 		"nodemailer": "^6.9.13",
 		"react-icons": "^4.10.1",
 		"tailwind-merge": "^1.8.1",
+		"universal-cookie": "^7.1.4",
 		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
@@ -43,6 +44,7 @@
 		"tslog": "^4.9.2"
 	},
 	"peerDependencies": {
+		"electron": "^30.0.6",
 		"fastify": "^4.26.2"
 	}
 }

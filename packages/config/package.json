@@ -3,11 +3,11 @@
 	"sideEffects": false,
 	"private": true,
 	"version": "0.0.0",
-	"main": "index.js",
 	"license": "MIT",
 	"files": [
 		"eslint-preset.js",
-		"prettier-preset.js"
+		"prettier-preset.js",
+		"tailwind.config.ts"
 	],
 	"devDependencies": {
 		"@mertasan/tailwindcss-variables": "^2.7.0",
@@ -18,10 +18,15 @@
 		"@tailwindcss/typography": "^0.5.9",
 		"@trivago/prettier-plugin-sort-imports": "^4.2.0",
 		"@types/mertasan__tailwindcss-variables": "^2.6.4",
-		"@typescript-eslint/eslint-plugin": "^6.7.2",
-		"@typescript-eslint/parser": "^6.7.2",
-		"eslint": "^8.48.0",
-		"eslint-plugin-unused-imports": "^3.0.0",
+		"@typescript-eslint/eslint-plugin": "^7.9.0",
+		"@typescript-eslint/parser": "^7.9.0",
+		"eslint": "8.48.0",
+		"eslint-config-prettier": "^8.10.0",
+		"eslint-config-turbo": "^1.10.12",
+		"eslint-plugin-prettier": "^5.0.0",
+		"eslint-plugin-react": "^7.34.1",
+		"eslint-plugin-react-hooks": "^4.6.2",
+		"eslint-plugin-unused-imports": "^3.2.0",
 		"eslint-plugin-you-dont-need-lodash-underscore": "^6.12.0",
 		"prettier": "^3.0.1",
 		"prettier-plugin-tailwindcss": "^0.4.1",
@@ -30,11 +35,5 @@
 		"tailwindcss-animate": "^1.0.7",
 		"tailwindcss-radix": "^2.8.0",
 		"typescript": "5.4.5"
-	},
-	"dependencies": {
-		"eslint-config-next": "^14.0.3",
-		"eslint-config-prettier": "^8.10.0",
-		"eslint-config-turbo": "^1.10.12",
-		"eslint-plugin-prettier": "^5.0.0"
 	}
 }
