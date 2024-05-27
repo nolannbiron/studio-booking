@@ -1,4 +1,4 @@
-import NewBookingForm from '@/components/bookings/header/new-booking/NewBookingForm'
+import NewBookingForm from '@/components/bookings/new-booking/NewBookingForm'
 import { useTranslation } from '@repo/i18n/next/client'
 import { Button } from '@repo/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@repo/ui/dialog'

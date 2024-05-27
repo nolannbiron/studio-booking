@@ -1,5 +1,3 @@
-'use client'
-
 import { useActivePath } from '@repo/hooks'
 import { useTranslation } from '@repo/i18n/next/client'
 import {

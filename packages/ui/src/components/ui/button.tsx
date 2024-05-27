@@ -14,9 +14,11 @@ const buttonVariants = cva(
 					'before:bg-primary before:absolute before:inset-0 before:-z-10 before:rounded-[calc(theme(borderRadius.md)-1px)] before:shadow active:before:shadow-black/20',
 					'dark:bg-primary dark:hover:bg-primary/90 dark:border-white/10 dark:before:hidden dark:before:hidden dark:after:-inset-px dark:after:shadow-[shadow:inset_0_1.5px_theme(colors.white/15%),inset_0_-2.5px_theme(colors.black/25%)] dark:active:after:shadow-[shadow:inset_0_0,inset_0_0] dark:after:disabled:shadow-[shadow:inset_0_0,inset_0_0]'
 				],
+				'outline-primary':
+					'bg-primary/60 border-primary hover:bg-primary text-primary-foreground border',
 				destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
 				outline:
-					'border-input bg-background hover:bg-muted dark:hover:bg-border hover:text-secondary-foreground border shadow-sm',
+					'border-input bg-background hover:bg-muted hover:text-secondary-foreground border shadow-sm',
 				'outline-placeholder':
 					'bg-muted dark:bg-muted/20 border-input hover:bg-input text-foreground/70 dark:text-muted-foreground hover:bg-input border border-dashed shadow-sm',
 				secondary:

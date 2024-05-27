@@ -1,15 +1,16 @@
 import { useDeleteNote } from '@/api/note/hooks/useDeleteNote'
 import { useUpdateNote } from '@/api/note/hooks/useUpdateNote'
-import Editor from '@/components/editor/editor'
 import NoteDialogContentHeader from '@/components/note/dialog/NoteDialogContentHeader'
 import NoteDialogDropdownMenu from '@/components/note/dialog/NoteDialogDropdownMenu'
 import type { TNoteSchema } from '@repo/schemas/note'
 import { Button } from '@repo/ui/button'
 import { UserAvatar } from '@repo/ui/user/UserAvatar'
 import type { JSONContent } from '@tiptap/core'
-import { useRef, useState } from 'react'
+import { Suspense, lazy, useRef, useState } from 'react'
 import { PiDotsThreeVertical } from 'react-icons/pi'
 import { useDebounce } from 'react-use'
+
+const Editor = lazy(() => import('@/components/editor/editor'))
 
 export default function NoteDialogContent({
 	note,
@@ -66,11 +67,13 @@ export default function NoteDialogContent({
 			<div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 pt-10 md:pt-20">
 				<NoteDialogContentHeader note={note} />
 				<div className="flex-1" ref={ref}>
-					<Editor
-						content={content}
-						onBlur={() => handleUpdateNote()}
-						onChange={(value) => setContent(value)}
-					/>
+					<Suspense>
+						<Editor
+							content={content}
+							onBlur={() => handleUpdateNote()}
+							onChange={(value) => setContent(value)}
+						/>
+					</Suspense>
 				</div>
 			</div>
 		</div>

@@ -1,4 +1,5 @@
 import MainLayout from '@/components/layouts/MainLayout'
+import NotFound from '@/navigation/404'
 import { useAuthStore } from '@/state/auth.state'
 import { Loading } from '@repo/ui/loading'
 import { Fragment, Suspense, lazy } from 'react'
@@ -14,8 +15,8 @@ export default function Routing(): JSX.Element {
 
 	return (
 		<Routes>
-			<Route path="*" element={<>404</>} />
-			<Route path="/404" element={<>404</>} />
+			<Route path="*" element={<Navigate to="/404" />} />
+			<Route path="/404" element={<NotFound />} />
 			<Route path="/" element={isLoggedIn ? <Navigate to="/contacts" /> : <Navigate to="/login" />} />
 			{routes.auth.map((route) => (
 				<Route key={route.path} path={route.path} element={route.element} />

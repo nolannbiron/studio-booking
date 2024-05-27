@@ -6,17 +6,11 @@
 		"target": "es2015",
 		"jsx": "react-jsx",
 		"moduleResolution": "Bundler",
-		"baseUrl": ".",
+		"rootDir": ".",
 		"paths": {
 			"@/*": ["./*"]
 		}
 	},
-	"include": [
-		"**/*.ts",
-		"**/*.tsx",
-		"../../types/*.d.ts",
-		"../../../apps/desktop/src/vite-env.d.ts",
-		"../../../apps/desktop/electron/electron-env.d.ts"
-	],
+	"include": [".", "../../types/*.d.ts"],
 	"exclude": ["dist", "build", "node_modules"]
 }

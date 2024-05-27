@@ -1,6 +1,9 @@
+import { BookingStatus } from '@repo/prisma/enums'
 import { z } from 'zod'
 
 import { jsonSchema } from '../common'
+import { ZContactSchema } from '../contact'
+import { ZUserSchema } from '../user'
 
 export const ZBookingSchema = z.object({
 	id: z.string(),
@@ -11,6 +14,9 @@ export const ZBookingSchema = z.object({
 	teamId: z.string(),
 	contactId: z.string(),
 	ownerId: z.string(),
+	contact: z.lazy(() => ZContactSchema.pick({ id: true, name: true, avatarUrl: true, email: true })),
+	owner: z.lazy(() => ZUserSchema.pick({ id: true, fullName: true, avatarUrl: true, email: true })),
+	status: z.nativeEnum(BookingStatus),
 	createdAt: z.date(),
 	updatedAt: z.date()
 })
@@ -18,13 +24,17 @@ export const ZBookingSchema = z.object({
 export const ZBookingCreateSchema = ZBookingSchema.omit({
 	id: true,
 	createdAt: true,
-	updatedAt: true
+	updatedAt: true,
+	contact: true,
+	owner: true
 }).partial({ ownerId: true })
 
 export const ZUpdateBookingSchema = ZBookingSchema.omit({
 	id: true,
 	createdAt: true,
-	updatedAt: true
+	updatedAt: true,
+	contact: true,
+	owner: true
 })
 
 export type TBookingSchema = z.infer<typeof ZBookingSchema>
@@ -35,6 +45,11 @@ export type TBookingReply = {
 	success: true
 	booking: TBookingSchema
 }
+
+export type TGroupedBookings = {
+	monthYear: string
+	bookings: TBookingSchema[]
+}[]
 
 export type TBookingsReply = {
 	success: true
@@ -72,6 +87,7 @@ export type TGetBookingsCountRequest = {
 		ownerId?: string
 		contactId?: string
 		teamId: string
+		group: TBookingGroupName
 	}
 	Reply: TBookingsCountReply | { success: false; message: unknown }
 }
@@ -81,12 +97,9 @@ export type TGetBookingsRequest = {
 		ownerId?: string
 		contactId?: string
 		teamId: string
+		group: TBookingGroupName
 	}
 	Reply: TBookingsReply | { success: false; message: unknown }
 }
 
-export type TBookingGroupName = 'today' | 'future' | 'completed'
-
-export type TGroupedBookings = {
-	[key in TBookingGroupName]: TBookingSchema[]
-}
+export type TBookingGroupName = 'today' | 'upcoming' | 'past' | 'canceled'

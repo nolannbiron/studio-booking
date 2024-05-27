@@ -12,10 +12,6 @@ export default function ContactDetailsWrapper({ contact }: { contact: TContact }
 				<TabsContent tabIndex={-1} value="details">
 					<ContactDetails contact={contact} />
 				</TabsContent>
-
-				{/* <TabsContent value="comments">
-					<ContactDetailsComments />
-				</TabsContent> */}
 			</Tabs>
 		</div>
 	)

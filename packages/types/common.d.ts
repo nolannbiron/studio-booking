@@ -14,7 +14,7 @@ declare interface LocationCommon {
 			search?: string
 			state?: string | null
 		}
-		filters?: import('@/stores/filters.store').Filters
+		filters?: import('@repo/feature-shared/stores/filters.store').Filters
 	}
 }
 
@@ -32,6 +32,7 @@ declare type PartialOn<T, K extends keyof T> = Omit<T, K> & {
 declare type NullableOn<T, K extends keyof T> = Omit<T, K> & {
 	[P in K]: T[P] | null
 }
+declare type NonNullableOn<T, K extends keyof T> = Omit<T, K> & { [P in K]: NonNullable<T[P]> }
 declare type DeepPartial<T> = Partial<{ [P in keyof T]: DeepPartial<T[P]> }>
 type DeepRequired<T> = T extends Primitive
 	? Required<T>

@@ -1,5 +1,3 @@
-'use client'
-
 import { useTheme } from 'next-themes'
 import { MdOutlineErrorOutline } from 'react-icons/md'
 import { Toaster as Sonner, toast } from 'sonner'

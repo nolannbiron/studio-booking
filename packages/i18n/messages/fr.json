@@ -16,6 +16,10 @@
 		"coming_soon": "Arrive bientôt",
 		"you": "Vous"
 	},
+	"date": {
+		"today": "Aujourd'hui",
+		"this_month": "Ce mois-ci"
+	},
 	"button": {
 		"cancel": "Annuler",
 		"ok": "OK",
@@ -340,6 +344,14 @@
 				"linkedin": "LinkedIn",
 				"youtube": "YouTube"
 			}
+		}
+	},
+	"booking": {
+		"tabs": {
+			"today": "Aujourd'hui",
+			"upcoming": "À venir",
+			"past": "Passée",
+			"canceled": "Annulée"
 		}
 	}
 }

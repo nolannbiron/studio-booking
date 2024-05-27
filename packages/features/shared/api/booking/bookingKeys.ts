@@ -19,8 +19,8 @@ type IBookingKeysMapper = {
 export const bookingKeys: IBookingKeysMapper = {
 	all: [{ scope: 'bookings' }] as const,
 	lists: () => [{ ...bookingKeys.all[0], entity: 'list' }] as const,
-	list: ({ teamId, contactId, ownerId }) =>
-		[{ ...bookingKeys.lists()[0], teamId, contactId, ownerId }] as const,
+	list: ({ teamId, contactId, ownerId, group }) =>
+		[{ ...bookingKeys.lists()[0], teamId, contactId, ownerId, group }] as const,
 	counts: () => [{ ...bookingKeys.all[0], entity: 'count' }] as const,
 	count: ({ teamId, contactId, ownerId }) =>
 		[{ ...bookingKeys.counts()[0], teamId, contactId, ownerId }] as const,

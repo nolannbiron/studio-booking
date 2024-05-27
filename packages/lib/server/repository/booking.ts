@@ -13,6 +13,8 @@ import type {
 import type { TPrivateUser } from '@repo/schemas/user'
 import type { FastifyRequest } from 'fastify'
 
+import { getBookingsByGroup } from './booking/getBookingsByGroup'
+
 export class BookingRepository {
 	static #canAccessBooking(booking: Booking, currentUser: TPrivateUser): boolean {
 		const team = currentUser.teams.find((team) => team.id === booking.teamId)
@@ -26,6 +28,24 @@ export class BookingRepository {
 				...req.body,
 				content: req.body.content || undefined,
 				ownerId: req.body.ownerId || req.user!.id
+			},
+			include: {
+				contact: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+						email: true
+					}
+				},
+				owner: {
+					select: {
+						fullName: true,
+						id: true,
+						avatarUrl: true,
+						email: true
+					}
+				}
 			}
 		})
 
@@ -33,61 +53,31 @@ export class BookingRepository {
 	}
 
 	static async getBookings(req: FastifyRequest<TGetBookingsRequest>): Promise<TGroupedBookings> {
-		// get Booking with no due date, due date in the future, due date in the past, and completed bookings
-		const [todayBookings, futureDueDateBookings, completedBookings] = await prisma.$transaction([
-			prisma.booking.findMany({
-				where: {
-					ownerId: req.query.ownerId ? req.query.ownerId : undefined,
-					teamId: req.query.teamId,
-					contactId: req.query.contactId ? req.query.contactId : undefined,
-					startDate: {
-						lte: new Date(new Date().setHours(23, 59, 59, 999)),
-						gte: new Date(new Date().setHours(0, 0, 0, 0))
-					}
-				},
-				orderBy: {
-					startDate: 'asc'
-				}
-			}),
-			prisma.booking.findMany({
-				where: {
-					ownerId: req.query.ownerId ? req.query.ownerId : undefined,
-					teamId: req.query.teamId,
-					contactId: req.query.contactId ? req.query.contactId : undefined,
-					startDate: {
-						gt: new Date(new Date().setHours(23, 59, 59, 999))
-					}
-				},
-				orderBy: {
-					startDate: 'asc'
-				}
-			}),
-			prisma.booking.findMany({
-				where: {
-					ownerId: req.query.ownerId ? req.query.ownerId : undefined,
-					teamId: req.query.teamId,
-					contactId: req.query.contactId ? req.query.contactId : undefined,
-					endDate: {
-						lte: new Date(new Date().setHours(23, 59, 59, 999))
-					}
-				},
-				orderBy: {
-					endDate: 'asc'
-				}
-			})
-		])
-
-		return {
-			today: todayBookings,
-			future: futureDueDateBookings,
-			completed: completedBookings
-		}
+		return getBookingsByGroup(req)
 	}
 
 	static async getBooking(req: FastifyRequest<TGetBookingRequest>): Promise<TBookingSchema> {
 		const booking = await prisma.booking.findFirst({
 			where: {
 				id: req.params.bookingId
+			},
+			include: {
+				contact: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+						email: true
+					}
+				},
+				owner: {
+					select: {
+						fullName: true,
+						id: true,
+						avatarUrl: true,
+						email: true
+					}
+				}
 			}
 		})
 
@@ -125,7 +115,24 @@ export class BookingRepository {
 				...req.body,
 				content: req.body.content || undefined
 			},
-			include: {}
+			include: {
+				contact: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+						email: true
+					}
+				},
+				owner: {
+					select: {
+						fullName: true,
+						id: true,
+						avatarUrl: true,
+						email: true
+					}
+				}
+			}
 		})
 
 		return updatedBooking

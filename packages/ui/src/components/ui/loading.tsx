@@ -1,5 +1,3 @@
-'use client'
-
 import { useTranslation } from '@repo/i18n/next/client'
 import { type VariantProps, cva } from 'class-variance-authority'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'

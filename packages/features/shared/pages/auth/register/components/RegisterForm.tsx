@@ -1,7 +1,7 @@
 import { useRegister } from '@/api/auth/hooks'
 import { useAuthStore } from '@/state/auth.state'
 import { AuthRegisterForm } from '@repo/feature-auth/components/AuthRegisterForm'
-import { ErrorCode } from '@repo/feature-auth/lib'
+import { ErrorCode } from '@repo/feature-auth/lib/ErrorCode'
 import { useTranslation } from '@repo/i18n/next/client'
 import type { TRegisterBody } from '@repo/schemas/auth/auth.schema'
 import { toast } from '@repo/ui/sonner'

@@ -1,5 +1,3 @@
-'use client'
-
 import type { PopoverContentProps, PopoverProps } from '@radix-ui/react-popover'
 import { useEffect, useState } from 'react'
 import { IoIosCheckmarkCircle } from 'react-icons/io'

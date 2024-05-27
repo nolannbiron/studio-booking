@@ -1,5 +1,3 @@
-'use client'
-
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
@@ -12,7 +10,8 @@ const Tabs = TabsPrimitive.Root
 const tabsListClasses = cva('relative inline-flex items-center', {
 	variants: {
 		variant: {
-			default: 'text-muted-foreground w-full justify-center gap-2 rounded-md bg-gray-100 p-1',
+			default: 'text-muted-foreground bg-muted w-full justify-center gap-2 rounded-md p-1',
+			outline: 'gap-1',
 			primary:
 				'text-muted-foreground justify-center rounded-full border border-gray-200 bg-gray-100 p-0.5',
 			bordered:
@@ -38,7 +37,9 @@ const tabsTriggerClasses = cva(
 		variants: {
 			variant: {
 				default:
-					'ring-offset-background focus-visible:ring-ring data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex w-full items-center justify-center whitespace-nowrap rounded border border-transparent  text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow',
+					'ring-offset-background focus-visible:ring-ring data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex w-full items-center justify-center whitespace-nowrap rounded border border-transparent text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow',
+				outline:
+					'data-[state=active]:border-input data-[state=active]:bg-muted/50 data-[state=inactive]:hover:bg-muted/50 data-[state=active]:text-foreground border-input rounded-md border opacity-50 data-[state=active]:opacity-100 data-[state=active]:shadow-sm',
 				primary:
 					'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-[13px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-blue-500 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-900 data-[state=active]:shadow-sm',
 				bordered:
