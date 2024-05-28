@@ -1,155 +1,139 @@
-import { Prisma } from '@repo/prisma/client'
+import { prisma, userPublicProfileSelect } from '@repo/prisma'
+import type { TBookingSchema, TGetBookingsRequest } from '@repo/schemas/booking'
+import type { FastifyRequest } from 'fastify'
 
-type Props = {
-	ownerId?: string
-	contactId?: string
-	teamId: string
+export const getTodayBookings = async (
+	req: FastifyRequest<TGetBookingsRequest>
+): Promise<TBookingSchema[]> => {
+	return prisma.booking.findMany({
+		where: {
+			teamId: req.query.teamId,
+			status: {
+				not: 'CANCELED'
+			},
+			startDate: {
+				gte: new Date(new Date().setHours(0, 0, 0, 0)),
+				lte: new Date(new Date().setHours(23, 59, 59, 999))
+			},
+			...(req.query.ownerId && {
+				assignees: {
+					some: {
+						id: req.query.ownerId
+					}
+				}
+			}),
+			...(req.query.contactId && { contactId: req.query.contactId })
+		},
+		include: {
+			contact: true,
+			assignees: {
+				select: userPublicProfileSelect
+			}
+		},
+		orderBy: {
+			startDate: 'asc'
+		}
+	})
 }
 
-export const getTodayBookingsSQL = ({ ownerId, contactId, teamId }: Props) =>
-	Prisma.sql`
-    SELECT 
-        TO_CHAR("startDate", 'MM-YYYY') as "monthYear",
-        JSON_AGG(JSON_BUILD_OBJECT(
-        'id', b."id",
-        'title', b."title",
-        'content', b."content',
-        'startDate', b."startDate",
-        'endDate', b."endDate',
-        'status', b."status",
-        'contact', JSON_BUILD_OBJECT(
-            'id', c."id",
-            'name', c."name",
-            'avatarUrl', c."avatarUrl",
-            'email', c."email",
-        ),
-        'owner', JSON_BUILD_OBJECT(
-            'id', o."id",
-            'fullName', o."fullName",
-            'avatarUrl', o."avatarUrl",
-            'email', o."email"
-        )
-        )) as "bookings"
-    FROM "bookings" b
-    LEFT JOIN "contacts" c ON b."contactId" = c."id"
-    LEFT JOIN "users" o ON b."ownerId" = o."id"
-    WHERE 
-        ${ownerId ? Prisma.sql`b."ownerId" = ${ownerId}` : Prisma.sql`1=1`}
-        ${contactId ? Prisma.sql`AND b."contactId" = ${contactId}` : Prisma.sql`AND 1=1`}
-        AND b."teamId" = ${teamId}
-        AND b."status" != 'CANCELED'
-        AND b."startDate" >= ${new Date(new Date().setHours(0, 0, 0, 0))}::timestamp
-        AND b."startDate" <= ${new Date(new Date().setHours(23, 59, 59, 999))}::timestamp
-    GROUP BY "monthYear"
-    ORDER BY MIN(b."startDate");
-`
+export const getPastBookings = async (
+	req: FastifyRequest<TGetBookingsRequest>
+): Promise<TBookingSchema[]> => {
+	return prisma.booking.findMany({
+		where: {
+			teamId: req.query.teamId,
+			status: {
+				not: 'CANCELED'
+			},
+			startDate: {
+				lte: new Date(new Date().setHours(0, 0, 0, 0))
+			},
+			...(req.query.ownerId && {
+				assignees: {
+					some: {
+						id: req.query.ownerId
+					}
+				}
+			}),
+			...(req.query.contactId && { contactId: req.query.contactId })
+		},
+		include: {
+			contact: true,
+			assignees: {
+				select: userPublicProfileSelect
+			}
+		},
+		orderBy: {
+			startDate: 'asc'
+		}
+	})
+}
 
-export const getPastBookingsSQL = ({ ownerId, contactId, teamId }: Props) =>
-	Prisma.sql`
-    SELECT 
-        TO_CHAR("startDate", 'MM-YYYY') as "monthYear",
-        JSON_AGG(JSON_BUILD_OBJECT(
-        'id', b."id",
-        'title', b."title",
-        'content', b."content",
-        'startDate', b."startDate",
-        'endDate', b."endDate",
-        'status', b."status",
-        'contact', JSON_BUILD_OBJECT(
-            'id', c."id",
-            'name', c."name",
-            'avatarUrl', c."avatarUrl",
-            'email', c."email"
-        ),
-        'owner', JSON_BUILD_OBJECT(
-            'id', o."id",
-            'fullName', o."fullName",
-            'avatarUrl', o."avatarUrl",
-            'email', o."email"
-        )
-        )) as "bookings"
-    FROM "bookings" b
-    LEFT JOIN "contacts" c ON b."contactId" = c."id"
-    LEFT JOIN "users" o ON b."ownerId" = o."id"
-    WHERE 
-        ${ownerId ? Prisma.sql`b."ownerId" = ${ownerId}` : Prisma.sql`1=1`}
-        ${contactId ? Prisma.sql`AND b."contactId" = ${contactId}` : Prisma.sql`AND 1=1`}
-        AND b."teamId" = ${teamId}
-        AND b."status" != 'CANCELED'
-        AND b."startDate" <= ${new Date(new Date().setHours(0, 0, 0, 0))}::timestamp
-    GROUP BY "monthYear"
-    ORDER BY MIN(b."startDate") DESC;
-`
+export const getUpcomingBookings = async (
+	req: FastifyRequest<TGetBookingsRequest>
+): Promise<TBookingSchema[]> => {
+	return prisma.booking.findMany({
+		where: {
+			AND: [
+				{
+					teamId: req.query.teamId
+				},
+				{
+					status: {
+						not: 'CANCELED'
+					}
+				},
+				{
+					startDate: {
+						gt: new Date(new Date().setHours(23, 59, 59, 999))
+					}
+				}
+			],
+			...(req.query.ownerId && {
+				assignees: {
+					some: {
+						id: req.query.ownerId
+					}
+				}
+			}),
+			...(req.query.contactId && { contactId: req.query.contactId })
+		},
+		include: {
+			contact: true,
+			assignees: {
+				select: userPublicProfileSelect
+			}
+		},
+		orderBy: {
+			startDate: 'asc'
+		}
+	})
+}
 
-export const getUpcomingBookingsSQL = ({ ownerId, contactId, teamId }: Props) =>
-	Prisma.sql`
-    SELECT 
-        TO_CHAR("startDate", 'MM-YYYY') as "monthYear",
-        JSON_AGG(JSON_BUILD_OBJECT(
-        'id', b."id",
-        'title', b."title",
-        'content', b."content",
-        'startDate', b."startDate",
-        'endDate', b."endDate",
-        'status', b."status",
-        'contact', JSON_BUILD_OBJECT(
-            'id', c."id",
-            'name', c."name",
-            'avatarUrl', c."avatarUrl",
-            'email', c."email"
-        ),
-        'owner', JSON_BUILD_OBJECT(
-            'id', o."id",
-            'fullName', o."fullName",
-            'avatarUrl', o."avatarUrl",
-            'email', o."email"
-        )
-        )) as "bookings"
-    FROM "bookings" b
-    LEFT JOIN "contacts" c ON b."contactId" = c."id"
-    LEFT JOIN "users" o ON b."ownerId" = o."id"
-    WHERE 
-        ${ownerId ? Prisma.sql`b."ownerId" = ${ownerId}` : Prisma.sql`1=1`}
-        ${contactId ? Prisma.sql`AND b."contactId" = ${contactId}` : Prisma.sql`AND 1=1`}
-        AND b."teamId" = ${teamId}
-        AND b."status" != 'CANCELED'
-        AND b."startDate" > ${new Date(new Date().setHours(23, 59, 59, 999))}::timestamp
-    GROUP BY "monthYear"
-    ORDER BY MIN(b."startDate");
-`
-
-export const getCanceledBookingsSQL = ({ ownerId, contactId, teamId }: Props) =>
-	Prisma.sql`
-    SELECT 
-        TO_CHAR("startDate", 'MM-YYYY') as "monthYear",
-        JSON_AGG(JSON_BUILD_OBJECT(
-        'id', b."id",
-        'title', b."title",
-        'content', b."content',
-        'startDate', b."startDate",
-        'endDate', b."endDate',
-        'status', b."status',
-        'contact', JSON_BUILD_OBJECT(
-            'id', c."id",
-            'name', c."name",
-            'avatarUrl', c."avatarUrl",
-            'email', c."email'
-        ),
-        'owner', JSON_BUILD_OBJECT(
-            'id', o."id",
-            'fullName', o."fullName",
-            'avatarUrl', o."avatarUrl",
-            'email', o."email'
-        )
-    )) as "bookings"
-    FROM "bookings" b
-    LEFT JOIN "contacts" c ON b."contactId" = c."id"
-    LEFT JOIN "users" o ON b."ownerId" = o."id"
-    WHERE 
-        ${ownerId ? Prisma.sql`b."ownerId" = ${ownerId}` : Prisma.sql`1=1`}
-        ${contactId ? Prisma.sql`AND b."contactId" = ${contactId}` : Prisma.sql`AND 1=1`}
-        AND b."teamId" = ${teamId}
-        AND b."status" = 'CANCELED'
-    GROUP BY "monthYear"
-    ORDER BY MIN(b."startDate");
-`
+export const getCanceledBookings = async (
+	req: FastifyRequest<TGetBookingsRequest>
+): Promise<TBookingSchema[]> => {
+	return prisma.booking.findMany({
+		where: {
+			teamId: req.query.teamId,
+			status: 'CANCELED',
+			...(req.query.ownerId && {
+				assignees: {
+					some: {
+						id: req.query.ownerId
+					}
+				}
+			}),
+			...(req.query.contactId && { contactId: req.query.contactId })
+		},
+		include: {
+			contact: true,
+			assignees: {
+				select: userPublicProfileSelect
+			}
+		},
+		orderBy: {
+			startDate: 'asc'
+		}
+	})
+}

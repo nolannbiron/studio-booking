@@ -210,7 +210,7 @@ export default function ContactsTable({
 						</tr>
 					))}
 				</tbody>
-				<tfoot className="sticky bottom-0 z-50">
+				<tfoot className="sticky bottom-0 z-10">
 					{table.getFooterGroups().map((footerGroup) => (
 						<tr key={footerGroup.id}>
 							{footerGroup.headers.map((header) => (

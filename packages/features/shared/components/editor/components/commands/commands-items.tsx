@@ -110,6 +110,21 @@ export const commandsItems: CommandItems = {
 
 				editor.chain().focus().toggleOrderedList().run()
 			}
+		},
+		{
+			title: `${i18next.t('editor.commands.basic_blocks.to_do_list')}`,
+			icon: 'https://www.notion.so/images/blocks/to-do.f8d20542.png',
+			tooltip: {
+				image: 'https://www.notion.so/images/tooltips/blocks/to-do-list/en-US.png',
+				text: `${i18next.t('editor.commands.basic_blocks.to_do_list_description')}`
+			},
+			command: ({ editor, range, shouldDeleteRange }: ItemCommandProps) => {
+				if (shouldDeleteRange) {
+					return editor.chain().focus().deleteRange(range).toggleTaskList()
+				}
+
+				editor.chain().focus().toggleTaskList().run()
+			}
 		}
 	]
 }

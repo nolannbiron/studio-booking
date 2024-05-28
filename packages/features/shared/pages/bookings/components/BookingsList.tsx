@@ -4,40 +4,42 @@ import BookingDetailsSheet from '@/components/bookings/details/BookingDetailsShe
 import { useBookingStore } from '@/state/booking.store'
 import { useUserStore } from '@/state/user.state'
 import { convertDateStringToLocalized } from '@repo/lib/convertDateStringToLocalized'
-import type { TBookingGroupName } from '@repo/schemas/booking'
 import { Badge } from '@repo/ui/badge'
 import { ScrollArea } from '@repo/ui/scroll-area'
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi'
 
-export default function BookingsList({ group }: { group: TBookingGroupName }): JSX.Element {
+export default function BookingsList(): JSX.Element {
 	const { currentUser } = useUserStore()
+	const { active } = useBookingStore((state) => ({
+		active: state.tabs.active
+	}))
 	const { collapsedGroups, setCollapsedGroups } = useBookingStore((state) => ({
 		collapsedGroups: state.collapsedGroups,
 		setCollapsedGroups: state.setCollapsedGroups
 	}))
 
 	const { data } = useGetBookings({
-		group
+		group: active
 	})
 
 	const handleCollapse = (monthYear: string) => {
 		setCollapsedGroups(
-			group,
-			collapsedGroups[group].includes(monthYear)
-				? collapsedGroups[group].filter((id) => id !== monthYear)
-				: [...collapsedGroups[group], monthYear]
+			active,
+			collapsedGroups[active].includes(monthYear)
+				? collapsedGroups[active].filter((id) => id !== monthYear)
+				: [...collapsedGroups[active], monthYear]
 		)
 	}
 
 	return (
 		<>
 			<ScrollArea className="flex flex-1">
-				<div className="flex flex-col gap-6 px-6 py-6">
+				<div className="flex flex-col gap-6">
 					{data?.bookings?.map(({ monthYear, bookings }) =>
 						!!bookings.length ? (
 							<div key={monthYear} className="space-y-2">
 								<div
-									onClick={() => handleCollapse(monthYear)}
+									onClick={() => bookings.length > 1 && handleCollapse(monthYear)}
 									className="text-muted-foreground hover:text-foreground flex cursor-pointer select-none items-center gap-1.5 text-sm font-medium uppercase transition-all"
 								>
 									{convertDateStringToLocalized(monthYear, currentUser.locale)}
@@ -48,16 +50,20 @@ export default function BookingsList({ group }: { group: TBookingGroupName }): J
 									>
 										{bookings.length}
 									</Badge>
-									{collapsedGroups[group].includes(monthYear) ? (
-										<FiChevronDown />
+									{bookings.length > 1 ? (
+										collapsedGroups[active].includes(monthYear) ? (
+											<FiChevronDown />
+										) : (
+											<FiChevronRight />
+										)
 									) : (
-										<FiChevronRight />
+										<></>
 									)}
 								</div>
-								{!collapsedGroups[group].includes(monthYear) && (
+								{!collapsedGroups[active].includes(monthYear) && (
 									<div className="flex flex-col gap-2">
 										{bookings.map((booking) => (
-											<BookingCard group={group} key={booking.id} booking={booking} />
+											<BookingCard group={active} key={booking.id} booking={booking} />
 										))}
 									</div>
 								)}

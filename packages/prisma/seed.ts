@@ -15,7 +15,11 @@ const randomContactType = () => {
 }
 
 const randomBookingStatus = () => {
-	const statuses: BookingStatus[] = ['PENDING', 'CONFIRMED', 'CANCELED']
+	const statuses: BookingStatus[] = [
+		'CONFIRMED',
+		'CANCELED'
+		// 'PENDING',
+	]
 	return statuses[Math.floor(Math.random() * statuses.length)]
 }
 
@@ -203,7 +207,11 @@ async function createRandomContacts(team: TTeam, user: TPublicUser) {
 						startDate: oneHourEvent.start,
 						endDate: oneHourEvent.end,
 						title: fakerFR.lorem.words(3),
-						ownerId: user.id,
+						assignees: {
+							connect: {
+								id: user.id
+							}
+						},
 						teamId: team.id,
 						status: randomBookingStatus()
 					}

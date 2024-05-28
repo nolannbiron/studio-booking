@@ -6,11 +6,13 @@ export default function TaskDialogTitle({
 	task,
 	onChange,
 	onBlur,
-	onCheckedChange
+	onCheckedChange,
+	onKeyDown
 }: {
 	task: TTaskUpdateSchema
 	onChange: (value: string) => void
 	onBlur?: (e: React.FocusEvent<HTMLDivElement>) => void
+	onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void
 	onCheckedChange?: (value: boolean) => void
 }): JSX.Element {
 	// const { t } = useTranslation()
@@ -26,6 +28,7 @@ export default function TaskDialogTitle({
 				/>
 				<ContentEditable
 					preventNewLine
+					onKeyDown={onKeyDown}
 					value={task.title ?? ''}
 					aria-placeholder={`Envoyer le mix à l'équipe de @${task?.entity?.name || task?.entity?.email || 'contact'}`}
 					onBlur={onBlur}

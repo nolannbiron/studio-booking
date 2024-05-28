@@ -1,5 +1,4 @@
-import { prisma } from '@repo/prisma'
-import type { Booking } from '@repo/prisma/client'
+import { prisma, userPublicProfileSelect } from '@repo/prisma'
 import type {
 	TBookingSchema,
 	TCreateBookingRequest,
@@ -16,35 +15,40 @@ import type { FastifyRequest } from 'fastify'
 import { getBookingsByGroup } from './booking/getBookingsByGroup'
 
 export class BookingRepository {
-	static #canAccessBooking(booking: Booking, currentUser: TPrivateUser): boolean {
+	static #canAccessBooking(
+		booking: Pick<TBookingSchema, 'teamId'> & { assignees: { id: string }[] },
+		currentUser: TPrivateUser
+	): boolean {
 		const team = currentUser.teams.find((team) => team.id === booking.teamId)
 
-		return booking.ownerId === currentUser.id || (!!team && ['OWNER', 'ADMIN'].includes(team.role))
+		return (
+			(!!team && ['OWNER', 'ADMIN'].includes(team.role)) ||
+			booking.assignees.some((assignee) => assignee.id === currentUser.id)
+		)
 	}
 
 	static async create(req: FastifyRequest<TCreateBookingRequest>) {
+		const { assignees, ...body } = req.body
+
 		const booking = await prisma.booking.create({
 			data: {
-				...req.body,
-				content: req.body.content || undefined,
-				ownerId: req.body.ownerId || req.user!.id
+				...body,
+				content: body.content || undefined,
+				status: req.user ? 'CONFIRMED' : 'PENDING',
+				teamId: req.body.teamId,
+				contactId: req.body.contactId,
+				...(assignees?.length
+					? {
+							assignees: {
+								connect: assignees.map((assignee) => ({ id: assignee })) || []
+							}
+						}
+					: { assignees: undefined })
 			},
 			include: {
-				contact: {
-					select: {
-						id: true,
-						name: true,
-						avatarUrl: true,
-						email: true
-					}
-				},
-				owner: {
-					select: {
-						fullName: true,
-						id: true,
-						avatarUrl: true,
-						email: true
-					}
+				contact: true,
+				assignees: {
+					select: userPublicProfileSelect
 				}
 			}
 		})
@@ -62,21 +66,9 @@ export class BookingRepository {
 				id: req.params.bookingId
 			},
 			include: {
-				contact: {
-					select: {
-						id: true,
-						name: true,
-						avatarUrl: true,
-						email: true
-					}
-				},
-				owner: {
-					select: {
-						fullName: true,
-						id: true,
-						avatarUrl: true,
-						email: true
-					}
+				contact: true,
+				assignees: {
+					select: userPublicProfileSelect
 				}
 			}
 		})
@@ -96,6 +88,11 @@ export class BookingRepository {
 		const booking = await prisma.booking.findFirst({
 			where: {
 				id: req.params.bookingId
+			},
+			include: {
+				assignees: {
+					select: userPublicProfileSelect
+				}
 			}
 		})
 
@@ -107,30 +104,28 @@ export class BookingRepository {
 			throw 'Unauthorized access to booking'
 		}
 
+		const { assignees, ...body } = req.body
+
 		const updatedBooking = await prisma.booking.update({
 			where: {
 				id: req.params.bookingId
 			},
 			data: {
-				...req.body,
-				content: req.body.content || undefined
+				...body,
+				content: body.content || undefined,
+				...(typeof assignees !== 'undefined' && assignees
+					? {
+							assignees: {
+								disconnect: booking.assignees.map((assignee) => ({ id: assignee.id })),
+								connect: assignees.map((assignee) => ({ id: assignee })) || []
+							}
+						}
+					: {})
 			},
 			include: {
-				contact: {
-					select: {
-						id: true,
-						name: true,
-						avatarUrl: true,
-						email: true
-					}
-				},
-				owner: {
-					select: {
-						fullName: true,
-						id: true,
-						avatarUrl: true,
-						email: true
-					}
+				contact: true,
+				assignees: {
+					select: userPublicProfileSelect
 				}
 			}
 		})
@@ -142,6 +137,13 @@ export class BookingRepository {
 		const booking = await prisma.booking.findFirst({
 			where: {
 				id: req.params.bookingId
+			},
+			include: {
+				assignees: {
+					select: {
+						id: true
+					}
+				}
 			}
 		})
 
@@ -165,7 +167,13 @@ export class BookingRepository {
 	static async getBookingsCount(req: FastifyRequest<TGetBookingsCountRequest>) {
 		const total = await prisma.booking.count({
 			where: {
-				ownerId: req.query.ownerId ? req.query.ownerId : undefined,
+				...(req.query.ownerId && {
+					assignees: {
+						some: {
+							id: req.query.ownerId
+						}
+					}
+				}),
 				teamId: req.query.teamId,
 				contactId: req.query.contactId ? req.query.contactId : undefined
 			}

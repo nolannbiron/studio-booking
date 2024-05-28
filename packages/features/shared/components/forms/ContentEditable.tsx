@@ -43,6 +43,8 @@ export default function ContentEditable({
 				if (preventNewLine && event.key === 'Enter') {
 					event.preventDefault()
 				}
+
+				props.onKeyDown?.(event)
 			}}
 			role="textbox"
 			suppressContentEditableWarning

@@ -54,7 +54,7 @@ export default function NoteCard({ note, onClick }: { note: TNoteSchema; onClick
 
 					{!!note.content && (
 						<div
-							className="text-foreground/80 line-clamp-4 text-xs"
+							className="text-foreground/80 tiptap line-clamp-4 max-h-52 !min-h-0 [&_*]:!text-sm"
 							dangerouslySetInnerHTML={{
 								__html: generateContentHTML(note.content as JSONContent)
 							}}

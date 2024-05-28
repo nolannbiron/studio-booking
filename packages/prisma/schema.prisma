@@ -55,7 +55,7 @@ model User {
     accounts Account[]
     notes    Note[]
     tasks    Task[]       @relation("AssignedTasks")
-    Booking  Booking[]
+    bookings Booking[]    @relation("AssignedBookings")
 
     @@index([email, password])
     @@map("users")
@@ -363,12 +363,9 @@ model Booking {
     contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
     contactId String
 
-    owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-    ownerId String
+    assignees User[] @relation("AssignedBookings")
 
     @@index([teamId, startDate, status])
-    @@index([teamId, ownerId, contactId, startDate, status])
-    @@index([teamId, ownerId, startDate, status])
     @@index([teamId, contactId, startDate, status])
     @@map("bookings")
 }

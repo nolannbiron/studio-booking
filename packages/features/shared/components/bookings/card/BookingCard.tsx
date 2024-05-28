@@ -1,3 +1,4 @@
+import ContactLinkButton from '@/components/contacts/generics/ContactLinkButton'
 import { BookingStatus } from '@repo/prisma/enums'
 import type { TBookingGroupName, TBookingSchema } from '@repo/schemas/booking'
 import { Button } from '@repo/ui/button'
@@ -32,6 +33,7 @@ export default function BookingCard({ booking, group }: Props): JSX.Element {
 		minute: '2-digit'
 	})
 
+	const isCanceled = group === 'canceled'
 	const isPastOrCanceled = ['canceled', 'past'].includes(group)
 	const isPending = !isPastOrCanceled && booking.status === BookingStatus.PENDING
 
@@ -42,7 +44,7 @@ export default function BookingCard({ booking, group }: Props): JSX.Element {
 	return (
 		<Card
 			className={cn({
-				'border-dashed opacity-80': isPending
+				'border-primary/50 bg-primary/5 border-dashed': isPending
 			})}
 		>
 			<CardContent
@@ -54,7 +56,14 @@ export default function BookingCard({ booking, group }: Props): JSX.Element {
 				)}
 			>
 				<div className="flex items-stretch gap-6">
-					<div className="inline-flex w-28 max-w-28 flex-col items-center justify-center space-y-px border-r text-center">
+					<div
+						className={cn(
+							'inline-flex w-28 max-w-28 flex-col items-center justify-center space-y-px border-r text-center',
+							{
+								'border-primary/50 border-dashed': isPending
+							}
+						)}
+					>
 						<span className="text-foreground/90 text-base font-normal uppercase">
 							{startDayText}
 						</span>
@@ -84,21 +93,28 @@ export default function BookingCard({ booking, group }: Props): JSX.Element {
 					<div className="text-foreground flex flex-col justify-between py-4 pl-8">
 						<div className="text-base font-semibold capitalize">{booking.title}</div>
 						<div className="text-foreground/90 flex items-center gap-1.5 text-sm">
-							<div className="hover:bg-muted/70 flex cursor-pointer items-center gap-1 rounded-md px-0.5 py-0.5">
-								<UserAvatar size="2xs" className="rounded-full" user={booking.contact} />
-								<span className="select-none"> {booking.contact.name}</span>
-							</div>
+							<ContactLinkButton contact={booking.contact} />
 
-							<BsArrows className="text-muted-foreground size-[18px]" />
+							{booking.assignees?.length && (
+								<>
+									<BsArrows className="text-muted-foreground size-[18px]" />
 
-							<div className="flex cursor-default items-center gap-1 rounded-md px-0.5 py-0.5">
-								<UserAvatar size="2xs" className="rounded-full" user={booking.owner} />
-								<span className="select-none"> {booking.owner.fullName}</span>
-							</div>
+									{booking.assignees.map((assignee, i) => (
+										<div
+											key={assignee.id}
+											className={cn('flex cursor-default items-center rounded-md', {
+												'z-10 -ml-3': i > 0
+											})}
+										>
+											<UserAvatar size="2xs" className="rounded-full" user={assignee} />
+										</div>
+									))}
+								</>
+							)}
 						</div>
 					</div>
 				</div>
-				{!isPastOrCanceled && (
+				{!isPastOrCanceled ? (
 					<div className="flex items-center gap-2">
 						<Button onClick={handleViewDetails} variant="outline" className="ml-auto">
 							Voir
@@ -118,6 +134,8 @@ export default function BookingCard({ booking, group }: Props): JSX.Element {
 							</Button>
 						)}
 					</div>
+				) : (
+					isCanceled && <div className="flex items-center gap-1 italic">Annulé</div>
 				)}
 			</CardContent>
 		</Card>

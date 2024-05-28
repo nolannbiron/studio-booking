@@ -9,7 +9,8 @@ const pathnames = {
 	dashboard: 'home',
 	tasks: 'tasks',
 	notes: 'notes',
-	contacts: 'contacts'
+	contacts: 'contacts',
+	sessions: 'sessions'
 } as const
 
 export default function Navbar(): JSX.Element {

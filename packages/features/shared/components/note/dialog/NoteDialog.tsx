@@ -23,7 +23,7 @@ export default function NoteDialog({
 		<Dialog {...props}>
 			<DialogTrigger asChild={asChild}>{children}</DialogTrigger>
 
-			<DialogContent className="flex h-dvh max-w-4xl flex-col gap-0 p-0 max-md:rounded-none md:h-[75dvh]">
+			<DialogContent className="flex h-dvh max-w-4xl flex-col gap-0 overflow-hidden p-0 max-md:rounded-none md:h-[75dvh]">
 				<DialogHeader className="h-fit border-b px-5 pb-3 pt-4">
 					{data?.note && <NoteDialogHeader note={data.note} />}
 				</DialogHeader>

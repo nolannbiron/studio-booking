@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { jsonSchema } from '../common'
 import { ZContactSchema } from '../contact'
-import { ZUserSchema } from '../user'
+import { ZPublicUserSchema } from '../user'
 
 export const ZBookingSchema = z.object({
 	id: z.string(),
@@ -13,9 +13,8 @@ export const ZBookingSchema = z.object({
 	endDate: z.date(),
 	teamId: z.string(),
 	contactId: z.string(),
-	ownerId: z.string(),
-	contact: z.lazy(() => ZContactSchema.pick({ id: true, name: true, avatarUrl: true, email: true })),
-	owner: z.lazy(() => ZUserSchema.pick({ id: true, fullName: true, avatarUrl: true, email: true })),
+	assignees: z.lazy(() => z.array(ZPublicUserSchema)),
+	contact: z.lazy(() => ZContactSchema),
 	status: z.nativeEnum(BookingStatus),
 	createdAt: z.date(),
 	updatedAt: z.date()
@@ -26,16 +25,23 @@ export const ZBookingCreateSchema = ZBookingSchema.omit({
 	createdAt: true,
 	updatedAt: true,
 	contact: true,
-	owner: true
-}).partial({ ownerId: true })
+	assignees: true
+}).extend({
+	assignees: z.array(z.string()).nullish()
+})
 
 export const ZUpdateBookingSchema = ZBookingSchema.omit({
 	id: true,
 	createdAt: true,
 	updatedAt: true,
 	contact: true,
-	owner: true
+	owner: true,
+	assignees: true
 })
+	.partial()
+	.extend({
+		assignees: z.array(z.string()).nullish()
+	})
 
 export type TBookingSchema = z.infer<typeof ZBookingSchema>
 export type TBookingCreateSchema = z.infer<typeof ZBookingCreateSchema>
@@ -87,7 +93,7 @@ export type TGetBookingsCountRequest = {
 		ownerId?: string
 		contactId?: string
 		teamId: string
-		group: TBookingGroupName
+		group?: TBookingGroupName
 	}
 	Reply: TBookingsCountReply | { success: false; message: unknown }
 }
@@ -97,7 +103,7 @@ export type TGetBookingsRequest = {
 		ownerId?: string
 		contactId?: string
 		teamId: string
-		group: TBookingGroupName
+		group?: TBookingGroupName
 	}
 	Reply: TBookingsReply | { success: false; message: unknown }
 }

@@ -15,7 +15,7 @@ const buttonVariants = cva(
 					'dark:bg-primary dark:hover:bg-primary/90 dark:border-white/10 dark:before:hidden dark:before:hidden dark:after:-inset-px dark:after:shadow-[shadow:inset_0_1.5px_theme(colors.white/15%),inset_0_-2.5px_theme(colors.black/25%)] dark:active:after:shadow-[shadow:inset_0_0,inset_0_0] dark:after:disabled:shadow-[shadow:inset_0_0,inset_0_0]'
 				],
 				'outline-primary':
-					'bg-primary/60 border-primary hover:bg-primary text-primary-foreground border',
+					'bg-primary dark:bg-primary/60 border-primary hover:bg-primary text-primary-foreground border',
 				destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
 				outline:
 					'border-input bg-background hover:bg-muted hover:text-secondary-foreground border shadow-sm',
