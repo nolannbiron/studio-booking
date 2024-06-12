@@ -1,22 +1,31 @@
-import ContactInputCell from '@/components/contacts/generics/ContactInputCell'
-import ContactsTableHeadCell from '@/components/contacts/table/ContactsTableHeadCell'
-import ContactsTableHeadCellName from '@/components/contacts/table/ContactsTableHeadCellName'
 import { columns } from '@/components/contacts/table/columns'
-import ContactsTableRowCellGenre from '@/components/contacts/table/row/genre/ContactsTableRowCellGenre'
-import ContactsTableRowCellName from '@/components/contacts/table/row/name/ContactsTableRowCellName'
-import ContactsTableRowCellType from '@/components/contacts/table/row/type/ContactsTableRowCellType'
 import { useContactsTableStore } from '@/components/contacts/table/store/contacts-table.store'
-import { useIsOutsideClick } from '@repo/hooks'
+import { useIsOutsideClick } from '@repo/hooks/lib/use-is-outside-click'
 import type { TContact } from '@repo/schemas/contact'
 import { cn } from '@repo/ui/lib/utils'
+import { Loading } from '@repo/ui/loading'
 import { ScrollArea } from '@repo/ui/scroll-area'
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useMemo, useRef, useState } from 'react'
+
+const ContactsTableRowCellGenre = lazy(
+	() => import('@/components/contacts/table/row/genre/ContactsTableRowCellGenre')
+)
+const ContactsTableRowCellName = lazy(
+	() => import('@/components/contacts/table/row/name/ContactsTableRowCellName')
+)
+const ContactsTableRowCellType = lazy(
+	() => import('@/components/contacts/table/row/type/ContactsTableRowCellType')
+)
+const ContactInputCell = lazy(() => import('@/components/contacts/generics/ContactInputCell'))
+const ContactsTableHeadCell = lazy(() => import('@/components/contacts/table/ContactsTableHeadCell'))
+const ContactsTableHeadCellName = lazy(() => import('@/components/contacts/table/ContactsTableHeadCellName'))
 
 export type TContactsTableRow = Partial<Record<keyof TContact | 'new', JSX.Element>>
 
 export default function ContactsTable({
-	contacts
+	contacts,
+	isLoading
 }: {
 	contacts: TContact[]
 	isLoading: boolean
@@ -115,7 +124,8 @@ export default function ContactsTable({
 					/>
 				)
 			})),
-		[contacts, rowSelection, handleCheckedChange]
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[contacts, rowSelection]
 	)
 
 	const table = useReactTable({
@@ -130,12 +140,16 @@ export default function ContactsTable({
 		getCoreRowModel: getCoreRowModel()
 	})
 
+	const width = useMemo(() => table.getCenterTotalSize(), [table])
+
+	if (isLoading) return <Loading />
+
 	return (
 		<ScrollArea tabIndex={-1} className="flex-1 focus-visible:outline-none">
 			<table
 				ref={ref}
 				style={{
-					width: table.getCenterTotalSize()
+					width
 				}}
 			>
 				<thead className="sticky top-0 z-50">
@@ -156,27 +170,29 @@ export default function ContactsTable({
 										}
 									)}
 								>
-									{header.id === 'name' ? (
-										<ContactsTableHeadCellName
-											header={header}
-											onCheckedChange={table.getToggleAllRowsSelectedHandler()}
-											checked={
-												table.getIsAllRowsSelected()
-													? true
-													: table.getIsSomeRowsSelected()
-														? 'indeterminate'
-														: false
-											}
-											// selectedRows.length === contacts.length
-											// 	? true
-											// 	: selectedRows.length > 0
-											// 		? 'indeterminate'
-											// 		: false
-											// }
-										/>
-									) : (
-										<ContactsTableHeadCell header={header} table={table} />
-									)}
+									<Suspense fallback={null}>
+										{header.id === 'name' ? (
+											<ContactsTableHeadCellName
+												header={header}
+												onCheckedChange={table.getToggleAllRowsSelectedHandler()}
+												checked={
+													table.getIsAllRowsSelected()
+														? true
+														: table.getIsSomeRowsSelected()
+															? 'indeterminate'
+															: false
+												}
+												// selectedRows.length === contacts.length
+												// 	? true
+												// 	: selectedRows.length > 0
+												// 		? 'indeterminate'
+												// 		: false
+												// }
+											/>
+										) : (
+											<ContactsTableHeadCell header={header} table={table} />
+										)}
+									</Suspense>
 								</th>
 							))}
 						</tr>
@@ -204,7 +220,9 @@ export default function ContactsTable({
 										}
 									)}
 								>
-									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+									<Suspense fallback={null}>
+										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+									</Suspense>
 								</td>
 							))}
 						</tr>
@@ -228,9 +246,11 @@ export default function ContactsTable({
 										}
 									)}
 								>
-									{header.isPlaceholder
-										? null
-										: flexRender(header.column.columnDef.footer, header.getContext())}
+									<Suspense fallback={null}>
+										{header.isPlaceholder
+											? null
+											: flexRender(header.column.columnDef.footer, header.getContext())}
+									</Suspense>
 								</th>
 							))}
 						</tr>

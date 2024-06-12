@@ -7,6 +7,8 @@ import type {
 } from '@repo/schemas/timeline'
 import type { FastifyRequest } from 'fastify'
 
+import { arraysAreEqual } from '../../arraysAreEqual'
+
 export class TimelineRepository {
 	static async getTimelineEventsContact(req: FastifyRequest<TGetTimelineEventsContact>) {
 		const { contactId } = req.params
@@ -64,15 +66,13 @@ export class TimelineRepository {
 		if (exists.length > 0) {
 			const lastEvent = exists[exists.length - 1]
 
-			console.log('lastEvent', lastEvent)
-
 			if (lastEvent.type === 'VALUES_UPDATED' && event.type === 'VALUES_UPDATED') {
+				console.log(lastEvent.event.oldValue, event.event.newValue)
 				if (
+					(Array.isArray(lastEvent.event.oldValue) &&
+						Array.isArray(event.event.newValue) &&
+						arraysAreEqual(lastEvent.event.oldValue, event.event.newValue)) ||
 					lastEvent.event.oldValue === event.event.newValue
-					// ||
-					// (Array.isArray(lastEvent.event.oldValue) &&
-					// 	Array.isArray(event.event.newValue) &&
-					// 	JSON.stringify(lastEvent.event.oldValue) === JSON.stringify(event.event.newValue))
 				) {
 					return prisma.timelineEvent.delete({
 						where: {

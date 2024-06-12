@@ -23,7 +23,7 @@ body {
 }
 
 #root {
-	@apply h-dvh max-h-dvh min-h-dvh;
+	@apply isolate h-dvh max-h-dvh min-h-dvh;
 }
 
 body:has([data-tippy-root]) #root {

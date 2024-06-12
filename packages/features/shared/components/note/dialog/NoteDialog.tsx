@@ -1,10 +1,12 @@
 import { useGetNote } from '@/api/note/hooks/useGetNote'
-import NoteDialogContent from '@/components/note/dialog/NoteDialogContent'
 import NoteDialogHeader from '@/components/note/dialog/NoteDialogHeader'
 import type { DialogProps } from '@repo/ui/dialog'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@repo/ui/dialog'
-import { type PropsWithChildren } from 'react'
+import { Loading } from '@repo/ui/loading'
+import { type PropsWithChildren, Suspense, lazy } from 'react'
 import { useSearchParams } from 'react-router-dom'
+
+const NoteDialogContent = lazy(() => import('@/components/note/dialog/NoteDialogContent'))
 
 type CreateNoteDialogProps = {
 	asChild?: boolean
@@ -28,7 +30,9 @@ export default function NoteDialog({
 					{data?.note && <NoteDialogHeader note={data.note} />}
 				</DialogHeader>
 				{data?.note && (
-					<NoteDialogContent onClose={() => props.onOpenChange?.(false)} note={data.note} />
+					<Suspense fallback={<Loading />}>
+						<NoteDialogContent onClose={() => props.onOpenChange?.(false)} note={data.note} />
+					</Suspense>
 				)}
 			</DialogContent>
 		</Dialog>

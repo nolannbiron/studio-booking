@@ -3,20 +3,16 @@ import TimelineEventNoteAdded from '@/components/timeline/TimelineEventNoteAdded
 import TimelineEventValuesUpdated from '@/components/timeline/TimelineEventValuesUpdated'
 import TimelineEventIcon from '@/components/timeline/components/TimelineEventIcon'
 import type { TContact } from '@repo/schemas/contact'
-import type {
-	TTimelineEventNoteAdded,
-	TTimelineEventWithTypedEvent,
-	TTimelineValuesUpdated
-} from '@repo/schemas/timeline'
+import type { TTimelineEventWithTypedEvent } from '@repo/schemas/timeline'
 
 const getActiveComponent = (event: TTimelineEventWithTypedEvent, contact: TContact) => {
 	switch (event.type) {
 		case 'VALUES_UPDATED':
-			return <TimelineEventValuesUpdated event={event.event as TTimelineValuesUpdated} />
+			return <TimelineEventValuesUpdated event={event.event} />
 		case 'ENTITY_CREATED':
 			return <TimelineEventEntityCreated event={event.event} contact={contact} />
 		case 'NOTE_ADDED':
-			return <TimelineEventNoteAdded event={event.event as TTimelineEventNoteAdded} />
+			return <TimelineEventNoteAdded event={event.event} />
 		default:
 			return <></>
 	}

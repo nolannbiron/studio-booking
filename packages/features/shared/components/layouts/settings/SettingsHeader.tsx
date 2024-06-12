@@ -1,4 +1,4 @@
-import { useActivePath } from '@repo/hooks'
+import { useActivePath } from '@repo/hooks/lib/use-active-path'
 import { useTranslation } from '@repo/i18n/next/client'
 import {
 	Breadcrumb,

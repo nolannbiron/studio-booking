@@ -19,22 +19,26 @@ export default function TaskDialogHeader({
 	isNewTask?: boolean
 }): JSX.Element {
 	const { t } = useTranslation()
-	const { data } = useGetContact({ contactId: entityId ?? '' })
+	const { data, isLoading } = useGetContact({ contactId: entityId ?? '' })
 
 	return (
 		<Breadcrumb>
 			<BreadcrumbList>
-				{data?.contact && (
+				{!isNewTask && (
 					<>
 						<BreadcrumbLink
 							href={`/contact/${entityId}`}
 							tabIndex={-1}
 							className="hover:text-inherit focus:outline-0"
 						>
-							<Button variant="ghost" size="sm" className="px-0.5 py-0 pr-1 text-xs">
-								<UserAvatar className="rounded-full" size="2xs" user={data?.contact} />
-								<div className="font-medium">{data?.contact.name}</div>
-							</Button>
+							{isLoading || !data ? (
+								<div className="h-7 w-full" />
+							) : (
+								<Button variant="ghost" size="sm" className="px-0.5 py-0 pr-1 text-xs">
+									<UserAvatar className="rounded-full" size="2xs" user={data?.contact} />
+									<div className="font-medium">{data?.contact.name}</div>
+								</Button>
+							)}
 						</BreadcrumbLink>
 						<BreadcrumbSeparator />
 					</>

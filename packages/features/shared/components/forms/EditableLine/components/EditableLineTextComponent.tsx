@@ -1,5 +1,5 @@
 import type { TEditableLineTextComponent } from '@/components/forms/EditableLine/type'
-import { useIsOutsideClick } from '@repo/hooks'
+import { useIsOutsideClick } from '@repo/hooks/lib/use-is-outside-click'
 import { useTranslation } from '@repo/i18n/next/client'
 import { Input } from '@repo/ui/input'
 import { cn } from '@repo/ui/lib/utils'

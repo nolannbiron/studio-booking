@@ -1,6 +1,6 @@
 import { formatTaskDueDate } from '@/components/task/utils'
 import { useUserStore } from '@/state/user.state'
-import { useDebounceValue } from '@repo/hooks'
+import { useDebounceValue } from '@repo/hooks/lib/use-debounce-value'
 import { useTranslation } from '@repo/i18n/next/client'
 import { parseDate } from '@repo/lib/parseDate'
 import { Button } from '@repo/ui/button'

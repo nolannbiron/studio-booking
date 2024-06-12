@@ -7,10 +7,6 @@ export default function ContactsPage(): JSX.Element {
 	const { filters } = useContactsFiltersStore()
 	const { data, isLoading } = useGetTeamContacts({ filters })
 
-	// if (!data) {
-	// 	return <></>
-	// }
-
 	return (
 		<>
 			<ContactsHeader />

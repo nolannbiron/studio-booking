@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { cn } from '../../lib/utils'
 
-const cardVariants = cva('rounded-xl border', {
+const cardVariants = cva('overflow-hidden rounded-xl border', {
 	variants: {
 		variant: {
 			default: 'bg-card text-card-foreground',

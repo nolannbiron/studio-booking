@@ -1,7 +1,7 @@
 import { useUpdateContact } from '@/api/contact/hooks/useUpdateContact'
 import TableSelectableCell from '@/components/contacts/table/row/TableSelectableCell'
 import { useContactsTableStore } from '@/components/contacts/table/store/contacts-table.store'
-import { useKeyPress } from '@repo/hooks'
+import { useKeyPress } from '@repo/hooks/lib/use-key-press'
 import type { TContact } from '@repo/schemas/contact'
 import { Button } from '@repo/ui/button'
 import { Input } from '@repo/ui/input'

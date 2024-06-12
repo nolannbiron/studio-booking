@@ -1,4 +1,7 @@
+import { useGetNotesCount } from '@/api/note/hooks/useGetNotesCount'
+import { useGetTasksCount } from '@/api/task/hooks/useGetTasksCount'
 import MainLayout from '@/components/layouts/MainLayout'
+import { useUserStore } from '@/state/user.state'
 import { useTranslation } from '@repo/i18n/next/client'
 import { Loading } from '@repo/ui/loading'
 import { Suspense, lazy } from 'react'
@@ -29,7 +32,10 @@ const TeamSettingsPage = lazy(() => import('@/pages/settings/team/general/TeamSe
 const NotesPage = lazy(() => import('@/pages/notes/NotesPage'))
 
 export const useGetRoutes = (): TRoutesConfig => {
+	const { currentUser } = useUserStore()
 	const { t } = useTranslation()
+	const { data: dataTasksCount } = useGetTasksCount({ ownerId: currentUser.id })
+	const { data: dataNotesCount } = useGetNotesCount({ ownerId: currentUser.id })
 
 	const baseRoutes: TRoutesConfig = {
 		navbar: {
@@ -94,6 +100,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							path: '/tasks',
 							name: t('navbar.dashboard.tasks'),
 							icon: <TbSquareRoundedCheck />,
+							total: dataTasksCount?.total ?? undefined,
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
@@ -106,6 +113,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							path: '/notes',
 							name: t('navbar.dashboard.notes'),
 							icon: <TbFile />,
+							total: dataNotesCount?.total ?? undefined,
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
