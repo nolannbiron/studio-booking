@@ -12,13 +12,14 @@ const badgeVariants = cva(
 			},
 			variant: {
 				default:
-					'border-blue-300 bg-blue-100 text-blue-900 shadow dark:border-[#314872] dark:bg-[#293c60] dark:text-[#E5EEFF]',
+					'border-blue-300 bg-blue-100 text-blue-900 shadow-sm dark:border-[#314872] dark:bg-[#293c60] dark:text-[#E5EEFF]',
 				secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent',
 				destructive:
 					'bg-destructive text-destructive-foreground hover:bg-destructive/80 border-transparent shadow',
 				outline: 'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground border',
 				'outline-dashed':
-					'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground border-dashed'
+					'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground border-dashed',
+				primary: 'bg-primary text-primary-foreground hover:bg-primary/80 border-transparent'
 			},
 			rounded: {
 				full: 'rounded-full',
@@ -27,6 +28,7 @@ const badgeVariants = cva(
 				lg: 'rounded-lg'
 			},
 			size: {
+				auto: '',
 				sm: 'px-0.5 py-0.5 text-xs',
 				md: 'px-3 py-1 text-sm',
 				lg: 'px-4 py-2 text-base'

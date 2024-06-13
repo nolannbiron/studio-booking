@@ -11,10 +11,10 @@ ALTER TABLE "_TaskToUser" DROP CONSTRAINT "_TaskToUser_A_fkey";
 ALTER TABLE "_TaskToUser" DROP CONSTRAINT "_TaskToUser_B_fkey";
 
 -- DropForeignKey
-ALTER TABLE "notes" DROP CONSTRAINT "notes_creatorId_fkey";
+ALTER TABLE "notes" DROP CONSTRAINT "notes_ownerId_fkey";
 
 -- DropIndex
-DROP INDEX "tasks_creatorId_idx";
+DROP INDEX "tasks_ownerId_idx";
 
 -- DropIndex
 DROP INDEX "tasks_teamId_idx";
@@ -35,7 +35,7 @@ CREATE UNIQUE INDEX "_AssignedTasks_AB_unique" ON "_AssignedTasks"("A", "B");
 CREATE INDEX "_AssignedTasks_B_index" ON "_AssignedTasks"("B");
 
 -- AddForeignKey
-ALTER TABLE "notes" ADD CONSTRAINT "notes_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "notes" ADD CONSTRAINT "notes_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_AssignedTasks" ADD CONSTRAINT "_AssignedTasks_A_fkey" FOREIGN KEY ("A") REFERENCES "tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -87,10 +87,17 @@ export default function CreateTaskDialog({
 		onOpenChange?.(isOpen)
 	}
 
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		if (e.key === 'Enter') {
+			title.current = e.currentTarget.textContent || ''
+			handleCreateTask()
+		}
+	}
+
 	return (
 		<Dialog open={isOpen} onOpenChange={handleOpenChange} {...props}>
 			<DialogTrigger asChild={asChild}>{children}</DialogTrigger>
-			<DialogContent className="top-0 flex max-w-3xl translate-y-0 flex-col gap-0 overflow-hidden p-0 max-md:rounded-none md:top-1/4 md:-translate-y-1/2">
+			<DialogContent className="top-0 flex max-w-4xl translate-y-0 flex-col gap-0 overflow-hidden p-0 max-md:rounded-none md:top-1/4 md:-translate-y-1/2">
 				<DialogHeader className="h-fit border-b px-5 pb-3 pt-4">
 					<TaskDialogHeader isNewTask entityId={entityId} />
 				</DialogHeader>
@@ -98,6 +105,7 @@ export default function CreateTaskDialog({
 					task={formData}
 					onChange={(value) => handleChange('title', value)}
 					onBlur={handleBlur}
+					onKeyDown={handleKeyDown}
 				/>
 				<TaskDialogFooter
 					task={formData}

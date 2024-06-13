@@ -16,7 +16,7 @@ import { TimelineRepository } from './timeline'
 
 export class NoteRepository {
 	static #canAccessNote(note: Note, currentUser: TPrivateUser): boolean {
-		return note.creatorId === currentUser.id || currentUser.teams.some((team) => team.id === note.teamId)
+		return note.ownerId === currentUser.id || currentUser.teams.some((team) => team.id === note.teamId)
 	}
 
 	static async getNote(req: FastifyRequest<TGetNoteRequest>): Promise<TNoteSchema> {
@@ -34,7 +34,7 @@ export class NoteRepository {
 				entityId: true,
 				entityType: true,
 				getEntity: true,
-				creatorId: true,
+				ownerId: true,
 				creator: {
 					select: userPublicProfileSelect
 				}
@@ -57,7 +57,7 @@ export class NoteRepository {
 	static async getNotes(req: FastifyRequest<TGetNotesRequest>): Promise<TNoteSchema[]> {
 		const notes = await prisma.note.findMany({
 			where: {
-				creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+				ownerId: req.query.ownerId ? req.query.ownerId : undefined,
 				teamId: req.query.teamId,
 				entityId: req.query.entityId ? req.query.entityId : undefined
 			},
@@ -71,7 +71,7 @@ export class NoteRepository {
 				entityId: true,
 				entityType: true,
 				getEntity: true,
-				creatorId: true,
+				ownerId: true,
 				creator: {
 					select: userPublicProfileSelect
 				}
@@ -94,7 +94,7 @@ export class NoteRepository {
 	static async getNotesCount(req: FastifyRequest<TGetNotesCountRequest>) {
 		const total = await prisma.note.count({
 			where: {
-				creatorId: req.query.creatorId ? req.query.creatorId : undefined,
+				ownerId: req.query.ownerId ? req.query.ownerId : undefined,
 				teamId: req.query.teamId,
 				entityId: req.query.entityId ? req.query.entityId : undefined
 			}
@@ -108,7 +108,7 @@ export class NoteRepository {
 			data: {
 				...req.body,
 				content: req.body.content || undefined,
-				creatorId: req.user!.id
+				ownerId: req.user!.id
 			},
 			select: {
 				content: true,
@@ -120,7 +120,7 @@ export class NoteRepository {
 				entityId: true,
 				entityType: true,
 				getEntity: true,
-				creatorId: true,
+				ownerId: true,
 				creator: {
 					select: userPublicProfileSelect
 				}
@@ -135,7 +135,7 @@ export class NoteRepository {
 				noteId: newNote.id,
 				creatorModel: 'USER',
 				teamId: newNote.teamId,
-				creatorId: newNote.creatorId
+				ownerId: newNote.ownerId
 			}
 		})
 
@@ -164,7 +164,7 @@ export class NoteRepository {
 			data: {
 				...req.body,
 				content: req.body.content || undefined,
-				creatorId: req.user!.id
+				ownerId: req.user!.id
 			},
 			select: {
 				content: true,
@@ -176,7 +176,7 @@ export class NoteRepository {
 				entityId: true,
 				entityType: true,
 				getEntity: true,
-				creatorId: true,
+				ownerId: true,
 				creator: {
 					select: userPublicProfileSelect
 				}
@@ -202,7 +202,7 @@ export class NoteRepository {
 		}
 
 		if (
-			note.creatorId !== req.user!.id &&
+			note.ownerId !== req.user!.id &&
 			req.user?.teams.find((team) => team.id === note.teamId)?.role !== 'OWNER'
 		) {
 			throw 'Only the creator can delete the note'

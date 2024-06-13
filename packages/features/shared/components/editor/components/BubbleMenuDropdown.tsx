@@ -20,7 +20,7 @@ interface Props extends ComponentProps<typeof DropdownMenu> {
 
 export default function BubbleMenuDropdown({ editor, open, onOpenChange }: Props): JSX.Element {
 	return (
-		<DropdownMenu open={open} onOpenChange={onOpenChange}>
+		<DropdownMenu modal open={open} onOpenChange={onOpenChange}>
 			<DropdownMenuTrigger className="hover:bg-accent border-input focus:ring-ring flex w-32 items-center justify-start overflow-visible rounded-md rounded-r-none border-r px-3 text-sm shadow-none focus:outline-0 focus:ring-1">
 				<div className="flex w-full items-center justify-between">
 					{editor.isActive('heading')
@@ -29,13 +29,15 @@ export default function BubbleMenuDropdown({ editor, open, onOpenChange }: Props
 							? 'Bulleted list'
 							: editor.isActive('orderedList')
 								? 'Ordered list'
-								: editor.isActive('paragraph')
-									? 'Text'
-									: 'Turn into'}
+								: editor.isActive('taskList')
+									? 'Task list'
+									: editor.isActive('paragraph')
+										? 'Text'
+										: 'Turn into'}
 					<BsChevronExpand className="ml-1 h-4 w-4" />
 				</div>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent side="bottom" align="start" className="w-44">
+			<DropdownMenuContent withPortal={false} side="bottom" align="start" className="w-44">
 				<TooltipProvider>
 					<DropdownMenuGroup>
 						{Object.values(commandsItems).map((items, i) => (

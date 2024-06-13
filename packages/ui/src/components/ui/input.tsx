@@ -1,5 +1,3 @@
-'use client'
-
 import { EyeNoneIcon, EyeOpenIcon } from '@radix-ui/react-icons'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'

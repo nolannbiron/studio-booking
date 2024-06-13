@@ -16,6 +16,10 @@
 		"coming_soon": "Arrive bientôt",
 		"you": "Vous"
 	},
+	"date": {
+		"today": "Aujourd'hui",
+		"this_month": "Ce mois-ci"
+	},
 	"button": {
 		"cancel": "Annuler",
 		"ok": "OK",
@@ -30,7 +34,8 @@
 		"create_contact": "Créer un contact",
 		"login": "Connexion",
 		"register": "S'inscrire",
-		"delete": "Supprimer"
+		"delete": "Supprimer",
+		"create_booking": "Créer une session"
 	},
 	"team": {
 		"create": {
@@ -149,7 +154,10 @@
 		"createdAt": "Date de création",
 		"name": "Nom",
 		"type": "Type",
-		"attributes": "Attributs"
+		"attributes": "Attributs",
+		"title": "Titre",
+		"startDate": "Début",
+		"endDate": "Fin"
 	},
 	"contact": {
 		"type": {
@@ -336,6 +344,14 @@
 				"linkedin": "LinkedIn",
 				"youtube": "YouTube"
 			}
+		}
+	},
+	"booking": {
+		"tabs": {
+			"today": "Aujourd'hui",
+			"upcoming": "À venir",
+			"past": "Passée",
+			"canceled": "Annulée"
 		}
 	}
 }

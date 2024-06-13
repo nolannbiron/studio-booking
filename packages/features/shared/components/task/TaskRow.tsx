@@ -97,7 +97,7 @@ export default function TaskRow({
 			</div>
 
 			<div className="animate-in col-span-1 flex items-center justify-end gap-2.5">
-				<DropdownMenu>
+				<DropdownMenu modal>
 					<DropdownMenuTrigger asChild>
 						<Button
 							variant="ghost"

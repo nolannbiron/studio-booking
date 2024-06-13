@@ -1,5 +1,3 @@
-'use client'
-
 import type { Locale } from '@repo/prisma/enums'
 import type { i18n } from 'i18next'
 import i18next from 'i18next'

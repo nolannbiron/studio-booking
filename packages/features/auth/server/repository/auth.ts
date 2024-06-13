@@ -5,8 +5,7 @@ import type { TLoginBody, TRegisterBody } from '@repo/schemas/auth'
 import type { TPrivateUser } from '@repo/schemas/user'
 import { createSigner, createVerifier } from 'fast-jwt'
 
-import { ErrorCode, hashPassword, verifyPassword } from '../../lib'
-import { getRandomAvatarColor } from '../../lib/getRandomAvatarColor'
+import { ErrorCode, getRandomAvatarColor, hashPassword, verifyPassword } from '../../lib'
 
 const teamSelect = Prisma.validator<Prisma.TeamSelect>()({
 	id: true,

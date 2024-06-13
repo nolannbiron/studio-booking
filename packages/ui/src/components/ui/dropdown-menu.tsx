@@ -1,5 +1,3 @@
-'use client'
-
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { ChevronRightIcon, DotFilledIcon } from '@radix-ui/react-icons'
 import * as React from 'react'

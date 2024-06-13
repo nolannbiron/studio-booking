@@ -6,8 +6,8 @@ type EditableLineProps = TEditableLineComponent
 
 export default function EditableLine(component: EditableLineProps): JSX.Element {
 	return (
-		<div className="relative flex items-center gap-2">
-			<div className="inline-flex w-fit select-none items-center justify-start gap-1 lg:w-28 lg:min-w-28">
+		<div className="relative flex gap-2">
+			<div className="relative top-2 inline-flex h-fit w-fit select-none items-center justify-start gap-1 lg:top-1.5 lg:w-28 lg:min-w-28">
 				{component.label ? (
 					<>
 						{component.icon && (

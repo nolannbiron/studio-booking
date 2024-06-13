@@ -11,6 +11,7 @@ export type TRoute = {
 	hidden?: boolean
 	element: JSX.Element
 	path: string
+	total?: number
 	// children?: TRoute[]
 }
 

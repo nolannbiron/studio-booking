@@ -50,3 +50,11 @@ export const EventType = {
 } as const;
 
 export type EventType = (typeof EventType)[keyof typeof EventType];
+
+export const BookingStatus = {
+  PENDING: "PENDING",
+  CONFIRMED: "CONFIRMED",
+  CANCELED: "CANCELED",
+} as const;
+
+export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus];

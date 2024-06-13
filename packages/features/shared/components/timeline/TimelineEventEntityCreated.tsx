@@ -10,7 +10,7 @@ export default function TimelineEventEntityCreated({
 	event: TTimelineEntityCreated
 	contact: TContact
 }): JSX.Element {
-	const { data, isLoading } = useGetUser({ userId: event.creatorId ?? undefined })
+	const { data, isLoading } = useGetUser({ userId: event.ownerId ?? undefined })
 
 	if (isLoading) return <></>
 

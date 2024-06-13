@@ -83,6 +83,13 @@ export default function UpdateTaskDialog({
 		onOpenChange?.(isOpen)
 	}
 
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		if (e.key === 'Enter') {
+			setFormData({ ...formData, title: e.currentTarget.textContent ?? '' })
+			handleSave()
+		}
+	}
+
 	return (
 		<Dialog open={isOpen} onOpenChange={handleOpenChange} {...props}>
 			<DialogTrigger asChild={asChild}>{children}</DialogTrigger>
@@ -98,6 +105,7 @@ export default function UpdateTaskDialog({
 					onCheckedChange={(value) =>
 						updateTask({ ...formData, title: formData.title, completed: value })
 					}
+					onKeyDown={handleKeyDown}
 				/>
 
 				<TaskDialogFooter

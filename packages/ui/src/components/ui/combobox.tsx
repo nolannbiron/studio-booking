@@ -1,5 +1,3 @@
-'use client'
-
 import type { PopoverContentProps, PopoverProps } from '@radix-ui/react-popover'
 import { useEffect, useState } from 'react'
 import { IoIosCheckmarkCircle } from 'react-icons/io'
@@ -23,9 +21,9 @@ const normalizeString = (value: string) =>
 		.replace(/[\u0300-\u036f]/g, '')
 
 export interface ComboboxProps<T> extends PopoverProps {
-	options: ComboboxOption<T>[]
-	value: T | T[] | undefined
-	onSelect: (value: T) => void
+	options?: ComboboxOption<T>[]
+	value?: T | T[] | undefined
+	onSelect?: (value: T) => void
 	placeholder?: string
 	sideOffset?: PopoverContentProps['sideOffset']
 	alignOffset?: PopoverContentProps['alignOffset']
@@ -72,7 +70,7 @@ export function Combobox<T>({
 	}
 
 	return (
-		<Popover open={isOpen} onOpenChange={handleOpenChange} {...props}>
+		<Popover modal open={isOpen} onOpenChange={handleOpenChange} {...props}>
 			<PopoverTrigger
 				disabled={disabled}
 				className={triggerClassName}
@@ -101,11 +99,11 @@ export function Combobox<T>({
 						return 0
 					}}
 				>
-					{(options.length > 10 || shouldShowInput) && (
+					{((!!options?.length && options?.length > 10) || shouldShowInput) && (
 						<CommandInput placeholder={placeholder} className="h-9" />
 					)}
 					<CommandEmpty>No results found.</CommandEmpty>
-					{!!options.length && (
+					{!!options?.length && (
 						<CommandList>
 							<CommandGroup>
 								{options.map((option) => (
@@ -114,7 +112,7 @@ export function Combobox<T>({
 										key={option.label as string}
 										value={option.label}
 										onSelect={() => {
-											onSelect(option.value as T)
+											onSelect?.(option.value as T)
 											closeOnSelect && handleOpenChange?.(false)
 										}}
 									>

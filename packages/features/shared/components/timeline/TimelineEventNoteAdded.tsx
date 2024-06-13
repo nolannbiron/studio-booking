@@ -1,12 +1,12 @@
 import { useGetNote } from '@/api/note/hooks/useGetNote'
 import { useGetUser } from '@/api/user/hooks/useGetUser'
 import { useTranslation } from '@repo/i18n/next/client'
-import type { TTimelineEventNoteAdded } from '@repo/schemas/timeline'
+import type { TTimelineNoteAdded } from '@repo/schemas/timeline'
 import { UserAvatar } from '@repo/ui/user/UserAvatar'
 
-export default function TimelineEventNoteAdded({ event }: { event: TTimelineEventNoteAdded }): JSX.Element {
+export default function TimelineEventNoteAdded({ event }: { event: TTimelineNoteAdded }): JSX.Element {
 	const { t } = useTranslation()
-	const { data, isLoading } = useGetUser({ userId: event.creatorId ?? undefined })
+	const { data, isLoading } = useGetUser({ userId: event.ownerId ?? undefined })
 	const { data: dataNote } = useGetNote({ noteId: event.noteId })
 
 	if (isLoading) return <></>

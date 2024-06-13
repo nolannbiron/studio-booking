@@ -1,5 +1,3 @@
-'use client'
-
 import type { Locale } from '@repo/prisma/enums'
 import type { TPublicUser } from '@repo/schemas/user'
 import { createContext, useContext } from 'react'

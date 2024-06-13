@@ -4,13 +4,23 @@ import { hashPassword } from '@repo/features/auth/lib/hashPassword'
 import { getDefaultAvatarImage } from '@repo/lib/defaultAvatarImage'
 import type { TTagColorsPreset } from '@repo/lib/tag-colors'
 import type { TTeam } from '@repo/schemas/team'
+import type { TPublicUser } from '@repo/schemas/user'
 
 import { prisma } from './'
-import type { ContactType } from './enums'
+import type { BookingStatus, ContactType } from './enums'
 
 const randomContactType = () => {
 	const types: ContactType[] = ['ARTIST', 'MANAGER', 'LABEL', 'BAND']
 	return types[Math.floor(Math.random() * types.length)]
+}
+
+const randomBookingStatus = () => {
+	const statuses: BookingStatus[] = [
+		'CONFIRMED',
+		'CANCELED'
+		// 'PENDING',
+	]
+	return statuses[Math.floor(Math.random() * statuses.length)]
 }
 
 const defaultGenres: {
@@ -115,14 +125,14 @@ const seed = async () => {
 			}
 		})
 
-		createRandomContacts(membership.team)
+		createRandomContacts(membership.team, user)
 		addRandomMemberships(membership.team)
 	}
 
 	console.log(`User created: ${user.email}`)
 }
 
-async function createRandomContacts(team: TTeam) {
+async function createRandomContacts(team: TTeam, user: TPublicUser) {
 	const contacts = Array.from({ length: fakerFR.number.int({ min: 5, max: 30 }) }, async (_) => {
 		const contactName = fakerFR.person.fullName()
 		const avatarUrl = await getDefaultAvatarImage(contactName)
@@ -132,6 +142,13 @@ async function createRandomContacts(team: TTeam) {
 		const randomBetween0and4 = Math.floor(Math.random() * 5)
 
 		const randomGenres = team.genres.sort(() => 0.5 - Math.random()).slice(0, randomBetween0and4)
+
+		const startDate = fakerFR.date.anytime()
+
+		const oneHourEvent = {
+			start: new Date(startDate.setHours(fakerFR.number.int({ min: 9, max: 24 }), 0, 0, 0)),
+			end: new Date(new Date(startDate.getTime() + 60 * 60 * 1000))
+		}
 
 		return prisma.contact.create({
 			data: {
@@ -184,6 +201,20 @@ async function createRandomContacts(team: TTeam) {
 				},
 				genres: {
 					connect: randomGenres.map((genre) => ({ id: genre.id }))
+				},
+				bookings: {
+					create: {
+						startDate: oneHourEvent.start,
+						endDate: oneHourEvent.end,
+						title: fakerFR.lorem.words(3),
+						assignees: {
+							connect: {
+								id: user.id
+							}
+						},
+						teamId: team.id,
+						status: randomBookingStatus()
+					}
 				}
 			}
 		})

@@ -14,7 +14,7 @@ export const ZNoteSchema = z.object({
 		.lazy(() => ZContactSchema.pick({ id: true, name: true, avatarUrl: true, teamId: true }))
 		.nullish(),
 	teamId: z.string(),
-	creatorId: z.string().nullish(),
+	ownerId: z.string().nullish(),
 	creator: z.lazy(() => ZPublicUserSchema).nullish(),
 	createdAt: z.date(),
 	updatedAt: z.date()
@@ -31,7 +31,7 @@ export const ZNoteUpdateSchema = ZNoteSchema.omit({
 	createdAt: true,
 	updatedAt: true,
 	creator: true,
-	creatorId: true,
+	ownerId: true,
 	teamId: true
 }).partial()
 
@@ -51,7 +51,7 @@ export type TNoteReply = {
 
 export type TGetNoteRequest = {
 	Querystring: {
-		creatorId?: string
+		ownerId?: string
 		entityId?: string
 		teamId: string
 	}
@@ -61,7 +61,7 @@ export type TGetNoteRequest = {
 
 export type TGetNotesRequest = {
 	Querystring: {
-		creatorId?: string
+		ownerId?: string
 		entityId?: string
 		teamId: string
 	}
@@ -75,7 +75,7 @@ export type TNotesCountReply = {
 
 export type TGetNotesCountRequest = {
 	Querystring: {
-		creatorId?: string
+		ownerId?: string
 		entityId?: string
 		teamId: string
 	}

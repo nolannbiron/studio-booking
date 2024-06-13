@@ -5,7 +5,7 @@
 	"pipeline": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": [".next/**", "!.next/cache/**", "dist", ".react-email"]
+			"outputs": [".next/**", "!.next/cache/**", "dist", ".react-email", "out", "build"]
 		},
 		"lint": {
 			"dependsOn": ["^lint"],

@@ -4,6 +4,12 @@
 	"version": "0.0.0",
 	"type": "module",
 	"dependencies": {
+		"@fullcalendar/core": "^6.1.13",
+		"@fullcalendar/daygrid": "^6.1.13",
+		"@fullcalendar/interaction": "^6.1.13",
+		"@fullcalendar/list": "^6.1.13",
+		"@fullcalendar/react": "^6.1.13",
+		"@fullcalendar/timegrid": "^6.1.13",
 		"@repo/feature-auth": "*",
 		"@repo/hooks": "*",
 		"@repo/i18n": "*",
@@ -41,8 +47,6 @@
 		"@repo/tsconfig": "*",
 		"@types/lodash": "^4.17.0",
 		"@types/node": "^20",
-		"@types/react": "^18.2.0",
-		"@types/react-dom": "^18.2.0",
 		"@types/react-router-dom": "^5.3.3",
 		"@types/use-double-click": "^1.0.5",
 		"@vitejs/plugin-react-swc": "^3.5.0",
@@ -53,5 +57,11 @@
 		"typescript": "^5.4.5",
 		"vite": "^5.2.0",
 		"vite-tsconfig-paths": "^4.3.2"
+	},
+	"peerDependencies": {
+		"@types/react": "^18.2.0",
+		"@types/react-dom": "^18.2.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
 	}
 }

@@ -1,5 +1,5 @@
 import { useUserStore } from '@/state/user.state'
-import { useActivePath } from '@repo/hooks'
+import { useActivePath } from '@repo/hooks/lib/use-active-path'
 import { Breadcrumb, BreadcrumbList, BreadcrumbPage } from '@repo/ui/breadcrumb'
 import { TooltipProvider } from '@repo/ui/tooltip'
 import { UserAvatar } from '@repo/ui/user/UserAvatar'
@@ -9,7 +9,8 @@ const pathnames = {
 	dashboard: 'home',
 	tasks: 'tasks',
 	notes: 'notes',
-	contacts: 'contacts'
+	contacts: 'contacts',
+	sessions: 'sessions'
 } as const
 
 export default function Navbar(): JSX.Element {

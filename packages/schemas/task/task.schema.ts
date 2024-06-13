@@ -11,7 +11,7 @@ import { ZPublicUserSchema } from '../user'
 //     entityId   String?
 //     entityType String?
 
-//     creatorId String?
+//     ownerId String?
 
 //     createdAt DateTime @default(now())
 //     updatedAt DateTime @updatedAt
@@ -28,7 +28,7 @@ export const ZTaskSchema = z.object({
 	completed: z.boolean().nullish(),
 	entityId: z.string().uuid().nullish(),
 	entityType: z.string().nullish(),
-	creatorId: z.string().nullish(),
+	ownerId: z.string().nullish(),
 	teamId: z.string(),
 	assignees: z.lazy(() => z.array(ZPublicUserSchema)),
 	entity: z.lazy(() => ZContactSchema).nullish(),
@@ -56,7 +56,7 @@ export const ZTaskUpdateSchema = ZTaskSchema.omit({
 	createdAt: true,
 	updatedAt: true,
 	creator: true,
-	creatorId: true,
+	ownerId: true,
 	teamId: true,
 	assignees: true
 })
@@ -81,7 +81,7 @@ export type TTaskReply = {
 
 export type TGetTaskRequest = {
 	Querystring: {
-		creatorId?: string
+		ownerId?: string
 		entityId?: string
 		teamId: string
 	}
@@ -91,7 +91,7 @@ export type TGetTaskRequest = {
 
 export type TGetTasksRequest = {
 	Querystring: {
-		creatorId?: string
+		ownerId?: string
 		entityId?: string
 		teamId: string
 	}
@@ -105,7 +105,7 @@ export type TTasksCountReply = {
 
 export type TGetTasksCountRequest = {
 	Querystring: {
-		creatorId?: string
+		ownerId?: string
 		entityId?: string | null
 		teamId: string
 	}

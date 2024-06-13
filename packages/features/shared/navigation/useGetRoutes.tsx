@@ -1,4 +1,7 @@
+import { useGetNotesCount } from '@/api/note/hooks/useGetNotesCount'
+import { useGetTasksCount } from '@/api/task/hooks/useGetTasksCount'
 import MainLayout from '@/components/layouts/MainLayout'
+import { useUserStore } from '@/state/user.state'
 import { useTranslation } from '@repo/i18n/next/client'
 import { Loading } from '@repo/ui/loading'
 import { Suspense, lazy } from 'react'
@@ -7,13 +10,14 @@ import { TbCalendarEvent, TbFile, TbSquareRoundedCheck, TbUsers } from 'react-ic
 
 import type { TRoutesConfig } from './types'
 
+const BookingsPage = lazy(() => import('@/pages/bookings/BookingsPage'))
 const TasksPage = lazy(() => import('@/pages/tasks/TasksPage'))
 const TeamSettingsMembersPage = lazy(() => import('@/pages/settings/team/members/TeamSettingsMembersPage'))
 const ContactTasksPage = lazy(() => import('@/pages/contact/tasks/ContactTasksPage'))
 const ContactNotesPage = lazy(() => import('@/pages/contact/notes/ContactNotesPage'))
 const ContactActivityPage = lazy(() => import('@/pages/contact/activity/ContactActivityPage'))
 const ContactFilesPage = lazy(() => import('@/pages/contact/library/ContactLibraryPage'))
-const ContactSessionsPage = lazy(() => import('@/pages/contact/sessions/ContactSessionsPage'))
+const ContactBookingsPage = lazy(() => import('@/pages/contact/bookings/ContactBookingsPage'))
 const ContactPage = lazy(() => import('@/pages/contact/ContactPage'))
 const RequireAnonymous = lazy(() => import('@/navigation/RequireAnonymous'))
 const RequireAuth = lazy(() => import('@/navigation/RequireAuth'))
@@ -28,7 +32,10 @@ const TeamSettingsPage = lazy(() => import('@/pages/settings/team/general/TeamSe
 const NotesPage = lazy(() => import('@/pages/notes/NotesPage'))
 
 export const useGetRoutes = (): TRoutesConfig => {
+	const { currentUser } = useUserStore()
 	const { t } = useTranslation()
+	const { data: dataTasksCount } = useGetTasksCount({ ownerId: currentUser.id })
+	const { data: dataNotesCount } = useGetNotesCount({ ownerId: currentUser.id })
 
 	const baseRoutes: TRoutesConfig = {
 		navbar: {
@@ -93,6 +100,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							path: '/tasks',
 							name: t('navbar.dashboard.tasks'),
 							icon: <TbSquareRoundedCheck />,
+							total: dataTasksCount?.total ?? undefined,
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
@@ -105,6 +113,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							path: '/notes',
 							name: t('navbar.dashboard.notes'),
 							icon: <TbFile />,
+							total: dataNotesCount?.total ?? undefined,
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
@@ -135,7 +144,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 							element: (
 								<Suspense fallback={<Loading withText fullScreen />}>
 									<RequireAuth>
-										<></>
+										<BookingsPage />
 									</RequireAuth>
 								</Suspense>
 							)
@@ -266,7 +275,7 @@ export const useGetRoutes = (): TRoutesConfig => {
 						path: '/contact/:id/sessions',
 						element: (
 							<Suspense fallback={<Loading withText fullScreen />}>
-								<ContactSessionsPage />
+								<ContactBookingsPage />
 							</Suspense>
 						)
 					}

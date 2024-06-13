@@ -55,6 +55,7 @@ model User {
     accounts Account[]
     notes    Note[]
     tasks    Task[]       @relation("AssignedTasks")
+    bookings Booking[]    @relation("AssignedBookings")
 
     @@index([email, password])
     @@map("users")
@@ -126,6 +127,7 @@ model Team {
     genres             ContactGenre[]
     notes              Note[]
     Task               Task[]
+    Booking            Booking[]
 
     @@map("teams")
 }
@@ -263,6 +265,7 @@ model Contact {
     teamId String
 
     avatarColor String?
+    bookings    Booking[]
 
     @@map("contacts")
 }
@@ -299,15 +302,15 @@ model Note {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
-    creatorId String
+    creator User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+    ownerId String
 
     team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
     teamId String
 
     @@index([entityId])
     @@index([teamId])
-    @@index([creatorId])
+    @@index([ownerId])
     @@index([entityId, entityType])
     @@map("notes")
 }
@@ -321,7 +324,7 @@ model Task {
     entityId   String?
     entityType String?
 
-    creatorId String?
+    ownerId String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -331,8 +334,38 @@ model Task {
 
     assignees User[] @relation("AssignedTasks")
 
-    @@index([entityId, teamId, dueDate, completed, creatorId])
+    @@index([entityId, teamId, dueDate, completed, ownerId])
     @@index([entityId, teamId, dueDate, completed])
-    @@index([creatorId, teamId, dueDate, completed])
+    @@index([ownerId, teamId, dueDate, completed])
     @@map("tasks")
+}
+
+enum BookingStatus {
+    PENDING
+    CONFIRMED
+    CANCELED
+}
+
+model Booking {
+    id        String        @id @default(uuid())
+    title     String
+    content   Json?
+    startDate DateTime
+    endDate   DateTime
+    status    BookingStatus @default(PENDING)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+    teamId String
+
+    contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+    contactId String
+
+    assignees User[] @relation("AssignedBookings")
+
+    @@index([teamId, startDate, status])
+    @@index([teamId, contactId, startDate, status])
+    @@map("bookings")
 }

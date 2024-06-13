@@ -20,6 +20,7 @@
 		"@otplib/plugin-crypto": "^12.0.1",
 		"@otplib/plugin-thirty-two": "^12.0.1",
 		"@repo/features": "*",
+		"@repo/i18n": "*",
 		"@repo/prisma": "*",
 		"bcryptjs": "^2.4.3",
 		"js-cookie": "^3.0.5",

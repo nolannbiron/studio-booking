@@ -9,7 +9,7 @@ CREATE TABLE "tasks" (
     "completed" BOOLEAN NOT NULL DEFAULT false,
     "entityId" TEXT,
     "entityType" TEXT,
-    "creatorId" TEXT,
+    "ownerId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "teamId" TEXT NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE "tasks" (
 );
 
 -- CreateIndex
-CREATE INDEX "tasks_creatorId_idx" ON "tasks"("creatorId");
+CREATE INDEX "tasks_ownerId_idx" ON "tasks"("ownerId");
 
 -- CreateIndex
 CREATE INDEX "tasks_teamId_idx" ON "tasks"("teamId");

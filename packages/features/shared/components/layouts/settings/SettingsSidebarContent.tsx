@@ -1,5 +1,7 @@
+import SidebarDesktopHeader from '@/components/layouts/sidebar/SidebarDesktopHeader'
 import { useGetRoutes } from '@/navigation/useGetRoutes'
 import { useTranslation } from '@repo/i18n/next/client'
+import { isDesktop } from '@repo/lib/env'
 import { Button } from '@repo/ui/button'
 import { FiChevronLeft } from 'react-icons/fi'
 import { useLocation } from 'react-router-dom'
@@ -14,6 +16,7 @@ export default function SettingsSidebarContent({ onClick }: { onClick?: () => vo
 
 	return (
 		<div className="flex flex-col overflow-hidden">
+			{isDesktop && <SidebarDesktopHeader />}
 			<div className="flex h-16 items-center gap-3 border-b px-2">
 				<Link to="/" tabIndex={-1}>
 					<Button variant="ghost" size="icon-sm">

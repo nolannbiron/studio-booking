@@ -28,7 +28,7 @@ export const useCreateTask = () => {
 
 			queryClient.invalidateQueries({
 				queryKey: taskKeys.list({
-					creatorId: currentUser.id,
+					ownerId: currentUser.id,
 					teamId: data.task.teamId
 				})
 			})
