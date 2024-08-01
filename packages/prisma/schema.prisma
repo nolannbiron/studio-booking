@@ -32,10 +32,10 @@ enum Locale {
 
 model User {
     id            String    @id @default(uuid())
-    firstName     String?
-    lastName      String?
-    fullName      String?
-    avatarUrl     String?
+    firstName     String
+    lastName      String
+    fullName      String
+    avatarUrl     String
     avatarColor   String?
     email         String    @unique
     password      String?
@@ -53,7 +53,9 @@ model User {
 
     teams    Membership[]
     accounts Account[]
-    contacts Contact[]
+    notes    Note[]
+    tasks    Task[]       @relation("AssignedTasks")
+    bookings Booking[]    @relation("AssignedBookings")
 
     @@index([email, password])
     @@map("users")
@@ -91,14 +93,16 @@ model Membership {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId String
+    user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+    userEmail String
 
     team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
     teamId String
 
+    @@unique([userEmail, teamId])
     @@unique([userId, teamId])
-    @@index([userId])
+    @@index([userEmail])
     @@index([teamId])
     @@map("memberships")
 }
@@ -119,8 +123,11 @@ model Team {
     members            Membership[]
     orgSettings        OrganizationSettings?
     verificationTokens VerificationToken[]
-    studio             StudioDetails?
     contacts           Contact[]
+    genres             ContactGenre[]
+    notes              Note[]
+    Task               Task[]
+    Booking            Booking[]
 
     @@map("teams")
 }
@@ -205,113 +212,42 @@ model Feature {
     @@map("features")
 }
 
-model Address {
-    id          String  @id @default(uuid())
-    number      String?
-    street      String?
-    city        String
-    postalCode  String
-    country     String
-    coordinates Json?
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    studio   StudioDetails @relation(fields: [studioId], references: [id], onDelete: Cascade)
-    studioId String        @unique
-
-    @@map("addresses")
-}
-
-model Picture {
-    id    String @id @default(uuid())
-    url   String
-    order Int?
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    studio   StudioDetails @relation(fields: [studioId], references: [id], onDelete: Cascade)
-    studioId String
-
-    @@map("pictures")
-}
-
-model Service {
-    id          String  @id @default(uuid())
-    name        String
-    description String?
-    price       Float?
-    duration    Int?
-    isActive    Boolean
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    studio   StudioDetails @relation(fields: [studioId], references: [id], onDelete: Cascade)
-    studioId String
-
-    @@map("services")
-}
-
-enum Visibility {
-    PUBLIC
-    PRIVATE
-}
-
-model StudioDetails {
-    id                 String   @id @default(uuid())
-    description        Json
-    minBookingDuration Float?
-    amenities          String[]
-    equipment          String[]
-
-    address    Address?
-    pictures   Picture[]
-    services   Service[]
-    visibility Visibility @default(PRIVATE)
-
-    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-    teamId String @unique
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@map("studio_details")
-}
-
 enum ContactType {
     ARTIST
-    GROUP
+    BAND
     LABEL
     MANAGER
-    COMPANY
+    CAMERAMAN
+    PHOTOGRAPHER
 }
 
-enum ContactGenre {
-    BLUES
-    CLASSICAL
-    COUNTRY
-    DANCE
-    ELECTRONIC
-    HIP_HOP
-    JAZZ
-    POP
-    RAP
-    REGGAE
-    ROCK
-    SOUL
-    OTHERS
+model ContactGenre {
+    id    String @id @default(uuid())
+    title String
+    value String
+    color String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+    teamId String
+
+    contacts Contact[] @relation("GenreContacts")
+
+    @@unique([teamId, title], name: "unique_genre")
+    @@map("contact_genres")
 }
 
 model Contact {
-    id    String  @id @default(uuid())
-    name  String
-    email String
-    phone String?
+    id        String  @id @default(uuid())
+    name      String
+    email     String?
+    phone     String?
+    avatarUrl String
 
-    type  ContactType?
-    genre ContactGenre?
+    type   ContactType?
+    genres ContactGenre[] @relation("GenreContacts")
 
     instagram String?
     facebook  String?
@@ -328,9 +264,108 @@ model Contact {
     team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
     teamId String
 
-    user   User   @relation(fields: [userId], references: [id])
-    userId String
+    avatarColor String?
+    bookings    Booking[]
 
-    @@unique([teamId, userId])
     @@map("contacts")
+}
+
+enum EventType {
+    ENTITY_CREATED
+    VALUES_UPDATED
+    NOTE_ADDED
+}
+
+model TimelineEvent {
+    id    String    @id @default(uuid())
+    type  EventType
+    event Json
+
+    entityId   String
+    entityType String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([entityId])
+    @@map("activities")
+}
+
+model Note {
+    id      String @id @default(uuid())
+    title   String
+    content Json?
+
+    entityId   String
+    entityType String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    creator User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+    ownerId String
+
+    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+    teamId String
+
+    @@index([entityId])
+    @@index([teamId])
+    @@index([ownerId])
+    @@index([entityId, entityType])
+    @@map("notes")
+}
+
+model Task {
+    id        String    @id @default(uuid())
+    title     String
+    dueDate   DateTime?
+    completed Boolean   @default(false)
+
+    entityId   String?
+    entityType String?
+
+    ownerId String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+    teamId String
+
+    assignees User[] @relation("AssignedTasks")
+
+    @@index([entityId, teamId, dueDate, completed, ownerId])
+    @@index([entityId, teamId, dueDate, completed])
+    @@index([ownerId, teamId, dueDate, completed])
+    @@map("tasks")
+}
+
+enum BookingStatus {
+    PENDING
+    CONFIRMED
+    CANCELED
+}
+
+model Booking {
+    id        String        @id @default(uuid())
+    title     String
+    content   Json?
+    startDate DateTime
+    endDate   DateTime
+    status    BookingStatus @default(PENDING)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+    teamId String
+
+    contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+    contactId String
+
+    assignees User[] @relation("AssignedBookings")
+
+    @@index([teamId, startDate, status])
+    @@index([teamId, contactId, startDate, status])
+    @@map("bookings")
 }

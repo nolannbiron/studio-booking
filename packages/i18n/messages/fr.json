@@ -10,9 +10,16 @@
 		"close": "Fermer",
 		"no_results": "Aucun résultat",
 		"command": "Taper une commande ou rechercher...",
-		"open_sidebar": "Ouvrir la barre latérale"
+		"open_sidebar": "Ouvrir la barre latérale",
+		"close_sidebar": "Fermer la barre latérale",
+		"search_record": "Rechercher un contact",
+		"coming_soon": "Arrive bientôt",
+		"you": "Vous"
 	},
-
+	"date": {
+		"today": "Aujourd'hui",
+		"this_month": "Ce mois-ci"
+	},
 	"button": {
 		"cancel": "Annuler",
 		"ok": "OK",
@@ -26,7 +33,9 @@
 		"add_filter": "Ajouter un filtre",
 		"create_contact": "Créer un contact",
 		"login": "Connexion",
-		"register": "S'inscrire"
+		"register": "S'inscrire",
+		"delete": "Supprimer",
+		"create_booking": "Créer une session"
 	},
 	"team": {
 		"create": {
@@ -65,7 +74,8 @@
 			"appointments": "Rendez-vous",
 			"home": "Dashboard",
 			"tasks": "Tâches",
-			"notes": "Notes"
+			"notes": "Notes",
+			"sessions": "Sessions"
 		},
 		"settings": {
 			"title": "Paramètres",
@@ -76,7 +86,10 @@
 			"referral": "Parrainage",
 			"team_general": "Général",
 			"team_members": "Membres",
-			"team_billing": "Facturation"
+			"team_billing": "Facturation",
+			"descriptions": {
+				"team_members": "Gérer les membres et les utilisateurs de votre espace de travail et définir leur niveau d'accès. Vous pouvez inviter de nouveaux utilisateurs si votre abonnement le permet."
+			}
 		},
 		"theme": {
 			"label": "Thème",
@@ -125,7 +138,8 @@
 		"user-account-locked": "Compte utilisateur verrouillé.",
 		"missing-backup-codes": "Codes de secours manquants.",
 		"incorrect-backup-code": "Code de secours incorrect.",
-		"slug-not-available": "Slug non disponible."
+		"slug-not-available": "Slug non disponible.",
+		"required": "Ce champ est obligatoire"
 	},
 	"filters": {
 		"choose_filter": "Choisir un filtre",
@@ -140,15 +154,19 @@
 		"createdAt": "Date de création",
 		"name": "Nom",
 		"type": "Type",
-		"attributes": "Attributs"
+		"attributes": "Attributs",
+		"title": "Titre",
+		"startDate": "Début",
+		"endDate": "Fin"
 	},
 	"contact": {
 		"type": {
 			"ARTIST": "Artiste",
 			"MANAGER": "Manager",
-			"GROUP": "Groupe",
-			"COMPANY": "Entreprise",
+			"BAND": "Groupe",
 			"LABEL": "Label",
+			"CAMERAMAN": "Caméraman",
+			"PHOTOGRAPHER": "Photographe",
 			"select_type": "Sélectionnez un type"
 		},
 		"genre": {
@@ -166,7 +184,44 @@
 			"ROCK": "Rock",
 			"SOUL": "Soul",
 			"OTHERS": "Autres"
+		},
+		"tabs": {
+			"activity": "Activité",
+			"details": "Détails",
+			"comments": "Commentaires",
+			"notes": "Notes",
+			"tasks": "Tâches",
+			"appointments": "Rendez-vous",
+			"library": "Bibliothèque",
+			"sessions": "Sessions"
 		}
+	},
+	"task": {
+		"assign_to": "Assigner à",
+		"due_date": "Date d'échéance",
+		"completed": "Terminé",
+		"completed_at": "Terminé le",
+		"completed_by": "Terminé par",
+		"create_task": "Créer une tâche",
+		"new_task": "Nouvelle tâche",
+		"update_task": "Modifier la tâche",
+		"link_contact": "Lier un contact",
+		"assigned_to_you": "Assigné à vous",
+		"group": {
+			"future": "À venir",
+			"today": "Aujourd'hui",
+			"past": "En retard",
+			"completed": "Terminé",
+			"noDueDate": "Aucune date d'échéance"
+		},
+		"no_date": "Aucune date"
+	},
+	"note": {
+		"create_note": "Créer une note",
+		"new_note": "Nouvelle note",
+		"delete_note": "Supprimer la note",
+		"placeholder": "Note sans titre",
+		"link_session": "Lier une session"
 	},
 	"auth": {
 		"login_with_facebook": "Se connecter avec Facebook",
@@ -178,10 +233,125 @@
 		"terms": "En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité."
 	},
 	"forgot-password": {
+		"title": "Mot de passe oublié",
+		"subtitle": "Entrez votre adresse e-mail ci-dessous pour réinitialiser votre mot de passe.",
 		"back_to_login": "Retour à la connexion",
 		"success": "Un e-mail vous a été envoyé à l'adresse {{email, string}} pour réinitialiser votre mot de passe.",
 		"submit": "Envoyer le lien de réinitialisation",
 		"reset_success": "Votre mot de passe a été réinitialisé avec succès.",
 		"reset_submit": "Réinitialiser le mot de passe"
+	},
+	"reset-password": {
+		"submit": "Réinitialiser le mot de passe",
+		"title": "Réinitialiser votre mot de passe",
+		"link_expired": "Oups ! Ce lien n'est plus valide",
+		"link_expired_label": "Le lien de réinitialisation de mot de passe a expiré. Veuillez en demander un nouveau.",
+		"label": "Entrez votre nouveau mot de passe ci-dessous."
+	},
+	"time-ago": {
+		"today": "Aujourd'hui",
+		"yesterday": "Hier",
+		"tomorrow": "Demain",
+		"seconds": "{{time, number}}s",
+		"minutes": "{{time, number}}m",
+		"hours": "{{time, number}}h",
+		"days": "{{time, number}}j",
+		"weeks": "{{time, number}}s",
+		"months": "{{time, number}}m",
+		"years": "{{time, number}}a"
+	},
+	"editor": {
+		"placeholder": {
+			"press": "Appuyer sur '/' pour afficher les commandes…",
+			"startTyping": "Commencer à taper..."
+		},
+		"link": {
+			"title": "Lien",
+			"tootltip": "Ajouter une lien",
+			"placeholder": "Coller le lien",
+			"copy": "Copier le lien",
+			"edit": "Editer le lien",
+			"openNewTab": "Ouvrir le lien dans un nouvel onglet",
+			"removeLink": "Supprimer le lien",
+			"error": {
+				"isValid": {
+					"true": "Lien vers une page Web",
+					"false": "Taper une URL complète pour créer un lien"
+				}
+			}
+		},
+		"commands": {
+			"noResult": "No results",
+			"action_menu": {
+				"bold": { "title": "B", "tooltip": "Mettre en gras", "command": "B" },
+				"italic": { "title": "I", "tooltip": "Mettre en italique", "command": "I" },
+				"underline": { "title": "U", "tooltip": "Souligner", "command": "U" },
+				"strike": { "title": "S", "tooltip": "Barrer", "command": "X" },
+				"turn_into": {
+					"title": "Transformer en",
+					"tooltip": "Transformer en"
+				}
+			},
+			"basic_blocks": {
+				"title": "Basic blocks",
+				"paragraph": "Texte",
+				"paragraph_description": "Ecrivez du texte. Tout simplement",
+				"heading": "Titre",
+				"heading1": "Titre 1",
+				"heading1_description": "Titre de grande taille",
+				"heading2": "Titre 2",
+				"heading2_description": "Titre de taille moyenne",
+				"heading3": "Titre",
+				"heading3_description": "Titre de petite taille",
+				"bullet_list": "Liste à puces",
+				"bullet_list_description": "Créer une liste à puces",
+				"ordered_list": "Liste numérotée",
+				"ordered_list_description": "Créer une liste à numérotée",
+				"to_do_list": "Liste de tâches",
+				"to_do_list_description": "Créer une case à cocher, idéal pour une liste de tâches."
+			}
+		}
+	},
+	"date-picker": {
+		"search_date": "Taper 'Mardi prochain'",
+		"preset": {
+			"custom_date": "Date personnalisée",
+			"no_date": "Aucune date",
+			"today": "Aujourd'hui",
+			"tomorrow": "Demain",
+			"VITE_week": "Semaine prochaine"
+		}
+	},
+	"projects": {
+		"create_project": "Créer un projet",
+		"new_project": "Nouveau projet",
+		"update_project": "Modifier le projet",
+		"delete_project": "Supprimer le projet",
+		"link_contact": "Lier un contact"
+	},
+	"timeline": {
+		"attributes": {
+			"contact": {
+				"name": "Nom",
+				"type": "Type",
+				"email": "E-mail",
+				"genres": "Genres",
+				"phone": "Téléphone",
+				"website": "Site web",
+				"instagram": "Instagram",
+				"facebook": "Facebook",
+				"twitter": "Twitter",
+				"linkedin": "LinkedIn",
+				"youtube": "YouTube"
+			}
+		}
+	},
+	"booking": {
+		"tabs": {
+			"today": "Aujourd'hui",
+			"upcoming": "À venir",
+			"past": "Passée",
+			"canceled": "Annulée"
+		}
 	}
 }

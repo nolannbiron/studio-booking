@@ -34,6 +34,7 @@ export const userPrivateProfileSelect = Prisma.validator<Prisma.UserSelect>()({
 			teamId: true,
 			createdAt: true,
 			updatedAt: true,
+			userEmail: true,
 			team: {
 				select: {
 					id: true,
@@ -47,8 +48,8 @@ export const userPrivateProfileSelect = Prisma.validator<Prisma.UserSelect>()({
 					members: false,
 					contacts: false,
 					orgSettings: false,
-					studio: false,
-					verificationTokens: false
+					verificationTokens: false,
+					genres: true
 				}
 			}
 		}

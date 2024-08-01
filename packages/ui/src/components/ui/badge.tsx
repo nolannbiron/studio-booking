@@ -4,20 +4,49 @@ import * as React from 'react'
 import { cn } from '../../lib/utils'
 
 const badgeVariants = cva(
-	'focus:ring-ring inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
+	'focus:ring-ring inline-flex items-center border font-semibold transition-colors focus:outline-0 focus:ring-1 focus:ring-offset-2',
 	{
 		variants: {
+			clickable: {
+				true: 'cursor-pointer'
+			},
 			variant: {
-				default: 'bg-primary text-primary-foreground hover:bg-primary/80 border-transparent shadow',
+				default:
+					'border-blue-300 bg-blue-100 text-blue-900 shadow-sm dark:border-[#314872] dark:bg-[#293c60] dark:text-[#E5EEFF]',
 				secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent',
 				destructive:
 					'bg-destructive text-destructive-foreground hover:bg-destructive/80 border-transparent shadow',
-				outline: 'text-foreground'
+				outline: 'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground border',
+				'outline-dashed':
+					'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground border-dashed',
+				primary: 'bg-primary text-primary-foreground hover:bg-primary/80 border-transparent'
+			},
+			rounded: {
+				full: 'rounded-full',
+				md: 'rounded-md',
+				sm: 'rounded',
+				lg: 'rounded-lg'
+			},
+			size: {
+				auto: '',
+				sm: 'px-0.5 py-0.5 text-xs',
+				md: 'px-3 py-1 text-sm',
+				lg: 'px-4 py-2 text-base'
 			}
 		},
 		defaultVariants: {
-			variant: 'default'
-		}
+			variant: 'default',
+			rounded: 'md',
+			size: 'sm',
+			clickable: false
+		},
+		compoundVariants: [
+			{
+				clickable: true,
+				variant: ['outline', 'outline-dashed'],
+				className: 'hover:bg-accent'
+			}
+		]
 	}
 )
 
@@ -25,8 +54,8 @@ export interface BadgeProps
 	extends React.HTMLAttributes<HTMLDivElement>,
 		VariantProps<typeof badgeVariants> {}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
-	return <div className={cn(badgeVariants({ variant }), className)} {...props} />
+function Badge({ className, variant, clickable, size, rounded, ...props }: BadgeProps) {
+	return <div className={cn(badgeVariants({ variant, clickable, size, rounded }), className)} {...props} />
 }
 
 export { Badge, badgeVariants }

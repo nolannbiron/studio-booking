@@ -14,10 +14,13 @@
 		"lint:report": "eslint . --format json --output-file ../../lint-results/app-store.json"
 	},
 	"dependencies": {
+		"@dicebear/core": "^8.0.1",
+		"@dicebear/initials": "^8.0.1",
 		"@otplib/core": "^12.0.1",
 		"@otplib/plugin-crypto": "^12.0.1",
 		"@otplib/plugin-thirty-two": "^12.0.1",
 		"@repo/features": "*",
+		"@repo/i18n": "*",
 		"@repo/prisma": "*",
 		"bcryptjs": "^2.4.3",
 		"js-cookie": "^3.0.5",
@@ -28,6 +31,7 @@
 		"nodemailer": "^6.9.13",
 		"react-icons": "^4.10.1",
 		"tailwind-merge": "^1.8.1",
+		"universal-cookie": "^7.1.4",
 		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
@@ -41,6 +45,7 @@
 		"tslog": "^4.9.2"
 	},
 	"peerDependencies": {
+		"electron": "^30.0.6",
 		"fastify": "^4.26.2"
 	}
 }

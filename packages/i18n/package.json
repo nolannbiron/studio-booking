@@ -19,7 +19,6 @@
 		"@repo/tsconfig": "*"
 	},
 	"peerDependencies": {
-		"next": "^14.2.2",
 		"react": "^18.2.0"
 	}
 }

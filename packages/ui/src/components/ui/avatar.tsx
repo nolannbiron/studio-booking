@@ -1,5 +1,3 @@
-'use client'
-
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
@@ -12,12 +10,12 @@ const avatarVariants = cva(
 	{
 		variants: {
 			variant: {
-				default: 'border-input border'
+				default: 'border border-transparent'
 			},
 			size: {
 				'2xs': 'h-5 w-5 rounded-sm text-[10px]',
-				xs: 'h-8 w-8 text-sm',
-				sm: 'h-10 w-10 text-sm',
+				xs: 'h-6 w-6 text-sm',
+				sm: 'h-8 w-8 text-sm',
 				md: 'h-14 w-14 text-lg',
 				lg: 'h-16 w-16 rounded-2xl text-xl',
 				xl: 'h-[72px] w-[72px] text-2xl',
@@ -58,7 +56,7 @@ const AvatarImage = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<AvatarPrimitive.Image
 		ref={ref}
-		className={cn('z-20 aspect-square h-full w-full rounded-full', className)}
+		className={cn('z-20 aspect-square h-full w-full', className)}
 		{...props}
 	/>
 ))

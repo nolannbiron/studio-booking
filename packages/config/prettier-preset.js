@@ -6,7 +6,7 @@ module.exports = {
 	useTabs: true,
 	tabWidth: 4,
 	printWidth: 110,
-	importOrder: ['^@(avest)/(.*)$', '^@lib/(.*)$', '^~/(.*)$', '^[./]'],
+	importOrder: ['^@(avest)/(.*)$', '^[./]'],
 	importOrderSeparation: true,
 	importOrderSortSpecifiers: true,
 	tailwindFunctions: ['cn', 'cva'],

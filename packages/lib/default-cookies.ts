@@ -12,13 +12,13 @@ import type { CookieOption, CookiesOptions } from 'next-auth'
  *
  */
 
-const NEXT_PUBLIC_COOKIE_DOMAIN = process.env.NEXT_PUBLIC_COOKIE_DOMAIN || ''
+const VITE_PUBLIC_COOKIE_DOMAIN = process.env.VITE_PUBLIC_COOKIE_DOMAIN || ''
 
 export function defaultCookies(useSecureCookies: boolean): CookiesOptions {
 	const cookiePrefix = useSecureCookies ? '__Secure-' : ''
 
 	const defaultOptions: CookieOption['options'] = {
-		domain: NEXT_PUBLIC_COOKIE_DOMAIN,
+		domain: VITE_PUBLIC_COOKIE_DOMAIN,
 		// To enable cookies on widgets,
 		// https://stackoverflow.com/questions/45094712/iframe-not-reading-cookies-in-chrome
 		// But we need to set it as `lax` in development

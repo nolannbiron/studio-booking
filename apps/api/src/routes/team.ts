@@ -1,14 +1,14 @@
 import { TeamRepository } from '@repo/lib/server/repository/team'
 import { ZTeamCreateMemberSchema, ZTeamUpdateMemberSchema, ZTeamUpdateSchema } from '@repo/schemas/team'
 import type {
-	TCreateTeam,
 	TDeleteTeamRequest,
+	TGetTeamMembersRequest,
 	TGetTeamRequest,
 	TGetTeamsRequest,
+	TPostTeamRequest,
 	TTeam,
 	TTeamAddMemberRequest,
 	TTeamDeleteMemberRequest,
-	TTeamReply,
 	TTeamUpdateMemberRequest,
 	TTeamUpdateRequest
 } from '@repo/schemas/team'
@@ -57,10 +57,7 @@ const teamRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done: (
 		}
 	})
 
-	app.route<{
-		Body: TCreateTeam
-		Reply: TTeamReply | { success: false; message: any }
-	}>({
+	app.route<TPostTeamRequest>({
 		method: 'POST',
 		url: '/team',
 		schema: {
@@ -71,10 +68,7 @@ const teamRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done: (
 			try {
 				if (!req.user) throw 'User not found'
 
-				const team = await TeamRepository.create({
-					data: req.body,
-					userId: req.user.id
-				})
+				const team = await TeamRepository.create(req)
 
 				return res.send({ success: true, team }).status(200)
 			} catch (e) {
@@ -92,12 +86,7 @@ const teamRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done: (
 		preHandler: app.Auth.TeamAdmin,
 		handler: async (req, res) => {
 			try {
-				const team = await TeamRepository.addMember({
-					currentUserId: req.user!.id,
-					role: req.body.role,
-					teamId: req.params.teamId,
-					userId: req.body.userId
-				})
+				const team = await TeamRepository.addMember(req)
 
 				return res.send({ success: true, team }).status(200)
 			} catch (e) {
@@ -182,6 +171,23 @@ const teamRoutes = (app: FastifyInstance, options: FastifyPluginOptions, done: (
 				})
 
 				return res.send({ success: true }).status(200)
+			} catch (e) {
+				return res.code(400).send({ success: false, message: e })
+			}
+		}
+	})
+
+	app.route<TGetTeamMembersRequest>({
+		method: 'GET',
+		url: '/team/:teamId/members',
+		preHandler: app.Auth.TeamUser,
+		handler: async (req, res) => {
+			try {
+				if (!req.user) throw 'User not found'
+
+				const members = await TeamRepository.getTeamMembers(req)
+
+				return res.send({ success: true, members }).status(200)
 			} catch (e) {
 				return res.code(400).send({ success: false, message: e })
 			}

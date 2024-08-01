@@ -3,18 +3,19 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export type ColorMode = 'light' | 'dark' | 'system'
+export type Theme = 'light' | 'dark'
 
 export const useTheme = create<{
 	colorMode: ColorMode
 	setColorMode: (colorMode: ColorMode) => void
-	resolvedTheme?: ColorMode
-	setResolvedTheme: (resolvedTheme: ColorMode) => void
+	resolvedTheme?: Theme
+	setResolvedTheme: (resolvedTheme: Theme) => void
 }>()(
 	persist(
 		(set) => ({
 			colorMode: 'system',
-			setColorMode: (colorMode: ColorMode) => set({ colorMode }),
-			setResolvedTheme: (resolvedTheme: ColorMode) => set({ resolvedTheme }),
+			setColorMode: (colorMode) => set({ colorMode }),
+			setResolvedTheme: (resolvedTheme) => set({ resolvedTheme }),
 			resolvedTheme: undefined
 		}),
 		{

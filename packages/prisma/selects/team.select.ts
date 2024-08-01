@@ -1,17 +1,7 @@
 import { Prisma } from '../client'
 
 export const teamPrivateInclude = Prisma.validator<Prisma.TeamInclude>()({
-	// members: {
-	// 	select: {
-	// 		role: true,
-	// 		accepted: true,
-	// 		user: {
-	// 			select: userPublicProfileSelect
-	// 		},
-	// 		createdAt: true,
-	// 		updatedAt: true
-	// 	}
-	// }
+	genres: true
 })
 
 export const teamPublicSelect = Prisma.validator<Prisma.TeamSelect>()({

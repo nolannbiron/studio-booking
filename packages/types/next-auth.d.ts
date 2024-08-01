@@ -15,11 +15,11 @@ declare module 'next-auth' {
 		id: TPublicUser['id']
 		emailVerified?: TPublicUser['emailVerified']
 		email_verified?: boolean
-		avatarUrl?: TPublicUser['avatarUrl']
+		avatarUrl: TPublicUser['avatarUrl']
 		avatarColor?: TPublicUser['avatarColor']
-		firstName?: TPublicUser['firstName']
-		lastName?: TPublicUser['lastName']
-		fullName?: TPublicUser['fullName']
+		firstName: TPublicUser['firstName']
+		lastName: TPublicUser['lastName']
+		fullName: TPublicUser['fullName']
 		locale?: TPublicUser['locale']
 		accessToken?: string
 		refreshToken?: string
@@ -29,11 +29,11 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
 	interface JWT {
 		id?: string
-		firstName?: string | null
-		lastName?: string | null
-		fullName?: string | null
+		firstName: string
+		lastName: string
+		fullName: string
 		email?: string | null
-		avatarUrl?: string | null
+		avatarUrl: string
 		avatarColor?: string | null
 		locale?: TPublicUser['locale']
 		accessToken?: string

@@ -11,8 +11,8 @@ export type TLoginBody = z.infer<typeof ZLoginBody>
 
 export const ZRegisterBody = z.object({
 	email: z.string().email(),
-	firstName: z.string().optional(),
-	lastName: z.string().optional(),
+	firstName: z.string(),
+	lastName: z.string(),
 	password: z.string()
 })
 

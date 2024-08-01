@@ -136,5 +136,13 @@
 	"auth": {
 		"login_with_facebook": "Login with Facebook",
 		"login_with_google": "Login with Google"
+	},
+	"booking": {
+		"tabs": {
+			"today": "Today",
+			"upcoming": "Upcoming",
+			"past": "Past",
+			"canceled": "Canceled"
+		}
 	}
 }

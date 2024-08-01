@@ -14,7 +14,7 @@ import type { AvailableAuthProviders } from './types'
 
 type AuthRegisterFormProps = {
 	onForgotPasswordClick: () => void
-	onAuthProviderClick: (type: AvailableAuthProviders) => void
+	onAuthProviderClick?: (type: AvailableAuthProviders) => void
 	onSubmit: (values: TRegisterBody) => void
 	isLoading: boolean
 	errors?: Record<string, { type: string; message: string }> | null
@@ -127,19 +127,31 @@ export function AuthRegisterForm({
 					</div>
 				</form>
 			</Form>
-			<div className="flex items-center gap-4">
-				<Separator className="shrink" />
-				<span className="text-muted-foreground shrink-0 text-xs">
-					{t('general.or_continue_with')}
-				</span>
-				<Separator className="shrink" />
-			</div>
-			<div className="grid grid-cols-2 gap-2 sm:w-full">
-				<Suspense fallback={<></>}>
-					<AuthProviderButton isLoading={isLoading} type="FACEBOOK" onClick={onAuthProviderClick} />
-					<AuthProviderButton isLoading={isLoading} type="GOOGLE" onClick={onAuthProviderClick} />
-				</Suspense>
-			</div>
+			{!!onAuthProviderClick && (
+				<>
+					<div className="flex items-center gap-4">
+						<Separator className="shrink" />
+						<span className="text-muted-foreground shrink-0 text-xs">
+							{t('general.or_continue_with')}
+						</span>
+						<Separator className="shrink" />
+					</div>
+					<div className="grid grid-cols-2 gap-2 sm:w-full">
+						<Suspense fallback={<></>}>
+							<AuthProviderButton
+								isLoading={isLoading}
+								type="FACEBOOK"
+								onClick={onAuthProviderClick}
+							/>
+							<AuthProviderButton
+								isLoading={isLoading}
+								type="GOOGLE"
+								onClick={onAuthProviderClick}
+							/>
+						</Suspense>
+					</div>
+				</>
+			)}
 		</div>
 	)
 }

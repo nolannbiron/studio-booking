@@ -9,7 +9,7 @@ export const buttonVariants = cva(
 		variants: {
 			variant: {
 				default: [
-					'bg-primary relative isolate inline-flex items-center justify-center rounded-lg border border-transparent py-[calc(theme(spacing[2])-1px)] text-white  shadow focus:outline-none active:pt-2.5 disabled:opacity-50 sm:py-[calc(theme(spacing[2])-1px)] [&>svg]:text-blue-50'
+					'bg-primary relative isolate inline-flex items-center justify-center rounded-lg border border-transparent py-[calc(theme(spacing[2])-1px)] text-white  shadow focus:outline-0 active:pt-2.5 disabled:opacity-50 sm:py-[calc(theme(spacing[2])-1px)] [&>svg]:text-blue-50'
 				],
 				destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
 				outline:
@@ -19,7 +19,7 @@ export const buttonVariants = cva(
 				ghost: 'hover:bg-secondary hover:text-secondary-foreground',
 				link: 'text-primary underline-offset-4 hover:underline',
 				contrast: [
-					'bg-foreground relative isolate inline-flex items-center justify-center rounded-lg border border-transparent py-[calc(theme(spacing[3])-1px)] text-white  shadow focus:outline-none active:pt-1.5 disabled:opacity-50 sm:py-[calc(theme(spacing[1.5])-1px)] [&>svg]:text-blue-50'
+					'bg-foreground relative isolate inline-flex items-center justify-center rounded-lg border border-transparent py-[calc(theme(spacing[3])-1px)] text-white  shadow focus:outline-0 active:pt-1.5 disabled:opacity-50 sm:py-[calc(theme(spacing[1.5])-1px)] [&>svg]:text-blue-50'
 				],
 				unstyled: 'text-foreground hover:text-foreground bg-transparent hover:bg-transparent'
 			},

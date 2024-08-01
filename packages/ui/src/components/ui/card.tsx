@@ -4,14 +4,14 @@ import * as React from 'react'
 
 import { cn } from '../../lib/utils'
 
-const cardVariants = cva('rounded-xl border', {
+const cardVariants = cva('overflow-hidden rounded-xl border', {
 	variants: {
 		variant: {
 			default: 'bg-card text-card-foreground',
 			outline: 'border-input bg-background hover:text-secondary-foreground border'
 		},
 		clickable: {
-			true: 'hover:bg-muted dark:hover:bg-muted/60 cursor-pointer transition-shadow hover:shadow-md'
+			true: 'hover:bg-muted dark:hover:bg-muted/60 cursor-pointer transition-all hover:shadow-md'
 		},
 		shadow: {
 			none: 'shadow-none',

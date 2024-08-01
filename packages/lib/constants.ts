@@ -2,9 +2,9 @@ export const APP_NAME = 'Acme'
 export const COMPANY_NAME = 'Acme Inc.'
 export const SENDER_NAME = 'Acme Team'
 export const SUPPORT_MAIL_ADDRESS = ''
-export const WEBAPP_URL = process.env.NEXT_PUBLIC_WEBAPP_URL || 'http://localhost:3000'
-export const AUTH_WEBAPP_URL = `https://${process.env.NEXT_PUBLIC_AUTH_WEBAPP_URL}` || 'http://localhost:3001'
-export const WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || 'http://localhost:3001'
+export const WEBAPP_URL = process.env.VITE_PUBLIC_WEBAPP_URL || 'http://localhost:3000'
+export const AUTH_WEBAPP_URL = `https://${process.env.VITE_PUBLIC_AUTH_WEBAPP_URL}` || 'http://localhost:3001'
+export const WEBSITE_URL = process.env.VITE_PUBLIC_WEBSITE_URL || 'http://localhost:3001'
 
 export const FULL_NAME_LENGTH_MAX_LIMIT = 20
 

@@ -1,0 +1,143 @@
+.tiptap {
+	@apply placeholder:text-muted-foreground/50 min-h-[250px] w-full items-stretch text-base;
+
+	&:focus,
+	&:active,
+	&:focus-visible,
+	&:focus-within {
+		outline: none;
+	}
+
+	.is-empty::before {
+		@apply text-muted-foreground/30 font-medium;
+		content: attr(data-placeholder);
+		float: left;
+		height: 0;
+		pointer-events: none;
+	}
+
+	// h1,
+	// h2,
+	// h3,
+	// h4,
+	// h5,
+	// h6,
+	// p,
+	// ul,
+	// ol,
+	// li,
+	// a,
+	// blockquote,
+	// code,
+	// pre,
+	// img,
+	// figure,
+	// figcaption {
+	// 	@apply relative px-4 hover:after:opacity-100;
+	// 	&::after {
+	// 		@apply text-foreground flex items-center justify-center transition-all;
+	// 		content: '+' !important;
+	// 		opacity: 0;
+	// 		top: 0;
+	// 		position: absolute;
+	// 		left: -40px;
+	// 		height: 100%;
+	// 		width: 40px;
+	// 	}
+	// }
+
+	h1 {
+		@apply text-3xl font-bold;
+	}
+
+	h2 {
+		@apply text-2xl font-bold;
+	}
+
+	h3 {
+		@apply text-xl font-bold;
+	}
+
+	h4 {
+		@apply text-lg font-bold;
+	}
+
+	h5 {
+		@apply text-base font-bold;
+	}
+
+	h6 {
+		@apply text-sm font-bold;
+	}
+
+	p {
+		@apply min-h-[1.5rem] text-base;
+	}
+
+	strong {
+		@apply font-bold;
+	}
+
+	em {
+		@apply italic;
+	}
+
+	ul {
+		@apply list-inside list-disc;
+	}
+
+	ol {
+		@apply list-inside list-decimal;
+	}
+
+	li {
+		@apply mb-1;
+		> p {
+			@apply mb-0 inline-block w-fit;
+		}
+	}
+
+	a {
+		@apply text-primary underline;
+	}
+
+	blockquote {
+		@apply border-l-4 border-gray-300 pl-2;
+	}
+
+	code {
+		@apply rounded bg-gray-100 px-1;
+	}
+
+	pre {
+		@apply rounded bg-gray-100 p-2;
+	}
+
+	img {
+		@apply mx-auto;
+	}
+
+	figure {
+		@apply mx-auto;
+	}
+
+	figcaption {
+		@apply text-center text-sm text-gray-500;
+	}
+}
+
+.editor-task-item {
+	@apply flex list-none items-baseline gap-2;
+
+	input[type='checkbox'] {
+		@apply border-border data-[state=unchecked]:hover:bg-muted/40 focus-visible:ring-ring data-[state=checked]:bg-primary data-[state=indeterminate]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground  data-[state=indeterminate]:text-primary-foreground h-4 w-4 shrink-0 rounded-sm border shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50;
+	}
+
+	& > div > ul {
+		@apply mt-1;
+	}
+}
+
+body:has([data-radix-popper-content-wrapper], [data-tippy-root]) {
+	pointer-events: auto !important;
+}

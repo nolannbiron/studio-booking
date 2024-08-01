@@ -32,37 +32,29 @@ export const FeatureType = {
 
 export type FeatureType = (typeof FeatureType)[keyof typeof FeatureType];
 
-export const Visibility = {
-  PUBLIC: "PUBLIC",
-  PRIVATE: "PRIVATE",
-} as const;
-
-export type Visibility = (typeof Visibility)[keyof typeof Visibility];
-
 export const ContactType = {
   ARTIST: "ARTIST",
-  GROUP: "GROUP",
+  BAND: "BAND",
   LABEL: "LABEL",
   MANAGER: "MANAGER",
-  COMPANY: "COMPANY",
+  CAMERAMAN: "CAMERAMAN",
+  PHOTOGRAPHER: "PHOTOGRAPHER",
 } as const;
 
 export type ContactType = (typeof ContactType)[keyof typeof ContactType];
 
-export const ContactGenre = {
-  BLUES: "BLUES",
-  CLASSICAL: "CLASSICAL",
-  COUNTRY: "COUNTRY",
-  DANCE: "DANCE",
-  ELECTRONIC: "ELECTRONIC",
-  HIP_HOP: "HIP_HOP",
-  JAZZ: "JAZZ",
-  POP: "POP",
-  RAP: "RAP",
-  REGGAE: "REGGAE",
-  ROCK: "ROCK",
-  SOUL: "SOUL",
-  OTHERS: "OTHERS",
+export const EventType = {
+  ENTITY_CREATED: "ENTITY_CREATED",
+  VALUES_UPDATED: "VALUES_UPDATED",
+  NOTE_ADDED: "NOTE_ADDED",
 } as const;
 
-export type ContactGenre = (typeof ContactGenre)[keyof typeof ContactGenre];
+export type EventType = (typeof EventType)[keyof typeof EventType];
+
+export const BookingStatus = {
+  PENDING: "PENDING",
+  CONFIRMED: "CONFIRMED",
+  CANCELED: "CANCELED",
+} as const;
+
+export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus];

@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import supertest from 'supertest'
 import { expect, test } from 'vitest'
 
